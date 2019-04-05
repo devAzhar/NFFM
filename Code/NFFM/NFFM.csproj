@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D358EFD1-0920-4250-888C-918B2F37EE26}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NFFM</RootNamespace>
+    <AssemblyName>NFFM</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BillOfLading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BillOfLading.Designer.cs">
+      <DependentUpon>BillOfLading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trucker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trucker.Designer.cs">
+      <DependentUpon>Trucker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trucker_AddUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trucker_AddUpdate.Designer.cs">
+      <DependentUpon>Trucker_AddUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shipper_AddUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shipper_AddUpdate.Designer.cs">
+      <DependentUpon>Shipper_AddUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shipper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shipper.Designer.cs">
+      <DependentUpon>Shipper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesCode_AddUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesCode_AddUpdate.Designer.cs">
+      <DependentUpon>SalesCode_AddUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesCode.Designer.cs">
+      <DependentUpon>SalesCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customers_AddUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customers_AddUpdate.Designer.cs">
+      <DependentUpon>Customers_AddUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBManager.cs" />
+    <Compile Include="Customers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customers.Designer.cs">
+      <DependentUpon>Customers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NFFM_be_sqlDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NFFM_be_sqlDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="NFFM_be_sqlDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NFFM_be_sqlDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BillOfLading.resx">
+      <DependentUpon>BillOfLading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trucker.resx">
+      <DependentUpon>Trucker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trucker_AddUpdate.resx">
+      <DependentUpon>Trucker_AddUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shipper_AddUpdate.resx">
+      <DependentUpon>Shipper_AddUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shipper.resx">
+      <DependentUpon>Shipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesCode_AddUpdate.resx">
+      <DependentUpon>SalesCode_AddUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesCode.resx">
+      <DependentUpon>SalesCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customers_AddUpdate.resx">
+      <DependentUpon>Customers_AddUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customers.resx">
+      <DependentUpon>Customers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="NFFM_be_sqlDataSet.xsc">
+      <DependentUpon>NFFM_be_sqlDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="NFFM_be_sqlDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>NFFM_be_sqlDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NFFM_be_sqlDataSet.xss">
+      <DependentUpon>NFFM_be_sqlDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="NFFM_be_sqlDataSet1.xsc">
+      <DependentUpon>NFFM_be_sqlDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="NFFM_be_sqlDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>NFFM_be_sqlDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NFFM_be_sqlDataSet1.xss">
+      <DependentUpon>NFFM_be_sqlDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\DataSources\Form1.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
