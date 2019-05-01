@@ -1,6 +1,6 @@
 ﻿namespace NFFM
 {
-    partial class BillOfLading
+    partial class FreightForwardingBOL
     {
         /// <summary>
         /// Required designer variable.
@@ -42,12 +42,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Action = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnFirst = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnLast = new System.Windows.Forms.Button();
             this.txtRecords = new System.Windows.Forms.TextBox();
-            this.Action = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.txtTruckingTotal = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
@@ -61,9 +61,9 @@
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
             this.lblHeading.Location = new System.Drawing.Point(289, 5);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(356, 25);
+            this.lblHeading.Size = new System.Drawing.Size(444, 25);
             this.lblHeading.TabIndex = 9;
-            this.lblHeading.Text = "Receiving Bill of Lading Entry Form";
+            this.lblHeading.Text = "Freight Forwarding Bill of Lading Entry Form";
             // 
             // btnDelete
             // 
@@ -201,9 +201,9 @@
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(96, 61);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 16);
+            this.label2.Size = new System.Drawing.Size(87, 16);
             this.label2.TabIndex = 22;
-            this.label2.Text = "Received Date:";
+            this.label2.Text = "Shipped Date:";
             // 
             // dataGridView1
             // 
@@ -217,6 +217,15 @@
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
+            // 
+            // Action
+            // 
+            this.Action.HeaderText = "";
+            this.Action.Name = "Action";
+            this.Action.Text = "X";
+            this.Action.ToolTipText = "Delete Line Item";
+            this.Action.UseColumnTextForButtonValue = true;
+            this.Action.Width = 30;
             // 
             // btnFirst
             // 
@@ -267,15 +276,6 @@
             this.txtRecords.TabIndex = 30;
             this.txtRecords.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Action
-            // 
-            this.Action.HeaderText = "";
-            this.Action.Name = "Action";
-            this.Action.Text = "X";
-            this.Action.ToolTipText = "Delete Line Item";
-            this.Action.UseColumnTextForButtonValue = true;
-            this.Action.Width = 30;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -297,7 +297,7 @@
             this.txtTruckingTotal.TabIndex = 31;
             this.txtTruckingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // BillOfLading
+            // FreightForwardingBOL
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -312,7 +312,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
-            this.Name = "BillOfLading";
+            this.Name = "FreightForwardingBOL";
             this.Text = "BillOfLading";
             this.Activated += new System.EventHandler(this.Form1_Activated);
             this.panel1.ResumeLayout(false);

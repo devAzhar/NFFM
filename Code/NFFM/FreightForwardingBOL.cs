@@ -11,21 +11,21 @@ using System.Windows.Forms;
 
 namespace NFFM
 {
-    public partial class BillOfLading : Form
+    public partial class FreightForwardingBOL : Form
     {
-        public BillOfLading()
+        public FreightForwardingBOL()
         {
             InitializeComponent();
-            this.Text = "Receiving Bill of Lading Entry Form";
+            this.Text = "Freight Forwarding Bill of Lading Entry Form";
         }
         int initialDataLoaded = 0;
         int isButtonClicked = 0;
-        string currentReceivingId = "0";
+        string currentShippingId = "0";
         string currentTruckerId = "0";
-        int previousReceivingId = 0;
-        int firstReceivingId = 0;
-        int nextReceivingId = 0;
-        int lastReceivingId = 0;
+        int previousShippingId = 0;
+        int firstShippingId = 0;
+        int nextShippingId = 0;
+        int lastShippingId = 0;
         int IsNewRecord = 0;
         int lineItemId;
         DataGridViewRow row;
@@ -38,42 +38,24 @@ namespace NFFM
         DataTable dtSalesCode;
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            currentReceivingId = "0";
+            currentShippingId = "0";
             currentTruckerId = "0";
-            //datePickerReceived.Value = new DateTime(2010, 01, 01);
-            //datePickerWeekEnding.Value = new DateTime(2010, 01, 01);
-            //txtBatchId.Text = "";
-            ddlTruckerName.Text = "";
+             ddlTruckerName.Text = "";
             txtTruckingTotal.Text = "";
-            //DataTable dataTable = (DataTable)dataGridView1.DataSource;
-            //DataRow drToAdd = dataTable.NewRow();
-
-            //drToAdd["Shipper"] = "Value1";
-            //drToAdd["SalesCode"] = "Value2";
-
-            //dataTable.Rows.Add(drToAdd);
-            //dataTable.AcceptChanges();
-            //dataGridView1.DataSource = dataTable;
-            //dataGridView1.AllowUserToAddRows = false;
-            //dataGridView1.Ta.Text = "No Data to display"
             IsNewRecord = 1;
-            //foreach (DataGridViewRow item in this.dataGridView1.Rows)
-            //{
-            //    dataGridView1.Rows.RemoveAt(item.Index);
-            //}
             LoadData(-1);
         }
-        public void LoadData(int receivingId)
+        public void LoadData(int shippingId)
         {
-            String SPName = "BillOfLading_GetAll";
+            String SPName = "FreightForwardingBOL_GetAll";
             //ddlCustomers.Clear();
             //ddlShippers.Clear();
             //ddlSalesCode.Clear();
             SqlCommand cmd = new SqlCommand();
             //cmd.CommandText = SPName;
-            cmd.Parameters.Add("receivingId", receivingId);
+            cmd.Parameters.Add("shippingId", shippingId);
             //cmd.CommandType = CommandType.StoredProcedure;
-            DataSet ds = DBManager.GetDataSet_New(SPName, receivingId);
+            DataSet ds = DBManager.GetDataSet_FreightForwarding(SPName, shippingId);
             // DataSet ds = DBManager.GetDataSet(SPName, cmd);
             DataTable dtTruckers = ds.Tables[0];
             DataTable dtLineItems = ds.Tables[2];
@@ -123,19 +105,19 @@ namespace NFFM
                 }
                 if (ds.Tables[1].Rows.Count > 0)
                 {
-                    datePickerReceived.Text = ds.Tables[1].Rows[0]["ReceivedDate"].ToString();
+                    datePickerReceived.Text = ds.Tables[1].Rows[0]["ShippedDate"].ToString();
                     datePickerWeekEnding.Text = ds.Tables[1].Rows[0]["WeekEndingDate"].ToString();
                     txtBatchId.Text = ds.Tables[1].Rows[0]["BatchID"].ToString();
                     ddlTruckerName.Text = ds.Tables[1].Rows[0]["Trucker"].ToString();
                     currentTruckerId = ds.Tables[1].Rows[0]["TruckerID"].ToString();
                     txtRecords.ReadOnly = true;
                     txtRecords.Text = ds.Tables[1].Rows[0]["CurrentRecord"].ToString() + " of " + ds.Tables[1].Rows[0]["TotalRecords"].ToString();
-                    currentReceivingId = ds.Tables[1].Rows[0]["receivingId"].ToString();
-                    previousReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["previousReceivingId"]);
-                    firstReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["firstReceivingId"]);
-                    nextReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["nextReceivingId"]);
-                    lastReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["lastReceivingId"]);
-                    if (nextReceivingId.ToString() == "0")
+                    currentShippingId = ds.Tables[1].Rows[0]["shippingId"].ToString();
+                    previousShippingId = Convert.ToInt32(ds.Tables[1].Rows[0]["previousShippingId"]);
+                    firstShippingId = Convert.ToInt32(ds.Tables[1].Rows[0]["firstShippingId"]);
+                    nextShippingId = Convert.ToInt32(ds.Tables[1].Rows[0]["nextShippingId"]);
+                    lastShippingId = Convert.ToInt32(ds.Tables[1].Rows[0]["lastShippingId"]);
+                    if (nextShippingId.ToString() == "0")
                     {
                         btnNext.Enabled = false;
                         btnLast.Enabled = false;
@@ -145,7 +127,7 @@ namespace NFFM
                         btnNext.Enabled = true;
                         btnLast.Enabled = true;
                     }
-                    if (previousReceivingId.ToString() == "0")
+                    if (previousShippingId.ToString() == "0")
                     {
                         btnPrevious.Enabled = false;
                         btnFirst.Enabled = false;
@@ -186,7 +168,7 @@ namespace NFFM
           
 
             
-            dataGridView1.Columns["receivingId"].Visible = false;
+            dataGridView1.Columns["shippingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
             dataGridView1.Columns["BillOfLadingNumber"].Width = 120;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
@@ -240,7 +222,7 @@ namespace NFFM
             label1.Font = new System.Drawing.Font(label1.Font.FontFamily.Name, 10);
             label1.BackColor = Color.Transparent;
 
-            if (dtLineItems.Rows[0]["receivingId"].ToString() == "-1")
+            if (dtLineItems.Rows[0]["shippingId"].ToString() == "-1")
             {
                 label1.Text = "Select a Trucker Name to continue.";
                 label1.Font = new Font(label1.Font, FontStyle.Bold);
@@ -267,7 +249,7 @@ namespace NFFM
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             string lineItemID = "";
-            string receivingID = "";
+            string shippingID = "";
             string billOfLading = "";
             string customerName = "";
             string shipper = "";
@@ -288,10 +270,10 @@ namespace NFFM
             {
                 if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
                 {
-                    receivingID = dataGridView1.Rows[rowIndex].Cells[1].Value.ToString();
-                    if (receivingID == "")
+                    shippingID = dataGridView1.Rows[rowIndex].Cells[1].Value.ToString();
+                    if (shippingID == "")
                     {
-                        receivingID = currentReceivingId;
+                        shippingID = currentShippingId;
                     }
                     lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
                     billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
@@ -301,9 +283,9 @@ namespace NFFM
                     shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
                     salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
                     quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
-                    rowsEffected = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
+                    rowsEffected = DBManager.ExecuteNonQuery_FreightForwarding("FreightForwardingBOL_AddUpdate", shippingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
                     //DBManager.isDataLoaded = false;
-                    LoadData(Convert.ToInt32(receivingID));
+                    LoadData(Convert.ToInt32(shippingID));
                     if (rowsEffected < 1)
                     {
                         MessageBox.Show("Error Occurred.");
@@ -314,37 +296,30 @@ namespace NFFM
                     //}
                 }
             }
-
-            // row = dataGridView1.Rows[c];
-            //a = Convert.ToInt32(row.Cells[b].Value);
-            //lineItemId = e.RowIndex;
-            //DataGridViewRow row = dataGridView1.Rows[lineItemId];
-            //currentReceivingId = Convert.ToInt32(row.Cells[0].Value);
-            //lineItemId = Convert.ToInt32(row.Cells[1].Value);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
             //currentTruckerId = "0";
             isButtonClicked = 1;
-            LoadData(previousReceivingId);
+            LoadData(previousShippingId);
         }
 
         private void btnFirst_Click(object sender, EventArgs e)
         {
             //currentTruckerId = "0";
             isButtonClicked = 1;
-            LoadData(firstReceivingId);
+            LoadData(firstShippingId);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            LoadData(nextReceivingId);
+            LoadData(nextShippingId);
         }
 
         private void btnLast_Click(object sender, EventArgs e)
         {
-            LoadData(lastReceivingId);
+            LoadData(lastShippingId);
         }
 
         private void ddlTruckerName_SelectedIndexChanged(object sender, EventArgs e)
@@ -353,7 +328,7 @@ namespace NFFM
             string truckerName = ((KeyValuePair<string, string>)ddlTruckerName.SelectedItem).Value;
             if (currentTruckerId != truckerId && currentTruckerId != "0" && initialDataLoaded == 1 && IsNewRecord == 0)
             {
-                int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", truckerId, "");
+                int retVal = DBManager.ExecuteNonQuery_FreightForwarding("FreightForwardingBOL_AddUpdate", currentShippingId, "", "", "", "", "", "", "", "", truckerId, "");
             }
             else if (currentTruckerId != truckerId && truckerId != "1" && initialDataLoaded == 1 && IsNewRecord == 1)
             {
@@ -361,7 +336,7 @@ namespace NFFM
                 //dataGridView1.AllowUserToAddRows = true;
                 //DataTable dt = new DataTable();
                 //dataGridView1.DataSource = dt;
-                int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, truckerId, txtBatchId.Text);
+                int retVal = DBManager.ExecuteNonQuery_FreightForwarding("FreightForwardingBOL_AddUpdate", currentShippingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, truckerId, txtBatchId.Text);
                 LoadData(0);
             }
         }
@@ -370,7 +345,7 @@ namespace NFFM
         {
             if (initialDataLoaded == 1 && IsNewRecord == 0)
             {
-                int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", "0", txtBatchId.Text);
+                int retVal = DBManager.ExecuteNonQuery_FreightForwarding("FreightForwardingBOL_AddUpdate", currentShippingId, "", "", "", "", "", "", "", "", "0", txtBatchId.Text);
             }
         }
 
@@ -378,14 +353,14 @@ namespace NFFM
         {
             if (initialDataLoaded == 1 && IsNewRecord == 0)
             {
-                int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, "0", "");
+                int retVal = DBManager.ExecuteNonQuery_FreightForwarding("FreightForwardingBOL_AddUpdate", currentShippingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, "0", "");
             }
         }
         private void datePickerWeekEnding_Leave(object sender, EventArgs e)
         {
             if (initialDataLoaded == 1 && IsNewRecord == 0)
             {
-                int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, "0", "");
+                int retVal = DBManager.ExecuteNonQuery_FreightForwarding("FreightForwardingBOL_AddUpdate", currentShippingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, "0", "");
             }
         }
 
@@ -395,16 +370,16 @@ namespace NFFM
             {
                 String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
                 SqlConnection con = new SqlConnection(str);
-                SqlCommand cmd = new SqlCommand("BillOfLading_Delete", con);
+                SqlCommand cmd = new SqlCommand("FreightForwardingBOL_Delete", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("ReceivingId", currentReceivingId);
+                cmd.Parameters.Add("ShippingId", currentShippingId);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
                 //DBManager.isDataLoaded = false;
                 MessageBox.Show("Bill of Lading is deleted successfully.");
                 isButtonClicked = 1;
-                LoadData(nextReceivingId);
+                LoadData(nextShippingId);
             }
         }
 
@@ -419,7 +394,7 @@ namespace NFFM
                     {
                         String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
                         SqlConnection con = new SqlConnection(str);
-                        SqlCommand cmd = new SqlCommand("LineItem_Delete", con);
+                        SqlCommand cmd = new SqlCommand("FreightForwardingBOLLineItem_Delete", con);
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
                         con.Open();
@@ -428,7 +403,7 @@ namespace NFFM
                         //DBManager.isDataLoaded = false;
                         MessageBox.Show("Line item is deleted successfully.");
                         isButtonClicked = 1;
-                        LoadData(nextReceivingId);
+                        LoadData(nextShippingId);
                     }
                 }
             }

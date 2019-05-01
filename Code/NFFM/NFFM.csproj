@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FreightForwardingBOL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FreightForwardingBOL.Designer.cs">
+      <DependentUpon>FreightForwardingBOL.cs</DependentUpon>
+    </Compile>
     <Compile Include="BillOfLading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FreightForwardingBOL.resx">
+      <DependentUpon>FreightForwardingBOL.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BillOfLading.resx">
       <DependentUpon>BillOfLading.cs</DependentUpon>
     </EmbeddedResource>
@@ -184,7 +193,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

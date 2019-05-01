@@ -1,17 +1,17 @@
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\bin\Debug\NFFM.exe.config
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\bin\Debug\NFFM.exe
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\bin\Debug\NFFM.pdb
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.SalesCode_AddUpdate.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.SalesCode.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.Customers_AddUpdate.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.Customers.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.Properties.Resources.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.csproj.GenerateResource.Cache
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.exe
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.pdb
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.Shipper.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.csprojResolveAssemblyReference.cache
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.Shipper_AddUpdate.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.Trucker.resources
-c:\users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.Trucker_AddUpdate.resources
-C:\Users\tousif\documents\visual studio 2015\Projects\NFFM\NFFM\obj\Debug\NFFM.BillOfLading.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\bin\Debug\NFFM.exe.config
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\bin\Debug\NFFM.exe
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\bin\Debug\NFFM.pdb
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.FreightForwardingBOL.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.BillOfLading.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.Trucker.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.Trucker_AddUpdate.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.Shipper_AddUpdate.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.Shipper.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.SalesCode_AddUpdate.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.SalesCode.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.Customers_AddUpdate.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.Customers.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.Properties.Resources.resources
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.csproj.GenerateResource.Cache
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.exe
+C:\Users\tousif\Source\Repos\NFFM\Code\NFFM\obj\Debug\NFFM.pdb
