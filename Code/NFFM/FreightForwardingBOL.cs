@@ -17,6 +17,7 @@ namespace NFFM
         {
             InitializeComponent();
             this.Text = "Freight Forwarding Bill of Lading Entry Form";
+            DBManager.isDataLoaded = false;
         }
         int initialDataLoaded = 0;
         int isButtonClicked = 0;

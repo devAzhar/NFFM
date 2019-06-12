@@ -56,6 +56,26 @@ namespace NFFM
 
             return ds;
         }
+       public static DataSet GetDataSet_Report(string SPName, string receivedDate,string batchId,string invoiceNumber, string billOfLadingNumber, string customerName)
+        {
+            String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
+            SqlConnection conn = new SqlConnection(str);
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.Parameters.Add("receivedDate", receivedDate);
+            cmd.Parameters.Add("batchId", batchId);
+            cmd.Parameters.Add("billOfLadingNumber", billOfLadingNumber);
+            cmd.Parameters.Add("customerName", customerName);
+            cmd.CommandText = SPName;
+            cmd.CommandType = CommandType.StoredProcedure;
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            conn.Open();
+            da.Fill(ds);
+            conn.Close();
+
+            return ds;
+        }
         public static DataSet GetDataSet_FreightForwarding(string SPName, int shippingId)
         {
             String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;

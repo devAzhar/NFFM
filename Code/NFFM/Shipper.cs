@@ -17,6 +17,7 @@ namespace NFFM
         {
             InitializeComponent();
             this.Text = "Shippers";
+            DBManager.isDataLoaded = false;
         }
         int selectedRow;
         

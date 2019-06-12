@@ -16,7 +16,7 @@ namespace NFFM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FreightForwardingBOL());
+            Application.Run(new Main());
         }
     }
 }
