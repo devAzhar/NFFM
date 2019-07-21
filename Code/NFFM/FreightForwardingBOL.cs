@@ -16,7 +16,7 @@ namespace NFFM
         public FreightForwardingBOL()
         {
             InitializeComponent();
-            this.Text = "Freight Forwarding Bill of Lading Entry Form";
+            this.Text = "NFFM";
             DBManager.isDataLoaded = false;
         }
         int initialDataLoaded = 0;
@@ -217,6 +217,11 @@ namespace NFFM
             dataGridView1.Columns["UnitOfMeasure"].ReadOnly = true;
             dataGridView1.Columns["Price"].ReadOnly = true;
             dataGridView1.Columns["Ext"].ReadOnly = true;
+
+            dataGridView1.Columns["BillOfLadingNumber"].Width = 135;
+            dataGridView1.Columns["Shipper"].Width = 123;
+            dataGridView1.Columns["SalesCode"].Width = 115;
+            dataGridView1.Columns["UnitOfMeasure"].Width = 150;
 
             label1.Text = "Click a heading to sort the data.";
             label1.Font = new Font(label1.Font, FontStyle.Regular);

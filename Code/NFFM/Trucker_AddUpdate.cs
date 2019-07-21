@@ -16,7 +16,7 @@ namespace NFFM
         public Trucker_AddUpdate()
         {
             InitializeComponent();
-            this.Text = "Truckers";
+            this.Text = "NFFM";
         }
         public int TruckerID = 0; 
         private void btnCancel_Click(object sender, EventArgs e)

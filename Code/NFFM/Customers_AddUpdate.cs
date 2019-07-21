@@ -16,7 +16,7 @@ namespace NFFM
         public Customers_AddUpdate()
         {
             InitializeComponent();
-            this.Text = "Customers";
+            this.Text = "NFFM";
         }
         public int customerId = 0; 
         private void btnCancel_Click(object sender, EventArgs e)

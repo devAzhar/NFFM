@@ -16,7 +16,7 @@ namespace NFFM
         public BillOfLading_Report()
         {
             InitializeComponent();
-            this.Text = "Receiving Bill of Lading Summary Report";
+            this.Text = "NFFM";
             DBManager.isDataLoaded = false;
 
             rbtReceivedAll.Checked = true;
@@ -280,22 +280,24 @@ namespace NFFM
 
             dataGridView1.DataSource = dtLineItems;
 
-
-
+            dataGridView1.Columns["ReceivedDate"].HeaderText = "Received Date";
+            dataGridView1.Columns["ReceivedDate"].Width = 135;
+            dataGridView1.Columns["BatchID"].HeaderText = "Batch ID";
+            //dataGridView1.Columns["BatchID"].Width = 110;
 
             dataGridView1.Columns["receivingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
-            dataGridView1.Columns["BillOfLadingNumber"].Width = 120;
+            dataGridView1.Columns["BillOfLadingNumber"].Width = 133;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
-            dataGridView1.Columns["InvoiceNumber"].Width = 120;
-            dataGridView1.Columns["InvoiceNumber"].HeaderText = "Invoice Number";
+            //dataGridView1.Columns["InvoiceNumber"].Width = 120;
+            dataGridView1.Columns["InvoiceNumber"].HeaderText = "Invoice #";
             dataGridView1.Columns["CustomerName"].Width = 199;
             dataGridView1.Columns["CustomerName"].HeaderText = "Co-Op Member";
-            dataGridView1.Columns["SalesCode"].Width = 100;
+            dataGridView1.Columns["SalesCode"].Width = 77;
             dataGridView1.Columns["SalesCode"].HeaderText = "Sales Code";
             dataGridView1.Columns["UnitOfMeasure"].HeaderText = "Unit of Measure";
-            dataGridView1.Columns["UnitOfMeasure"].Width = 120;
-            dataGridView1.Columns["Qty"].Width = 50;
+            dataGridView1.Columns["UnitOfMeasure"].Width = 140;
+            dataGridView1.Columns["Qty"].Width = 40;
             dataGridView1.Columns["Price"].Width = 50;
             dataGridView1.Columns["Ext"].Width = 50;
 

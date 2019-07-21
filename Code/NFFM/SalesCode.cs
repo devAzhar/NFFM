@@ -16,7 +16,7 @@ namespace NFFM
         public SalesCode()
         {
             InitializeComponent();
-            this.Text = "Sales Codes";
+            this.Text = "NFFM";
             DBManager.isDataLoaded = false;
         }
         int selectedRow;
@@ -38,6 +38,13 @@ namespace NFFM
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.Columns["Sales Code"].Width = 115;
+            dataGridView1.Columns["Description"].Width = 180; 
+            dataGridView1.Columns["Unit of Measure"].Width = 180;
+            dataGridView1.Columns["Price"].Width = 73;
+            dataGridView1.Columns["FF Tier 1"].Width = 95;
+            dataGridView1.Columns["FF Tier 2"].Width = 95;
+            dataGridView1.Columns["FF Tier 3"].Width = 95;
             DBManager.isDataLoaded = true;
         }
        

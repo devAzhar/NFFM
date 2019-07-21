@@ -16,53 +16,12 @@ namespace NFFM
         public Customers()
         {
             InitializeComponent();
-            this.Text = "Customers";
+            this.Text = "NFFM";
             DBManager.isDataLoaded = false;
         }
         int selectedRow;
         
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-
-            {
-
-                // String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString; 
-                String SPName = "Customers_GetAll";
-
-                //  SqlConnection con = new SqlConnection(str);
-
-                //  SqlCommand cmd = new SqlCommand(SPName, con);
-
-
-
-                //  SqlDataAdapter da = new SqlDataAdapter(cmd);
-                //  DataTable table = new DataTable();
-                //  da.Fill(table);
-
-                DataTable dt = DBManager.GetDataTable(SPName);
-                //DBManager.ExecuteNonQuery("insertA");
-                //con.Open();
-
-                //  DataSet ds = new DataSet();
-
-                MessageBox.Show("connect with sql server");
-                dataGridView1.DataSource = dt;
-
-                //  con.Close();
-
-            }
-
-            catch (Exception es)
-
-            {
-
-                MessageBox.Show(es.Message);
-
-
-
-            }
-        }
+       
         public void LoadData()
         {
             String SPName = "Customers_GetAll";
@@ -74,6 +33,10 @@ namespace NFFM
             //dataGridView1.RowHeadersVisible = false;
             //dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Blue;
             //dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.Columns["Customer No"].Width = 120;
+            dataGridView1.Columns["Name"].Width = 213;
+            dataGridView1.Columns["CoOp Member"].Width = 120;
+            dataGridView1.Columns["Price"].Width = 60;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;

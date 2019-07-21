@@ -16,7 +16,7 @@ namespace NFFM
         public SalesCode_AddUpdate()
         {
             InitializeComponent();
-            this.Text = "Sales Codes";
+            this.Text = "NFFM";
         }
         public int SalesCodeID = 0; 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -16,7 +16,7 @@ namespace NFFM
         public BillOfLading()
         {
             InitializeComponent();
-            this.Text = "Receiving Bill of Lading Entry Form";
+            this.Text = "NFFM";
             DBManager.isDataLoaded = false;
         }
         int initialDataLoaded = 0;
@@ -84,7 +84,6 @@ namespace NFFM
             currentTruckerId = "0";
             //datePickerReceived.Value = new DateTime(1900, 01, 01);
             //datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
-
 
             if (ds.Tables.Count > 0)
             {
@@ -169,7 +168,8 @@ namespace NFFM
                 }
             }
         }
-        public void BindLineItems(DataTable dtLineItems) {
+        public void BindLineItems(DataTable dtLineItems)
+        {
             Decimal totalTrucking = 0;
             if (dtLineItems.Rows.Count > 0)
             {
@@ -184,9 +184,9 @@ namespace NFFM
 
             dataGridView1.DataSource = dtLineItems;
 
-          
 
-            
+
+
             dataGridView1.Columns["receivingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
             dataGridView1.Columns["BillOfLadingNumber"].Width = 120;
@@ -200,7 +200,7 @@ namespace NFFM
             dataGridView1.Columns["Qty"].Width = 50;
             dataGridView1.Columns["Price"].Width = 50;
             dataGridView1.Columns["Ext"].Width = 50;
-                        
+
             dataGridView1.BorderStyle = BorderStyle.None;
             //dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
 
@@ -235,6 +235,11 @@ namespace NFFM
             dataGridView1.Columns["UnitOfMeasure"].ReadOnly = true;
             dataGridView1.Columns["Price"].ReadOnly = true;
             dataGridView1.Columns["Ext"].ReadOnly = true;
+
+            dataGridView1.Columns["BillOfLadingNumber"].Width = 135;
+            dataGridView1.Columns["Shipper"].Width = 123;
+            dataGridView1.Columns["SalesCode"].Width = 115;
+            dataGridView1.Columns["UnitOfMeasure"].Width = 150;
 
             label1.Text = "Click a heading to sort the data.";
             label1.Font = new Font(label1.Font, FontStyle.Regular);
@@ -474,6 +479,30 @@ namespace NFFM
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.ThrowException = false;
+        }
+
+        private void datePickerReceived_ValueChanged(object sender, EventArgs e)
+        {
+            if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Sunday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(5);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Monday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(4);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Tuesday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(3);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Wednesday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(2);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Thursday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(1);
+            }
         }
 
         //private void dataGridView1_Paint(object sender, PaintEventArgs e)

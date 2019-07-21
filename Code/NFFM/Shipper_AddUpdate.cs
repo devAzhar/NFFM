@@ -16,7 +16,7 @@ namespace NFFM
         public Shipper_AddUpdate()
         {
             InitializeComponent();
-            this.Text = "Shippers";
+            this.Text = "NFFM";
         }
         public int ShipperID = 0; 
         private void btnCancel_Click(object sender, EventArgs e)
