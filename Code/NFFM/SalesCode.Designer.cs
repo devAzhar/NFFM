@@ -110,7 +110,7 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(86, 32);
             this.btnAdd.TabIndex = 3;
-            this.btnAdd.Text = "Add";
+            this.btnAdd.Text = "&Add";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -124,7 +124,7 @@
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 32);
             this.btnUpdate.TabIndex = 4;
-            this.btnUpdate.Text = "Update";
+            this.btnUpdate.Text = "&Update";
             this.btnUpdate.UseVisualStyleBackColor = false;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
@@ -138,7 +138,7 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 32);
             this.btnDelete.TabIndex = 5;
-            this.btnDelete.Text = "Delete";
+            this.btnDelete.Text = "&Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -162,7 +162,7 @@
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
             this.lblHeading.Location = new System.Drawing.Point(326, 9);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(278, 25);
+            this.lblHeading.Size = new System.Drawing.Size(360, 32);
             this.lblHeading.TabIndex = 6;
             this.lblHeading.Text = "Sales Codes Update Form ";
             // 
@@ -173,7 +173,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(380, 75);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(183, 16);
+            this.label1.Size = new System.Drawing.Size(234, 19);
             this.label1.TabIndex = 19;
             this.label1.Text = "Click a heading to sort the data.";
             // 
