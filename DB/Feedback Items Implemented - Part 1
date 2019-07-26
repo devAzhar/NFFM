@@ -112,7 +112,7 @@ BEGIN
 set @receivedDate = (select max(ReceivedDate) from tblReceivingInfo where Deleted = 0 and ReceivedDate is not null)
 END
 
-select top 20 ReceivedDate,BatchID,Format([WeekEndingDate],'MMdd') + Right(LTRIM(RTrim([Customer No])),2) + SUBSTRING([Customer No],4,1) As InvoiceNumber, info.receivingID,info.lineitemid,BillOfLadingNumber,cust.Name As CustomerName, Shipper,sc.[Sales Code] As SalesCode, sc.Description, sc.[Unit of Measure] As UnitOfMeasure, lineitem.Quantity As Qty, 
+select top 20 ReceivedDate,BatchID, SUBSTRING(CONVERT(CHAR(10), WeekEndingDate, 12),3,4) + Right(LTRIM(RTrim([Customer No])),2) + SUBSTRING([Customer No],4,1) As InvoiceNumber, info.receivingID,info.lineitemid,BillOfLadingNumber,cust.Name As CustomerName, Shipper,sc.[Sales Code] As SalesCode, sc.Description, sc.[Unit of Measure] As UnitOfMeasure, lineitem.Quantity As Qty, 
 -- table3
 sc.Price, lineitem.Quantity * Isnull(sc.Price, 0) As Ext from tblLineItems_Receiving lineitem
 inner join tblReceivingInfo_LineItems info on info.lineItemID = lineitem.lineItemID
