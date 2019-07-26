@@ -307,9 +307,11 @@ namespace NFFM
                     shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
                     salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
                     quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
+                    string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
+                    dataGridView1.Rows[rowIndex].Cells[11].Value = int.Parse(quantity) * float.Parse(price);
                     rowsEffected = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
                     //DBManager.isDataLoaded = false;
-                    LoadData(Convert.ToInt32(receivingID));
+                    //LoadData(Convert.ToInt32(receivingID));
                     if (rowsEffected < 1)
                     {
                         MessageBox.Show("Error Occurred.");

@@ -290,8 +290,10 @@ namespace NFFM
                     salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
                     quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
                     rowsEffected = DBManager.ExecuteNonQuery_FreightForwarding("FreightForwardingBOL_AddUpdate", shippingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
+                    string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
+                    dataGridView1.Rows[rowIndex].Cells[11].Value = int.Parse(quantity) * float.Parse(price);
                     //DBManager.isDataLoaded = false;
-                    LoadData(Convert.ToInt32(shippingID));
+                    //LoadData(Convert.ToInt32(shippingID));
                     if (rowsEffected < 1)
                     {
                         MessageBox.Show("Error Occurred.");

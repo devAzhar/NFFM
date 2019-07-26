@@ -50,30 +50,32 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(47, 84);
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(47, 90);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.Size = new System.Drawing.Size(65, 19);
             this.label2.TabIndex = 1;
             this.label2.Text = "Trucker";
             // 
             // txtTrucker
             // 
+            this.txtTrucker.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtTrucker.Location = new System.Drawing.Point(133, 84);
             this.txtTrucker.MinimumSize = new System.Drawing.Size(170, 30);
             this.txtTrucker.Name = "txtTrucker";
-            this.txtTrucker.Size = new System.Drawing.Size(170, 20);
+            this.txtTrucker.Size = new System.Drawing.Size(170, 30);
             this.txtTrucker.TabIndex = 6;
             // 
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.DimGray;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCancel.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(235, 121);
+            this.btnCancel.Location = new System.Drawing.Point(225, 131);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(61, 23);
+            this.btnCancel.Size = new System.Drawing.Size(78, 33);
             this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -84,7 +86,7 @@
             this.lblHeading.AutoSize = true;
             this.lblHeading.Font = new System.Drawing.Font("Century Gothic", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
-            this.lblHeading.Location = new System.Drawing.Point(45, 9);
+            this.lblHeading.Location = new System.Drawing.Point(63, 9);
             this.lblHeading.Name = "lblHeading";
             this.lblHeading.Size = new System.Drawing.Size(229, 25);
             this.lblHeading.TabIndex = 6;
@@ -104,11 +106,11 @@
             // 
             this.btnAdd.BackColor = System.Drawing.Color.SeaGreen;
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAdd.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(145, 121);
+            this.btnAdd.Location = new System.Drawing.Point(138, 131);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(82, 33);
             this.btnAdd.TabIndex = 20;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -116,9 +118,11 @@
             // 
             // Trucker_AddUpdate
             // 
+            this.AcceptButton = this.btnAdd;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(353, 185);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.panel1);
