@@ -13,11 +13,15 @@ namespace NFFM
 {
     public partial class BillOfLading : Form
     {
+        private bool FormInitialized = false;
+
         public BillOfLading()
         {
+            DBManager.NewTruckerId = string.Empty;
+            DBManager.isDataLoaded = false;
+
             InitializeComponent();
             this.Text = "NFFM";
-            DBManager.isDataLoaded = false;
         }
         int initialDataLoaded = 0;
         int isButtonClicked = 0;
@@ -64,6 +68,32 @@ namespace NFFM
             //}
             LoadData(-1);
         }
+
+        private void LoadTruckers(DataTable dtTruckers, string selectedValue = "")
+        {
+            FormInitialized = false;
+            if (dtTruckers.Rows.Count > 0)
+            {
+                items.Clear();
+
+                items.Add("-1", "<<Add New Trucker>>");
+
+                for (int i = 0; i < dtTruckers.Rows.Count; i++)
+                {
+                    items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), dtTruckers.Rows[i]["Trucker"].ToString());
+                }
+                ddlTruckerName.DataSource = new BindingSource(items, null);
+                ddlTruckerName.DisplayMember = "Value";
+                ddlTruckerName.ValueMember = "Key";
+
+                if(!string.IsNullOrEmpty(selectedValue))
+                {
+                    ddlTruckerName.SelectedValue = selectedValue;
+                }
+
+                FormInitialized = true;
+            }
+        }
         public void LoadData(int receivingId)
         {
             String SPName = "BillOfLading_GetAll";
@@ -87,15 +117,23 @@ namespace NFFM
 
             if (ds.Tables.Count > 0)
             {
-                if (dtTruckers.Rows.Count > 0 && items.Count == 0)
+                if (items.Count == 0)
                 {
-                    for (int i = 0; i < dtTruckers.Rows.Count; i++)
-                    {
-                        items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), dtTruckers.Rows[i]["Trucker"].ToString());
-                    }
-                    ddlTruckerName.DataSource = new BindingSource(items, null);
-                    ddlTruckerName.DisplayMember = "Value";
-                    ddlTruckerName.ValueMember = "Key";
+                    LoadTruckers(dtTruckers);
+                    //FormInitialized = false;
+                    //if (dtTruckers.Rows.Count > 0)
+                    //{
+                    //    items.Add("-1", "<<Add New Trucker>>");
+
+                    //    for (int i = 0; i < dtTruckers.Rows.Count; i++)
+                    //    {
+                    //        items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), dtTruckers.Rows[i]["Trucker"].ToString());
+                    //    }
+                    //    ddlTruckerName.DataSource = new BindingSource(items, null);
+                    //    ddlTruckerName.DisplayMember = "Value";
+                    //    ddlTruckerName.ValueMember = "Key";
+                    //    FormInitialized = true;
+                    //}
                 }
                 if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
                 {
@@ -261,6 +299,14 @@ namespace NFFM
         }
         private void Form1_Activated(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(DBManager.NewTruckerId))
+            {
+                var data = DBManager.GetDataTable("Truckers_GetAll");
+                LoadTruckers(data, DBManager.NewTruckerId);
+                DBManager.NewTruckerId = string.Empty;
+                //ddlTruckerName.SelectedValue = DBManager.NewTruckerId;
+                return;
+            }
 
             if (DBManager.isDataLoaded == false)
             {
@@ -358,6 +404,14 @@ namespace NFFM
         private void ddlTruckerName_SelectedIndexChanged(object sender, EventArgs e)
         {
             string truckerId = ((KeyValuePair<string, string>)ddlTruckerName.SelectedItem).Key;
+
+            if (truckerId == "-1" && FormInitialized)
+            {
+                Trucker_AddUpdate add = new Trucker_AddUpdate();
+                add.ShowDialog();
+                return;
+            }
+
             string truckerName = ((KeyValuePair<string, string>)ddlTruckerName.SelectedItem).Value;
             if (currentTruckerId != truckerId && currentTruckerId != "0" && initialDataLoaded == 1 && IsNewRecord == 0)
             {
@@ -366,9 +420,6 @@ namespace NFFM
             else if (currentTruckerId != truckerId && truckerId != "1" && initialDataLoaded == 1 && IsNewRecord == 1)
             {
                 IsNewRecord = 0;
-                //dataGridView1.AllowUserToAddRows = true;
-                //DataTable dt = new DataTable();
-                //dataGridView1.DataSource = dt;
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, truckerId, txtBatchId.Text);
                 LoadData(0);
             }

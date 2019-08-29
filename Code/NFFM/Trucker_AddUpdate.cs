@@ -15,10 +15,12 @@ namespace NFFM
     {
         public Trucker_AddUpdate()
         {
+            DBManager.NewTruckerId = string.Empty;
+
             InitializeComponent();
             this.Text = "NFFM";
         }
-        public int TruckerID = 0; 
+        public int TruckerID = 0;
         private void btnCancel_Click(object sender, EventArgs e)
         {
             //Form1 main = new Form1();
@@ -28,15 +30,25 @@ namespace NFFM
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-            SqlConnection con = new SqlConnection(str);
-            SqlCommand cmd = new SqlCommand("Truckers_AddUpdate", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("TruckerID", TruckerID);
-            cmd.Parameters.Add("Trucker", txtTrucker.Text);
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
+            //String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
+            //SqlConnection con = new SqlConnection(str);
+            //SqlCommand cmd = new SqlCommand("Truckers_AddUpdate", con);
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.Parameters.Add("TruckerID", TruckerID);
+            //cmd.Parameters.Add("Trucker", txtTrucker.Text);
+            //con.Open();
+            //cmd.ExecuteNonQuery();
+            //con.Close();
+            var sql = string.Format("exec Truckers_AddUpdate @TruckerID={0}, @Trucker='{1}'", TruckerID, txtTrucker.Text.Replace("'", "''"));
+
+            using (DataTable dt = DBManager.GetDataTable(sql))
+            {
+                if(TruckerID == 0)
+                {
+                    DBManager.NewTruckerId = dt.Rows[0]["TruckerID"].ToString();
+                }
+            }
+
             DBManager.isDataLoaded = false;
             this.Hide();
         }

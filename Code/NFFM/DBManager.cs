@@ -11,6 +11,8 @@ namespace NFFM
     class DBManager
     {
         public static bool isDataLoaded = false;
+        public static string NewTruckerId = string.Empty;
+
         public static DataTable GetDataTable(string SPName)
         {
             String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
