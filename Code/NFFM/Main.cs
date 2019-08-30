@@ -78,7 +78,8 @@ namespace NFFM
 
         private void btnFFBOLReport_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("In Development Phase");
+            FreightForwardingBOL_Report FFBOLReport = new FreightForwardingBOL_Report();
+            FFBOLReport.ShowDialog();
         }
     }
 }

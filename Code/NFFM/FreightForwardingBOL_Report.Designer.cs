@@ -1,6 +1,6 @@
 ﻿namespace NFFM
 {
-    partial class BillOfLading_Report
+    partial class FreightForwardingBOL_Report
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BillOfLading_Report));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FreightForwardingBOL_Report));
             this.lblHeading = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -40,12 +40,12 @@
             this.rbtCustomerAll = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbtReceivedAll = new System.Windows.Forms.RadioButton();
-            this.ddlReceived = new System.Windows.Forms.ComboBox();
+            this.ddlShipped = new System.Windows.Forms.ComboBox();
             this.rbtReceived = new System.Windows.Forms.RadioButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.ddlBillOfLading = new System.Windows.Forms.ComboBox();
-            this.rbtBillOfLadingAll = new System.Windows.Forms.RadioButton();
-            this.rbtBillOfLading = new System.Windows.Forms.RadioButton();
+            this.ddlFreightForwardingBOL = new System.Windows.Forms.ComboBox();
+            this.rbtFreightForwardingBOLAll = new System.Windows.Forms.RadioButton();
+            this.rbtFreightForwardingBOL = new System.Windows.Forms.RadioButton();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ddlInvoice = new System.Windows.Forms.ComboBox();
@@ -80,9 +80,9 @@
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
             this.lblHeading.Location = new System.Drawing.Point(487, 19);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(419, 25);
+            this.lblHeading.Size = new System.Drawing.Size(507, 25);
             this.lblHeading.TabIndex = 9;
-            this.lblHeading.Text = "Receiving Bill of Lading Summary Report";
+            this.lblHeading.Text = "Freight Forwarding Bill of Lading Summary Report";
             // 
             // label1
             // 
@@ -126,7 +126,7 @@
             this.groupBox5.Size = new System.Drawing.Size(200, 90);
             this.groupBox5.TabIndex = 44;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Co-Op Members";
+            this.groupBox5.Text = "Customers";
             // 
             // ddlCustomer
             // 
@@ -163,7 +163,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.rbtReceivedAll);
-            this.groupBox1.Controls.Add(this.ddlReceived);
+            this.groupBox1.Controls.Add(this.ddlShipped);
             this.groupBox1.Controls.Add(this.rbtReceived);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(132, 46);
@@ -171,7 +171,7 @@
             this.groupBox1.Size = new System.Drawing.Size(200, 91);
             this.groupBox1.TabIndex = 47;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Received Date";
+            this.groupBox1.Text = "Shipped Date";
             // 
             // rbtReceivedAll
             // 
@@ -185,14 +185,14 @@
             this.rbtReceivedAll.UseVisualStyleBackColor = true;
             this.rbtReceivedAll.Click += new System.EventHandler(this.rbtReceivedAll_Click);
             // 
-            // ddlReceived
+            // ddlShipped
             // 
-            this.ddlReceived.FormattingEnabled = true;
-            this.ddlReceived.Location = new System.Drawing.Point(24, 51);
-            this.ddlReceived.Name = "ddlReceived";
-            this.ddlReceived.Size = new System.Drawing.Size(161, 24);
-            this.ddlReceived.TabIndex = 31;
-            this.ddlReceived.SelectedIndexChanged += new System.EventHandler(this.ddlReceived_SelectedIndexChanged);
+            this.ddlShipped.FormattingEnabled = true;
+            this.ddlShipped.Location = new System.Drawing.Point(24, 51);
+            this.ddlShipped.Name = "ddlShipped";
+            this.ddlShipped.Size = new System.Drawing.Size(161, 24);
+            this.ddlShipped.TabIndex = 31;
+            this.ddlShipped.SelectedIndexChanged += new System.EventHandler(this.ddlShipped_SelectedIndexChanged);
             // 
             // rbtReceived
             // 
@@ -207,9 +207,9 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.ddlBillOfLading);
-            this.groupBox4.Controls.Add(this.rbtBillOfLadingAll);
-            this.groupBox4.Controls.Add(this.rbtBillOfLading);
+            this.groupBox4.Controls.Add(this.ddlFreightForwardingBOL);
+            this.groupBox4.Controls.Add(this.rbtFreightForwardingBOLAll);
+            this.groupBox4.Controls.Add(this.rbtFreightForwardingBOL);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(779, 47);
             this.groupBox4.Name = "groupBox4";
@@ -218,37 +218,37 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Bills of Lading";
             // 
-            // ddlBillOfLading
+            // ddlFreightForwardingBOL
             // 
-            this.ddlBillOfLading.FormattingEnabled = true;
-            this.ddlBillOfLading.Location = new System.Drawing.Point(35, 50);
-            this.ddlBillOfLading.Name = "ddlBillOfLading";
-            this.ddlBillOfLading.Size = new System.Drawing.Size(159, 24);
-            this.ddlBillOfLading.TabIndex = 34;
-            this.ddlBillOfLading.SelectedIndexChanged += new System.EventHandler(this.ddlBillOfLading_SelectedIndexChanged);
+            this.ddlFreightForwardingBOL.FormattingEnabled = true;
+            this.ddlFreightForwardingBOL.Location = new System.Drawing.Point(35, 50);
+            this.ddlFreightForwardingBOL.Name = "ddlFreightForwardingBOL";
+            this.ddlFreightForwardingBOL.Size = new System.Drawing.Size(159, 24);
+            this.ddlFreightForwardingBOL.TabIndex = 34;
+            this.ddlFreightForwardingBOL.SelectedIndexChanged += new System.EventHandler(this.ddlFreightForwardingBOL_SelectedIndexChanged);
             // 
-            // rbtBillOfLadingAll
+            // rbtFreightForwardingBOLAll
             // 
-            this.rbtBillOfLadingAll.AutoSize = true;
-            this.rbtBillOfLadingAll.Location = new System.Drawing.Point(17, 29);
-            this.rbtBillOfLadingAll.Name = "rbtBillOfLadingAll";
-            this.rbtBillOfLadingAll.Size = new System.Drawing.Size(41, 20);
-            this.rbtBillOfLadingAll.TabIndex = 39;
-            this.rbtBillOfLadingAll.TabStop = true;
-            this.rbtBillOfLadingAll.Text = "All";
-            this.rbtBillOfLadingAll.UseVisualStyleBackColor = true;
-            this.rbtBillOfLadingAll.Click += new System.EventHandler(this.rbtBillOfLadingAll_Click);
+            this.rbtFreightForwardingBOLAll.AutoSize = true;
+            this.rbtFreightForwardingBOLAll.Location = new System.Drawing.Point(17, 29);
+            this.rbtFreightForwardingBOLAll.Name = "rbtFreightForwardingBOLAll";
+            this.rbtFreightForwardingBOLAll.Size = new System.Drawing.Size(41, 20);
+            this.rbtFreightForwardingBOLAll.TabIndex = 39;
+            this.rbtFreightForwardingBOLAll.TabStop = true;
+            this.rbtFreightForwardingBOLAll.Text = "All";
+            this.rbtFreightForwardingBOLAll.UseVisualStyleBackColor = true;
+            this.rbtFreightForwardingBOLAll.Click += new System.EventHandler(this.rbtFreightForwardingBOLAll_Click);
             // 
-            // rbtBillOfLading
+            // rbtFreightForwardingBOL
             // 
-            this.rbtBillOfLading.AutoSize = true;
-            this.rbtBillOfLading.Location = new System.Drawing.Point(17, 53);
-            this.rbtBillOfLading.Name = "rbtBillOfLading";
-            this.rbtBillOfLading.Size = new System.Drawing.Size(14, 13);
-            this.rbtBillOfLading.TabIndex = 45;
-            this.rbtBillOfLading.TabStop = true;
-            this.rbtBillOfLading.UseVisualStyleBackColor = true;
-            this.rbtBillOfLading.Click += new System.EventHandler(this.rbtBillOfLading_Click);
+            this.rbtFreightForwardingBOL.AutoSize = true;
+            this.rbtFreightForwardingBOL.Location = new System.Drawing.Point(17, 53);
+            this.rbtFreightForwardingBOL.Name = "rbtFreightForwardingBOL";
+            this.rbtFreightForwardingBOL.Size = new System.Drawing.Size(14, 13);
+            this.rbtFreightForwardingBOL.TabIndex = 45;
+            this.rbtFreightForwardingBOL.TabStop = true;
+            this.rbtFreightForwardingBOL.UseVisualStyleBackColor = true;
+            this.rbtFreightForwardingBOL.Click += new System.EventHandler(this.rbtFreightForwardingBOL_Click);
             // 
             // label7
             // 
@@ -395,23 +395,23 @@
             // 
             // dataGridView1
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeight = 35;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Location = new System.Drawing.Point(29, 164);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
@@ -453,7 +453,7 @@
             // 
             this.BOL_Print.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.BOL_Print_PrintPage);
             // 
-            // BillOfLading_Report
+            // FreightForwardingBOL_Report
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -463,8 +463,8 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
-            this.Name = "BillOfLading_Report";
-            this.Text = "BillOfLading_Report";
+            this.Name = "FreightForwardingBOL_Report";
+            this.Text = "FreightForwardingBOL_Report";
             this.Activated += new System.EventHandler(this.Form1_Activated);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -498,16 +498,16 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox ddlCustomer;
-        private System.Windows.Forms.ComboBox ddlBillOfLading;
+        private System.Windows.Forms.ComboBox ddlFreightForwardingBOL;
         private System.Windows.Forms.ComboBox ddlInvoice;
         private System.Windows.Forms.ComboBox ddlBatch;
-        private System.Windows.Forms.ComboBox ddlReceived;
+        private System.Windows.Forms.ComboBox ddlShipped;
         private System.Windows.Forms.RadioButton rbtCustomerAll;
-        private System.Windows.Forms.RadioButton rbtBillOfLadingAll;
+        private System.Windows.Forms.RadioButton rbtFreightForwardingBOLAll;
         private System.Windows.Forms.RadioButton rbtInvoiceAll;
         private System.Windows.Forms.RadioButton rbtBatchAll;
         private System.Windows.Forms.RadioButton rbtCustomer;
-        private System.Windows.Forms.RadioButton rbtBillOfLading;
+        private System.Windows.Forms.RadioButton rbtFreightForwardingBOL;
         private System.Windows.Forms.RadioButton rbtInvoice;
         private System.Windows.Forms.RadioButton rbtBatch;
         private System.Windows.Forms.RadioButton rbtReceived;

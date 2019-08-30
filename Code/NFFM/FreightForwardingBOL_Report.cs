@@ -11,17 +11,17 @@ using System.Windows.Forms;
 
 namespace NFFM
 {
-    public partial class BillOfLading_Report : Form
+    public partial class FreightForwardingBOL_Report : Form
     {
-        public BillOfLading_Report()
+        public FreightForwardingBOL_Report()
         {
             InitializeComponent();
             this.Text = "NFFM";
             DBManager.isDataLoaded = false;
 
             rbtReceivedAll.Checked = true;
-            ddlReceived.Text = "";
-            ddlReceived.Enabled = false;
+            ddlShipped.Text = "";
+            ddlShipped.Enabled = false;
 
             rbtBatchAll.Checked = true;
             ddlBatch.Text = "";
@@ -31,9 +31,9 @@ namespace NFFM
             ddlInvoice.Text = "";
             ddlInvoice.Enabled = false;
 
-            rbtBillOfLadingAll.Checked = true;
-            ddlBillOfLading.Text = "";
-            ddlBillOfLading.Enabled = false;
+            rbtFreightForwardingBOLAll.Checked = true;
+            ddlFreightForwardingBOL.Text = "";
+            ddlFreightForwardingBOL.Enabled = false;
 
             rbtCustomerAll.Checked = true;
             ddlCustomer.Text = "";
@@ -41,23 +41,23 @@ namespace NFFM
         }
         int initialDataLoaded = 0;
         int isButtonClicked = 0;
-        string currentReceivingId = "0";
-        string selectedReceivedDate = "0";
+        string currentshippingId = "0";
+        string selectedshippedDate = "0";
         string selectedBatch = "0";
-        string selectedBillOfLading = "0";
+        string selectedFreightForwardingBOL = "0";
         string selectedCustomerName = "0"; 
-        int previousReceivingId = 0;
-        int firstReceivingId = 0;
-        int nextReceivingId = 0;
-        int lastReceivingId = 0;
+        int previousshippingId = 0;
+        int firstshippingId = 0;
+        int nextshippingId = 0;
+        int lastshippingId = 0;
         int IsNewRecord = 0;
         int lineItemId;
         DataGridViewRow row;
         Dictionary<string, string> ddlCustomers = new Dictionary<string, string>();
-        //Dictionary<string, string> ddlReceivedDate = new Dictionary<string, string>();
-        Dictionary<string, string> ReceivedDateItems = new Dictionary<string, string>();
+        //Dictionary<string, string> ddlshippedDate = new Dictionary<string, string>();
+        Dictionary<string, string> shippedDateItems = new Dictionary<string, string>();
         Dictionary<string, string> BatchItems = new Dictionary<string, string>();
-        Dictionary<string, string> BillOfLadingItems = new Dictionary<string, string>();
+        Dictionary<string, string> FreightForwardingBOLItems = new Dictionary<string, string>();
         Dictionary<string, string> CustomersItems = new Dictionary<string, string>();
         DataTable dtCustomers;
         DataTable dtReceived;
@@ -66,21 +66,21 @@ namespace NFFM
         bool IsReceivedChecked = true;
         bool IsBatchChecked = true;
         bool IsInvoiceChecked = true;
-        bool IsBillOfLadingChecked = true;
+        bool IsFreightForwardingBOLChecked = true;
         bool IsCustomerChecked = true;
 
         
-        public void LoadData(string receivedDate, string batchId, string invoideNumbers, string billOfLadingNumber, string customerName)
+        public void LoadData(string shippedDate, string batchId, string invoideNumbers, string BillOfLadingNumber, string customerName)
         {
-            String SPName = "BillOfLading_Report_GetAll";
+            String SPName = "FreightForwardingBOL_Report_GetAll";
             //ddlCustomers.Clear();
-            //ddlReceivedDate.Clear();
+            //ddlshippedDate.Clear();
             //ddlBatch1.Clear();
             SqlCommand cmd = new SqlCommand();
             //cmd.CommandText = SPName;
-            //cmd.Parameters.Add("receivingId", receivingId);
+            //cmd.Parameters.Add("shippingId", shippingId);
             //cmd.CommandType = CommandType.StoredProcedure;
-            DataSet ds = DBManager.GetDataSet_Report(SPName, receivedDate, batchId, invoideNumbers, billOfLadingNumber, customerName);
+            DataSet ds = DBManager.GetDataSet_FreightForwardingReport(SPName, shippedDate, batchId, invoideNumbers, BillOfLadingNumber, customerName);
             // DataSet ds = DBManager.GetDataSet(SPName, cmd);
 
             
@@ -88,24 +88,24 @@ namespace NFFM
             DataTable dtLineItems = ds.Tables[0];
             dtReceived = ds.Tables[1];
             dtBatch = ds.Tables[2];
-            DataTable dtBillOfLading = ds.Tables[3];
+            DataTable dtFreightForwardingBOL = ds.Tables[3];
             dtCustomers = ds.Tables[4];
             // dtReceived = ds.Tables[4];
             // dtBatch = ds.Tables[5];
-            //selectedReceivedDate = "0";
+            //selectedshippedDate = "0";
             //datePickerReceived.Value = new DateTime(1900, 01, 01);
             //datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
-            if (selectedReceivedDate == "0")
+            if (selectedshippedDate == "0")
             {
-                selectedReceivedDate = DateTime.Parse(dtReceived.Rows[0]["ReceivedDate"].ToString()).ToShortDateString();
+                selectedshippedDate = DateTime.Parse(dtReceived.Rows[0]["shippedDate"].ToString()).ToShortDateString();
             }
             if (selectedBatch == "0")
             {
                 selectedBatch = dtBatch.Rows[0]["BatchID"].ToString();
             }
-            if (selectedBillOfLading == "0")
+            if (selectedFreightForwardingBOL == "0")
             {
-                selectedBillOfLading = dtBillOfLading.Rows[0]["BillOfLadingNumber"].ToString();
+                selectedFreightForwardingBOL = dtFreightForwardingBOL.Rows[0]["BillOfLadingNumber"].ToString();
             }
             if (selectedCustomerName == "0")
             {
@@ -113,15 +113,15 @@ namespace NFFM
             }
             if (ds.Tables.Count > 0)
             {
-                if (dtReceived.Rows.Count > 0 && ReceivedDateItems.Count == 0)
+                if (dtReceived.Rows.Count > 0 && shippedDateItems.Count == 0)
                 {
                     for (int i = 0; i < dtReceived.Rows.Count; i++)
                     {
-                        ReceivedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString());
+                        shippedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["shippedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["shippedDate"].ToString()).ToShortDateString());
                     }
-                    ddlReceived.DataSource = new BindingSource(ReceivedDateItems, null);
-                    ddlReceived.DisplayMember = "Value";
-                    ddlReceived.ValueMember = "Key";
+                    ddlShipped.DataSource = new BindingSource(shippedDateItems, null);
+                    ddlShipped.DisplayMember = "Value";
+                    ddlShipped.ValueMember = "Key";
                 }
                
                 if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
@@ -134,15 +134,15 @@ namespace NFFM
                     ddlBatch.DisplayMember = "Value";
                     ddlBatch.ValueMember = "Key";
                 }
-                if (dtBillOfLading.Rows.Count > 0 && BillOfLadingItems.Count == 0)
+                if (dtFreightForwardingBOL.Rows.Count > 0 && FreightForwardingBOLItems.Count == 0)
                 {
-                    for (int i = 0; i < dtBillOfLading.Rows.Count; i++)
+                    for (int i = 0; i < dtFreightForwardingBOL.Rows.Count; i++)
                     {
-                        BillOfLadingItems.Add(dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString(), dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString());
+                        FreightForwardingBOLItems.Add(dtFreightForwardingBOL.Rows[i]["BillOfLadingNumber"].ToString(), dtFreightForwardingBOL.Rows[i]["BillOfLadingNumber"].ToString());
                     }
-                    ddlBillOfLading.DataSource = new BindingSource(BillOfLadingItems, null);
-                    ddlBillOfLading.DisplayMember = "Value";
-                    ddlBillOfLading.ValueMember = "Key";
+                    ddlFreightForwardingBOL.DataSource = new BindingSource(FreightForwardingBOLItems, null);
+                    ddlFreightForwardingBOL.DisplayMember = "Value";
+                    ddlFreightForwardingBOL.ValueMember = "Key";
                 }
                 if (dtCustomers.Rows.Count > 0 && CustomersItems.Count == 0)
                 {
@@ -174,25 +174,25 @@ namespace NFFM
                 }
             }
         }
-        private void ddlReceived_SelectedIndexChanged(object sender, EventArgs e)
+        private void ddlShipped_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string receivedDateId = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Key;
-            string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
+            string shippedDateId = ((KeyValuePair<string, string>)ddlShipped.SelectedItem).Key;
+            string shippedDate = ((KeyValuePair<string, string>)ddlShipped.SelectedItem).Value;
           
-            if (selectedReceivedDate != receivedDate && selectedReceivedDate != "0" && initialDataLoaded == 1)
+            if (selectedshippedDate != shippedDate && selectedshippedDate != "0" && initialDataLoaded == 1)
             {
                 string batchId = selectedBatch;
                 if (rbtBatchAll.Checked)
                 {
                     batchId = "";
                 }
-                string BOL = selectedBillOfLading;
-                if (rbtBillOfLadingAll.Checked)
+                string BOL = selectedFreightForwardingBOL;
+                if (rbtFreightForwardingBOLAll.Checked)
                 {
                     BOL = "";
                 }
-                selectedReceivedDate = receivedDate;
-                LoadData(receivedDate, batchId, "", BOL, "");
+                selectedshippedDate = shippedDate;
+                LoadData(shippedDate, batchId, "", BOL, "");
             }
         }
         private void ddlBatch_SelectedIndexChanged(object sender, EventArgs e)
@@ -201,40 +201,40 @@ namespace NFFM
             string batch = ((KeyValuePair<string, string>)ddlBatch.SelectedItem).Value;
             if (selectedBatch != batchId && selectedBatch != "0" && initialDataLoaded == 1)
             {
-                string recDate = selectedReceivedDate;
+                string shipDate = selectedshippedDate;
                 if (rbtReceivedAll.Checked)
                 {
-                    recDate = "";
+                    shipDate = "";
                 }
-                string BOL = selectedBillOfLading;
-                if (rbtBillOfLadingAll.Checked)
+                string BOL = selectedFreightForwardingBOL;
+                if (rbtFreightForwardingBOLAll.Checked)
                 {
                     BOL = "";
                 }
                 selectedBatch = batchId;
-                LoadData(recDate, selectedBatch, "", BOL, "");
+                LoadData(shipDate, selectedBatch, "", BOL, "");
                 
             }
         }
-        private void ddlBillOfLading_SelectedIndexChanged(object sender, EventArgs e)
+        private void ddlFreightForwardingBOL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string BillOfLadingId = ((KeyValuePair<string, string>)ddlBillOfLading.SelectedItem).Key;
-            string BillOfLading = ((KeyValuePair<string, string>)ddlBillOfLading.SelectedItem).Value;
+            string FreightForwardingBOLId = ((KeyValuePair<string, string>)ddlFreightForwardingBOL.SelectedItem).Key;
+            string FreightForwardingBOL = ((KeyValuePair<string, string>)ddlFreightForwardingBOL.SelectedItem).Value;
 
-            if (selectedBillOfLading != BillOfLading && selectedBillOfLading != "0" && initialDataLoaded == 1)
+            if (selectedFreightForwardingBOL != FreightForwardingBOL && selectedFreightForwardingBOL != "0" && initialDataLoaded == 1)
             {
-                string recDate = selectedReceivedDate;
+                string shipDate = selectedshippedDate;
                 if (rbtReceivedAll.Checked)
                 {
-                    recDate = "";
+                    shipDate = "";
                 }
                 string batchId = selectedBatch;
                 if (rbtBatchAll.Checked)
                 {
                     batchId = "";
                 }
-                selectedBillOfLading = BillOfLading;
-                LoadData(recDate, batchId, "", selectedBillOfLading, "");
+                selectedFreightForwardingBOL = FreightForwardingBOL;
+                LoadData(shipDate, batchId, "", selectedFreightForwardingBOL, "");
                 
             }
         }
@@ -245,23 +245,23 @@ namespace NFFM
 
             if (selectedCustomerName.Trim() != Customer.Trim() && selectedCustomerName.Trim() != "0" && initialDataLoaded == 1)
             {
-                string recDate = selectedReceivedDate;
+                string shipDate = selectedshippedDate;
                 if (rbtReceivedAll.Checked)
                 {
-                    recDate = "";
+                    shipDate = "";
                 }
                 string batchId = selectedBatch;
                 if (rbtBatchAll.Checked)
                 {
                     batchId = "";
                 }
-                string BOL = selectedBillOfLading;
-                if (rbtBillOfLadingAll.Checked)
+                string BOL = selectedFreightForwardingBOL;
+                if (rbtFreightForwardingBOLAll.Checked)
                 {
                     BOL = "";
                 }
                 selectedCustomerName = Customer;
-                LoadData(recDate, batchId, "", BOL, selectedCustomerName);
+                LoadData(shipDate, batchId, "", BOL, selectedCustomerName);
             }
         }
         public void BindLineItems(DataTable dtLineItems)
@@ -280,19 +280,19 @@ namespace NFFM
 
             dataGridView1.DataSource = dtLineItems;
 
-            dataGridView1.Columns["ReceivedDate"].HeaderText = "Received Date";
-            dataGridView1.Columns["ReceivedDate"].Width = 135;
+            dataGridView1.Columns["shippedDate"].HeaderText = "Shipped Date";
+            dataGridView1.Columns["shippedDate"].Width = 135;
             dataGridView1.Columns["BatchID"].HeaderText = "Batch ID";
             //dataGridView1.Columns["BatchID"].Width = 110;
 
-            dataGridView1.Columns["receivingId"].Visible = false;
+            dataGridView1.Columns["shippingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
             dataGridView1.Columns["BillOfLadingNumber"].Width = 133;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
             //dataGridView1.Columns["InvoiceNumber"].Width = 120;
             dataGridView1.Columns["InvoiceNumber"].HeaderText = "Invoice #";
             dataGridView1.Columns["CustomerName"].Width = 199;
-            dataGridView1.Columns["CustomerName"].HeaderText = "Co-Op Member";
+            dataGridView1.Columns["CustomerName"].HeaderText = "Customer";
             dataGridView1.Columns["SalesCode"].Width = 77;
             dataGridView1.Columns["SalesCode"].HeaderText = "Sales Code";
             dataGridView1.Columns["UnitOfMeasure"].HeaderText = "Unit of Measure";
@@ -330,7 +330,7 @@ namespace NFFM
             dataGridView1.Columns["Shipper"].ReadOnly = true;
             dataGridView1.Columns["SalesCode"].ReadOnly = true;
             dataGridView1.Columns["Qty"].ReadOnly = true;
-            dataGridView1.Columns["ReceivedDate"].ReadOnly = true;
+            dataGridView1.Columns["shippedDate"].ReadOnly = true;
             dataGridView1.Columns["BatchID"].ReadOnly = true;
             dataGridView1.Columns["InvoiceNumber"].ReadOnly = true;
             dataGridView1.Columns["Description"].ReadOnly = true;
@@ -364,37 +364,37 @@ namespace NFFM
         {
             rbtReceivedAll.Checked = false;
             rbtReceived.Checked = true;
-            //ddlReceived.Text = "";
-            ddlReceived.Enabled = true;
+            //ddlShipped.Text = "";
+            ddlShipped.Enabled = true;
         }
         private void rbtBatch_Click(object sender, EventArgs e)
         {
             rbtBatchAll.Checked = false;
             rbtBatch.Checked = true;
-            //ddlReceived.Text = "";
+            //ddlShipped.Text = "";
             ddlBatch.Enabled = true;
         }
-        private void rbtBillOfLading_Click(object sender, EventArgs e)
+        private void rbtFreightForwardingBOL_Click(object sender, EventArgs e)
         {
-            rbtBillOfLadingAll.Checked = false;
-            rbtBillOfLading.Checked = true;
-            //ddlReceived.Text = "";
-            ddlBillOfLading.Enabled = true;
+            rbtFreightForwardingBOLAll.Checked = false;
+            rbtFreightForwardingBOL.Checked = true;
+            //ddlShipped.Text = "";
+            ddlFreightForwardingBOL.Enabled = true;
             
         }
         private void rbtCustomer_Click(object sender, EventArgs e)
         {
             rbtCustomerAll.Checked = false;
             rbtCustomer.Checked = true;
-            //ddlReceived.Text = "";
+            //ddlShipped.Text = "";
             ddlCustomer.Enabled = true;
         }
         private void rbtReceivedAll_Click(object sender, EventArgs e)
         {
             rbtReceivedAll.Checked = true;
             rbtReceived.Checked = false;
-            //ddlReceived.Text = "";
-            ddlReceived.Enabled = false;
+            //ddlShipped.Text = "";
+            ddlShipped.Enabled = false;
             string batchId = selectedBatch;
             if (rbtBatchAll.Checked)
             {
@@ -407,57 +407,57 @@ namespace NFFM
         {
             rbtBatchAll.Checked = true;
             rbtBatch.Checked = false;
-            //ddlReceived.Text = "";
+            //ddlShipped.Text = "";
             ddlBatch.Enabled = false;
-            string recDate = selectedReceivedDate;
+            string shipDate = selectedshippedDate;
             if (rbtReceivedAll.Checked)
             {
-                recDate = "";
+                shipDate = "";
             }
-            LoadData(recDate, "", "", "", "");
+            LoadData(shipDate, "", "", "", "");
             
         }
-        private void rbtBillOfLadingAll_Click(object sender, EventArgs e)
+        private void rbtFreightForwardingBOLAll_Click(object sender, EventArgs e)
         {
-            rbtBillOfLadingAll.Checked = true;
-            rbtBillOfLading.Checked = false;
-            //ddlReceived.Text = "";
-            ddlBillOfLading.Enabled = false;
-            string recDate = selectedReceivedDate;
+            rbtFreightForwardingBOLAll.Checked = true;
+            rbtFreightForwardingBOL.Checked = false;
+            //ddlShipped.Text = "";
+            ddlFreightForwardingBOL.Enabled = false;
+            string shipDate = selectedshippedDate;
             if (rbtReceivedAll.Checked)
             {
-                recDate = "";
+                shipDate = "";
             }
             string batchId = selectedBatch;
             if (rbtBatchAll.Checked)
             {
                 batchId = "";
             }
-            LoadData(recDate, batchId, "", "", "");
+            LoadData(shipDate, batchId, "", "", "");
             
         }
         private void rbtCustomerAll_Click(object sender, EventArgs e)
         {
             rbtCustomerAll.Checked = true;
             rbtCustomer.Checked = false;
-            //ddlReceived.Text = "";
+            //ddlShipped.Text = "";
             ddlCustomer.Enabled = false;
-            string recDate = selectedReceivedDate;
+            string shipDate = selectedshippedDate;
             if (rbtReceivedAll.Checked)
             {
-                recDate = "";
+                shipDate = "";
             }
             string batchId = selectedBatch;
             if (rbtBatchAll.Checked)
             {
                 batchId = "";
             }
-            string BOL = selectedBillOfLading;
-            if (rbtBillOfLadingAll.Checked)
+            string BOL = selectedFreightForwardingBOL;
+            if (rbtFreightForwardingBOLAll.Checked)
             {
                 BOL = "";
             }
-            LoadData(recDate, batchId, "", BOL, "");
+            LoadData(shipDate, batchId, "", BOL, "");
         }
         Bitmap bitmap;
         private void btnCreateReport_Click(object sender, EventArgs e)
@@ -509,6 +509,11 @@ namespace NFFM
         {
             e.Graphics.DrawImage(bitmap, 0, 0);
         }
+
+        //private void ddlShipped_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
         //private void dataGridView1_Paint(object sender, PaintEventArgs e)
         //{
 
