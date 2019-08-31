@@ -49,24 +49,15 @@ namespace NFFM
         public void LoadData(int shippingId)
         {
             String SPName = "FreightForwardingBOL_GetAll";
-            //ddlCustomers.Clear();
-            //ddlShippers.Clear();
-            //ddlSalesCode.Clear();
             SqlCommand cmd = new SqlCommand();
-            //cmd.CommandText = SPName;
-            cmd.Parameters.Add("shippingId", shippingId);
-            //cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("shippingId", shippingId);
             DataSet ds = DBManager.GetDataSet_FreightForwarding(SPName, shippingId);
-            // DataSet ds = DBManager.GetDataSet(SPName, cmd);
             DataTable dtTruckers = ds.Tables[0];
             DataTable dtLineItems = ds.Tables[2];
             dtCustomers = ds.Tables[3];
             dtShippers = ds.Tables[4];
             dtSalesCode = ds.Tables[5];
             currentTruckerId = "0";
-            //datePickerReceived.Value = new DateTime(1900, 01, 01);
-            //datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
-
 
             if (ds.Tables.Count > 0)
             {
@@ -86,9 +77,6 @@ namespace NFFM
                     {
                         ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
                     }
-                    //ddlTruckerName.DataSource = new BindingSource(items, null);
-                    //ddlTruckerName.DisplayMember = "Value";
-                    //ddlTruckerName.ValueMember = "Key";
                 }
                 if (dtShippers.Rows.Count > 0 && ddlShippers.Count == 0)
                 {

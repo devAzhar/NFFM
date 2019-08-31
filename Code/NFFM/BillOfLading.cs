@@ -354,7 +354,12 @@ namespace NFFM
                     salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
                     quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
                     string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
-                    dataGridView1.Rows[rowIndex].Cells[11].Value = int.Parse(quantity) * float.Parse(price);
+                    float fPrice = 0f;
+                    float.TryParse(price, out fPrice);
+                    var iQuantity = 0;
+                    int.TryParse(quantity, out iQuantity);
+
+                    dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
                     rowsEffected = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
                     //DBManager.isDataLoaded = false;
                     //LoadData(Convert.ToInt32(receivingID));
@@ -456,7 +461,7 @@ namespace NFFM
                 SqlConnection con = new SqlConnection(str);
                 SqlCommand cmd = new SqlCommand("BillOfLading_Delete", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("ReceivingId", currentReceivingId);
+                cmd.Parameters.AddWithValue("ReceivingId", currentReceivingId);
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -469,7 +474,105 @@ namespace NFFM
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 0)
+            HandleCellEvent(sender, e, true);
+        }
+
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+        }
+
+        private void datePickerReceived_ValueChanged(object sender, EventArgs e)
+        {
+            if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Sunday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(5);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Monday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(4);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Tuesday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(3);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Wednesday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(2);
+            }
+            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Thursday)
+            {
+                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(1);
+            }
+        }
+
+        private void dataGridView1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+            {
+                return;
+            }
+
+            e.SuppressKeyPress = true;
+            int iColumn = dataGridView1.CurrentCell.ColumnIndex;
+            int iRow = dataGridView1.CurrentCell.RowIndex;
+
+            if (iColumn == dataGridView1.ColumnCount - 1)
+            {
+                if (dataGridView1.RowCount > (iRow + 1))
+                {
+                    var index = 1;
+
+                    var cell = dataGridView1[index, iRow + 1];
+
+                    while(!cell.Visible)
+                    {
+                        index++;
+                        cell = dataGridView1[index, iRow + 1];
+                    }
+
+                    if (cell != null && cell.Visible)
+                    {
+                        dataGridView1.CurrentCell = cell;
+                    }
+                }
+                else
+                {
+                }
+            }
+            else
+            {
+                var cell = dataGridView1[iColumn + 1, iRow];
+
+                if (!cell.Visible)
+                {
+                    cell = dataGridView1[iColumn + 2, iRow];
+                }
+
+                if (cell.Visible)
+                {
+                    dataGridView1.CurrentCell = cell;
+                }
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            HandleCellEvent(sender, e);
+        }
+
+        private void HandleCellEvent(object sender, DataGridViewCellEventArgs e, bool isClick = false)
+        {
+            if (e.ColumnIndex == 0 && isClick)
             {
                 string lineItemIdToDelete = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
                 if (lineItemIdToDelete != "")
@@ -480,7 +583,7 @@ namespace NFFM
                         SqlConnection con = new SqlConnection(str);
                         SqlCommand cmd = new SqlCommand("LineItem_Delete", con);
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
+                        cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
@@ -526,35 +629,6 @@ namespace NFFM
                     l_objGridDropbox.ValueMember = "Sales Code";
                     l_objGridDropbox.DisplayMember = "Sales Code";
                 }
-            }
-        }
-
-        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            e.ThrowException = false;
-        }
-
-        private void datePickerReceived_ValueChanged(object sender, EventArgs e)
-        {
-            if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Sunday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(5);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Monday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(4);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Tuesday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(3);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Wednesday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(2);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Thursday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(1);
             }
         }
 
