@@ -348,7 +348,6 @@ namespace NFFM
                     lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
                     billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
                     customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
-                    //ddlCustomers.TryGetValue(customerName, out customerName);
 
                     shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
                     salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
@@ -361,16 +360,13 @@ namespace NFFM
 
                     dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
                     rowsEffected = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
-                    //DBManager.isDataLoaded = false;
-                    //LoadData(Convert.ToInt32(receivingID));
+
+                    dataGridView1.Rows[rowIndex].Cells[2].Value = rowsEffected;
+
                     if (rowsEffected < 1)
                     {
                         MessageBox.Show("Error Occurred.");
                     }
-                    //else
-                    //{
-                    //    MessageBox.Show("Row is updated successfully.");
-                    //}
                 }
             }
 
@@ -570,8 +566,18 @@ namespace NFFM
             HandleCellEvent(sender, e);
         }
 
+        private bool HandleCellEventFlag = false;
+
         private void HandleCellEvent(object sender, DataGridViewCellEventArgs e, bool isClick = false)
         {
+
+            if (this.HandleCellEventFlag)
+            {
+                return;
+            }
+
+            this.HandleCellEventFlag = true;
+
             if (e.ColumnIndex == 0 && isClick)
             {
                 string lineItemIdToDelete = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
@@ -587,13 +593,19 @@ namespace NFFM
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
-                        //DBManager.isDataLoaded = false;
                         MessageBox.Show("Line item is deleted successfully.");
                         isButtonClicked = 1;
                         LoadData(nextReceivingId);
                     }
                 }
             }
+
+            if (isClick)
+            {
+                this.HandleCellEventFlag = false;
+                return;
+            }
+
             if (e.ColumnIndex > -1 && e.RowIndex > -1)
             {
                 // Bind grid cell with combobox and than bind combobox with datasource.  
@@ -604,15 +616,10 @@ namespace NFFM
                 {
                     // On click of datagridview cell, attched combobox with this click cell of datagridview  
                     dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                    //l_objGridDropbox.DataSource = dtCustomers; // Bind combobox with datasource.  
 
                     l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
                     l_objGridDropbox.DisplayMember = "Name";
                     l_objGridDropbox.ValueMember = "Name";
-
-                    //l_objGridDropbox.ValueMember = "Name";
-                    //l_objGridDropbox.DisplayMember = "Name";
-
                 }
 
                 if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
@@ -630,21 +637,8 @@ namespace NFFM
                     l_objGridDropbox.DisplayMember = "Sales Code";
                 }
             }
+
+            this.HandleCellEventFlag = false;
         }
-
-        //private void dataGridView1_Paint(object sender, PaintEventArgs e)
-        //{
-
-        //    //DataGridView datagridview1 = (DataGridView)sender;
-
-        //    //if (datagridview1.Rows.Count == 1)
-        //    //{
-        //    //    using (Graphics g = e.Graphics)
-        //    //    {
-        //    //        g.FillRectangle(Brushes.Yellow, new Rectangle(new Point(), new Size(datagridview1.Width, 25)));
-        //    //        g.DrawString("Select a Trucker Name to continue.", new Font("Arial", 12), Brushes.Red, new PointF(3, 3));
-        //    //    }
-        //    //}
-        //}
     }
 }

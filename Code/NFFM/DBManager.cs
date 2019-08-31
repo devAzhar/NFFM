@@ -16,14 +16,21 @@ namespace NFFM
         public static DataTable GetDataTable(string SPName)
         {
             String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-            SqlConnection con = new SqlConnection(str);
-            SqlCommand cmd = new SqlCommand(SPName, con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Open();
-            da.Fill(dt);
-            con.Close();
-            return dt;
+
+            using (SqlConnection con = new SqlConnection(str))
+            {
+                using (SqlCommand cmd = new SqlCommand(SPName, con))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        con.Open();
+                        da.Fill(dt);
+                        con.Close();
+                        return dt;
+                    }
+                }
+            }
         }
         public static DataSet GetDataSet(string SPName)
         {
@@ -47,7 +54,7 @@ namespace NFFM
             SqlConnection conn = new SqlConnection(str);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
-            cmd.Parameters.Add("receivingId", receivingId);
+            cmd.Parameters.AddWithValue("receivingId", receivingId);
             cmd.CommandText = SPName;
             cmd.CommandType = CommandType.StoredProcedure;
             da.SelectCommand = cmd;
@@ -64,10 +71,10 @@ namespace NFFM
             SqlConnection conn = new SqlConnection(str);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
-            cmd.Parameters.Add("receivedDate", receivedDate);
-            cmd.Parameters.Add("batchId", batchId);
-            cmd.Parameters.Add("billOfLadingNumber", billOfLadingNumber);
-            cmd.Parameters.Add("customerName", customerName);
+            cmd.Parameters.AddWithValue("receivedDate", receivedDate);
+            cmd.Parameters.AddWithValue("batchId", batchId);
+            cmd.Parameters.AddWithValue("billOfLadingNumber", billOfLadingNumber);
+            cmd.Parameters.AddWithValue("customerName", customerName);
             cmd.CommandText = SPName;
             cmd.CommandType = CommandType.StoredProcedure;
             da.SelectCommand = cmd;
@@ -84,7 +91,7 @@ namespace NFFM
             SqlConnection conn = new SqlConnection(str);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
-            cmd.Parameters.Add("shippingId", shippingId);
+            cmd.Parameters.AddWithValue("shippingId", shippingId);
             cmd.CommandText = SPName;
             cmd.CommandType = CommandType.StoredProcedure;
             da.SelectCommand = cmd;
@@ -101,10 +108,10 @@ namespace NFFM
             SqlConnection conn = new SqlConnection(str);
             SqlDataAdapter da = new SqlDataAdapter();
             SqlCommand cmd = conn.CreateCommand();
-            cmd.Parameters.Add("shippedDate", shippedDate);
-            cmd.Parameters.Add("batchId", batchId);
-            cmd.Parameters.Add("billOfLadingNumber", billOfLadingNumber);
-            cmd.Parameters.Add("customerName", customerName);
+            cmd.Parameters.AddWithValue("shippedDate", shippedDate);
+            cmd.Parameters.AddWithValue("batchId", batchId);
+            cmd.Parameters.AddWithValue("billOfLadingNumber", billOfLadingNumber);
+            cmd.Parameters.AddWithValue("customerName", customerName);
             cmd.CommandText = SPName;
             cmd.CommandType = CommandType.StoredProcedure;
             da.SelectCommand = cmd;
@@ -128,34 +135,57 @@ namespace NFFM
         public static int ExecuteNonQuery_New(string SPName, string receivingID, string lineItemID, string billOfLading,  string customerName, string shipper, string salesCode, string quantity, string receivedDate, string weekEndingDate, string truckerId, string batchId)
         {
             int retValue = 0;
-            String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-            SqlConnection con = new SqlConnection(str);
-            SqlCommand cmd = new SqlCommand(SPName, con);
-            try
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("receivingId", receivingID);
-                cmd.Parameters.Add("lineItemId", lineItemID);
-                cmd.Parameters.Add("billOfLading", billOfLading);
-                cmd.Parameters.Add("CustomerName", customerName);
-                cmd.Parameters.Add("Shipper", shipper);
-                cmd.Parameters.Add("SalesCode", salesCode);
-                cmd.Parameters.Add("quantity", quantity);
-                cmd.Parameters.Add("receivedDate", receivedDate);
-                cmd.Parameters.Add("weekEndingDate", weekEndingDate);
-                cmd.Parameters.Add("truckerId", truckerId);
-                cmd.Parameters.Add("batchId", batchId); 
-                con.Open();
-                retValue = cmd.ExecuteNonQuery();
-                con.Close();
+            var str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
 
+
+            using (SqlConnection con = new SqlConnection(str))
+            {
+
+                using (SqlCommand cmd = new SqlCommand(SPName, con))
+                {
+                    try
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("receivingId", receivingID);
+                        cmd.Parameters.AddWithValue("lineItemId", lineItemID);
+                        cmd.Parameters.AddWithValue("billOfLading", billOfLading);
+                        cmd.Parameters.AddWithValue("CustomerName", customerName);
+                        cmd.Parameters.AddWithValue("Shipper", shipper);
+                        cmd.Parameters.AddWithValue("SalesCode", salesCode);
+                        cmd.Parameters.AddWithValue("quantity", quantity);
+                        cmd.Parameters.AddWithValue("receivedDate", receivedDate);
+                        cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
+                        cmd.Parameters.AddWithValue("truckerId", truckerId);
+                        cmd.Parameters.AddWithValue("batchId", batchId);
+                        con.Open();
+                        //retValue = cmd.ExecuteNonQuery();
+                        retValue = 0;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            da.Fill(dt);
+
+                            if (dt.Rows.Count > 0)
+                            {
+                                int.TryParse(dt.Rows[0][0].ToString(), out retValue);
+                            }
+                            //con.Close();
+                            //return dt;
+                        }
+
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        int code = ex.HResult;
+                        con.Close();
+                        retValue = 0;
+                    }
+
+                    return retValue;
+                }
             }
-            catch (Exception ex) {
-                int code = ex.HResult;
-                con.Close();
-                retValue = 0;
-            }
-            return retValue;
         }
         public static int ExecuteNonQuery_FreightForwarding(string SPName, string shippingId, string lineItemID, string billOfLading, string customerName, string shipper, string salesCode, string quantity, string shippedDate, string weekEndingDate, string truckerId, string batchId)
         {
@@ -166,17 +196,17 @@ namespace NFFM
             try
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("shippingId", shippingId);
-                cmd.Parameters.Add("lineItemId", lineItemID);
-                cmd.Parameters.Add("billOfLading", billOfLading);
-                cmd.Parameters.Add("CustomerName", customerName);
-                cmd.Parameters.Add("Shipper", shipper);
-                cmd.Parameters.Add("SalesCode", salesCode);
-                cmd.Parameters.Add("quantity", quantity);
-                cmd.Parameters.Add("ShippedDate", shippedDate);
-                cmd.Parameters.Add("weekEndingDate", weekEndingDate);
-                cmd.Parameters.Add("truckerId", truckerId);
-                cmd.Parameters.Add("batchId", batchId);
+                cmd.Parameters.AddWithValue("shippingId", shippingId);
+                cmd.Parameters.AddWithValue("lineItemId", lineItemID);
+                cmd.Parameters.AddWithValue("billOfLading", billOfLading);
+                cmd.Parameters.AddWithValue("CustomerName", customerName);
+                cmd.Parameters.AddWithValue("Shipper", shipper);
+                cmd.Parameters.AddWithValue("SalesCode", salesCode);
+                cmd.Parameters.AddWithValue("quantity", quantity);
+                cmd.Parameters.AddWithValue("ShippedDate", shippedDate);
+                cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
+                cmd.Parameters.AddWithValue("truckerId", truckerId);
+                cmd.Parameters.AddWithValue("batchId", batchId);
                 con.Open();
                 retValue = cmd.ExecuteNonQuery();
                 con.Close();
