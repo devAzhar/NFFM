@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NFFM
@@ -23,6 +19,7 @@ namespace NFFM
             InitializeComponent();
             this.Text = "NFFM";
         }
+
         int initialDataLoaded = 0;
         int isButtonClicked = 0;
         string currentReceivingId = "0";
@@ -102,7 +99,7 @@ namespace NFFM
             //ddlSalesCode.Clear();
             SqlCommand cmd = new SqlCommand();
             //cmd.CommandText = SPName;
-            cmd.Parameters.Add("receivingId", receivingId);
+            cmd.Parameters.AddWithValue("receivingId", receivingId);
             //cmd.CommandType = CommandType.StoredProcedure;
             DataSet ds = DBManager.GetDataSet_New(SPName, receivingId);
             // DataSet ds = DBManager.GetDataSet(SPName, cmd);
@@ -614,27 +611,35 @@ namespace NFFM
                 // Check the column  cell, in which it click.  
                 if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
                 {
-                    // On click of datagridview cell, attched combobox with this click cell of datagridview  
-                    dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                    {
+                        // On click of datagridview cell, attched combobox with this click cell of datagridview  
+                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
 
-                    l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
-                    l_objGridDropbox.DisplayMember = "Name";
-                    l_objGridDropbox.ValueMember = "Name";
+                        l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
+                        l_objGridDropbox.DisplayMember = "Name";
+                        l_objGridDropbox.ValueMember = "Name";
+                    }
                 }
-
-                if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
+                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
                 {
-                    dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                    l_objGridDropbox.DataSource = dtShippers;
-                    l_objGridDropbox.ValueMember = "Shipper";
-                    l_objGridDropbox.DisplayMember = "Shipper";
+                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                    {
+                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+                        l_objGridDropbox.DataSource = dtShippers;
+                        l_objGridDropbox.ValueMember = "Shipper";
+                        l_objGridDropbox.DisplayMember = "Shipper";
+                    }
                 }
-                if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("SalesCode"))
+                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("SalesCode"))
                 {
-                    dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                    l_objGridDropbox.DataSource = dtSalesCode;
-                    l_objGridDropbox.ValueMember = "Sales Code";
-                    l_objGridDropbox.DisplayMember = "Sales Code";
+                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                    {
+                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+                        l_objGridDropbox.DataSource = dtSalesCode;
+                        l_objGridDropbox.ValueMember = "Sales Code";
+                        l_objGridDropbox.DisplayMember = "Sales Code";
+                    }
                 }
             }
 
