@@ -191,34 +191,54 @@ namespace NFFM
         {
             int retValue = 0;
             String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-            SqlConnection con = new SqlConnection(str);
-            SqlCommand cmd = new SqlCommand(SPName, con);
-            try
+            using (SqlConnection con = new SqlConnection(str))
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("shippingId", shippingId);
-                cmd.Parameters.AddWithValue("lineItemId", lineItemID);
-                cmd.Parameters.AddWithValue("billOfLading", billOfLading);
-                cmd.Parameters.AddWithValue("CustomerName", customerName);
-                cmd.Parameters.AddWithValue("Shipper", shipper);
-                cmd.Parameters.AddWithValue("SalesCode", salesCode);
-                cmd.Parameters.AddWithValue("quantity", quantity);
-                cmd.Parameters.AddWithValue("ShippedDate", shippedDate);
-                cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
-                cmd.Parameters.AddWithValue("truckerId", truckerId);
-                cmd.Parameters.AddWithValue("batchId", batchId);
-                con.Open();
-                retValue = cmd.ExecuteNonQuery();
-                con.Close();
 
+                using (SqlCommand cmd = new SqlCommand(SPName, con))
+                {
+                    try
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("shippingId", shippingId);
+                        cmd.Parameters.AddWithValue("lineItemId", lineItemID);
+                        cmd.Parameters.AddWithValue("billOfLading", billOfLading);
+                        cmd.Parameters.AddWithValue("CustomerName", customerName);
+                        cmd.Parameters.AddWithValue("Shipper", shipper);
+                        cmd.Parameters.AddWithValue("SalesCode", salesCode);
+                        cmd.Parameters.AddWithValue("quantity", quantity);
+                        cmd.Parameters.AddWithValue("ShippedDate", shippedDate);
+                        cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
+                        cmd.Parameters.AddWithValue("truckerId", truckerId);
+                        cmd.Parameters.AddWithValue("batchId", batchId);
+                        con.Open();
+                        //retValue = cmd.ExecuteNonQuery();
+                        retValue = 0;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            da.Fill(dt);
+
+                            if (dt.Rows.Count > 0)
+                            {
+                                int.TryParse(dt.Rows[0][0].ToString(), out retValue);
+                            }
+                            //con.Close();
+                            //return dt;
+                        }
+
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        int code = ex.HResult;
+                        con.Close();
+                        retValue = 0;
+                    }
+
+                    return retValue;
+                }
             }
-            catch (Exception ex)
-            {
-                int code = ex.HResult;
-                con.Close();
-                retValue = 0;
-            }
-            return retValue;
         }
     }
 }
