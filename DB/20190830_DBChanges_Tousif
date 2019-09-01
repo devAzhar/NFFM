@@ -50,3 +50,108 @@ Exec Customers_GetAll -- table 5
 END
 
 GO
+CREATE procedure FreightForwardingBOL_AddUpdate
+(
+@shippingId  As nvarchar(50),
+@lineItemId   As nvarchar(50),
+@billOfLading As nvarchar(50),
+@customerName As nvarchar(200),
+@shipper 	  As nvarchar(50),
+@salesCode 	  As nvarchar(50),
+@quantity     As nvarchar(10),
+@ShippedDate As nvarchar(20),
+@weekEndingDate As nvarchar(20),
+@truckerId    As nvarchar(10) = 0,
+@batchId	  As nvarchar(50) = ''
+)
+As
+BEGIN
+
+Declare @customerId as int = 0,
+@shipperId as int = 0,
+@salesCodeId as int = 0,
+@newCustomerId as int = 0,
+@newShipperId as int = 0,
+@newSalesCodeId as int = 0
+
+Set @newCustomerId = (select Distinct top 1 CustomerId From tblCustomers where name = @customerName)
+Set @newShipperId = (select Distinct top 1 ShipperId From tblShippers where Shipper = @shipper)
+Set @newSalesCodeId = (Select Distinct top 1 SalesCodeId from tblSalesCodes where [Sales Code] = @salesCode)
+
+If @truckerId > 0 AND @shippingId = '0'
+BEGIN
+
+
+set @shippingId = (select max(shippingID) from tblShippingInfo) + 1
+
+Insert into tblShippingInfo
+values(@shippingId, @truckerId, @ShippedDate, @weekEndingDate, @batchId, 0)
+
+END
+ELSE If @truckerId > 0 AND @shippingId <> '0'
+BEGIN
+
+Update tblShippingInfo 
+set truckerID = @truckerId 
+where shippingID = @shippingId
+
+END
+ELSE IF @batchId <> ''
+BEGIN
+
+Update tblShippingInfo 
+set BatchID = @batchId 
+where shippingID = @shippingId
+
+END
+ELSE IF (@ShippedDate <> '' or @weekEndingDate <> '')
+BEGIN
+
+Update tblShippingInfo 
+set ShippedDate = @ShippedDate, 
+	WeekEndingDate = @weekEndingDate
+where shippingID = @shippingId
+
+END
+ELSE IF (@shippingId <> '' AND @lineItemId = '')
+BEGIN
+
+set @lineItemId = (select max(lineItemId) from tblLineItems_Shipping) + 1
+
+insert into tblShippingInfo_LineItems
+values(@shippingId, @lineItemId, 0)
+ 
+insert into tblLineItems_Shipping
+values(@lineItemId, @billOfLading, ISNULL(@newCustomerId, -1), ISNULL(@newShipperId, -1), ISNULL(@newSalesCodeId, -1), ISNULL(@quantity, -1), 0)
+
+--delete from tblLineItems_Shipping where lineitemId > 1421522
+--delete from tblShippingInfo_LineItems where lineitemId > 1421522
+END
+ELSE
+BEGIN 
+
+select @customerId = customerId, @shipperId = shipperID, @salesCodeId = salesCodeID From tblLineItems_Shipping lineitem
+inner join tblShippingInfo_LineItems info on info.lineItemID = lineitem.lineItemID where lineitem.lineItemID = @lineItemId ANd shippingID = @shippingId;
+
+
+
+BEGIN TRANSACTION;
+
+update tblLineItems_Shipping
+set BillOfLadingNumber = @billOfLading,
+	Quantity = @quantity,
+	CustomerId = @newCustomerId,
+	ShipperId = @newShipperId,
+	SalesCodeId = @newSalesCodeId
+where lineItemID = @lineItemId --AND customerID = @CustomerId
+
+
+
+COMMIT;
+
+END
+END
+
+
+--110550	1421521
+
