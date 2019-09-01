@@ -324,7 +324,6 @@ namespace NFFM
             string quantity = "";
             int rowIndex = 0;
             int columnIndex = 0;
-            int rowsEffected = 0;
             if (e.RowIndex > 0)
             {
                 rowIndex = e.RowIndex;
@@ -345,9 +344,21 @@ namespace NFFM
                     lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
                     billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
                     customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
-
                     shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
                     salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
+
+                    if (columnIndex == 6)
+                    {
+                        var rows = dtSalesCode.Select("[Sales Code]='" + salesCode + "'");
+
+                        if(rows.Length > 0)
+                        {
+                            dataGridView1.Rows[rowIndex].Cells[10].Value = rows[0]["Price"].ToString();
+                            dataGridView1.Rows[rowIndex].Cells[7].Value = rows[0]["Description"].ToString();
+                            dataGridView1.Rows[rowIndex].Cells[8].Value = rows[0]["Unit of Measure"].ToString();
+                        }
+                    }
+
                     quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
                     string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
                     float fPrice = 0f;
@@ -355,12 +366,20 @@ namespace NFFM
                     var iQuantity = 0;
                     int.TryParse(quantity, out iQuantity);
 
-                    dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
-                    rowsEffected = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
+                    var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
 
-                    dataGridView1.Rows[rowIndex].Cells[2].Value = rowsEffected;
+                    if (dataGridView1.Rows[rowIndex].Cells[11].Value.ToString() != (iQuantity * fPrice).ToString())
+                    {
+                        dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
+                        this.RecalculateTotals();
+                    }
 
-                    if (rowsEffected < 1)
+                    if (string.IsNullOrEmpty(lineItemID))
+                    {
+                        dataGridView1.Rows[rowIndex].Cells[2].Value = newLineItemId;
+                    }
+
+                    if (newLineItemId < 1)
                     {
                         MessageBox.Show("Error Occurred.");
                     }
@@ -373,6 +392,25 @@ namespace NFFM
             //DataGridViewRow row = dataGridView1.Rows[lineItemId];
             //currentReceivingId = Convert.ToInt32(row.Cells[0].Value);
             //lineItemId = Convert.ToInt32(row.Cells[1].Value);
+        }
+
+        private void RecalculateTotals()
+        {
+            var total = 0f;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[11].Value != null)
+                {
+                    var rowTotal = 0f;
+                    var rowTotalValue = row.Cells[11].Value.ToString().Replace("$", string.Empty);
+
+                    float.TryParse(rowTotalValue, out rowTotal);
+                    total += rowTotal;
+                }
+            }
+
+            txtTruckingTotal.Text = "$" + Math.Round(total, 2);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
