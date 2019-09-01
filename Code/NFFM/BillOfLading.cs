@@ -219,9 +219,6 @@ namespace NFFM
 
             dataGridView1.DataSource = dtLineItems;
 
-
-
-
             dataGridView1.Columns["receivingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
             dataGridView1.Columns["BillOfLadingNumber"].Width = 120;
@@ -234,6 +231,8 @@ namespace NFFM
             dataGridView1.Columns["UnitOfMeasure"].Width = 120;
             dataGridView1.Columns["Qty"].Width = 50;
             dataGridView1.Columns["Price"].Width = 50;
+            dataGridView1.Columns["Price"].ValueType = typeof(double);
+
             dataGridView1.Columns["Ext"].Width = 50;
 
             dataGridView1.BorderStyle = BorderStyle.None;
@@ -353,7 +352,9 @@ namespace NFFM
 
                         if(rows.Length > 0)
                         {
-                            dataGridView1.Rows[rowIndex].Cells[10].Value = rows[0]["Price"].ToString();
+                            var priceValue = 0d;
+                            double.TryParse(rows[0]["Price"].ToString(), out priceValue);
+                            dataGridView1.Rows[rowIndex].Cells[10].Value = priceValue;
                             dataGridView1.Rows[rowIndex].Cells[7].Value = rows[0]["Description"].ToString();
                             dataGridView1.Rows[rowIndex].Cells[8].Value = rows[0]["Unit of Measure"].ToString();
                         }
