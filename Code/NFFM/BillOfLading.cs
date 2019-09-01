@@ -397,16 +397,16 @@ namespace NFFM
 
         private void RecalculateTotals()
         {
-            var total = 0f;
+            var total = 0d;
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 if (row.Cells[11].Value != null)
                 {
-                    var rowTotal = 0f;
+                    var rowTotal = 0d;
                     var rowTotalValue = row.Cells[11].Value.ToString().Replace("$", string.Empty);
 
-                    float.TryParse(rowTotalValue, out rowTotal);
+                    double.TryParse(rowTotalValue, out rowTotal);
                     total += rowTotal;
                 }
             }
