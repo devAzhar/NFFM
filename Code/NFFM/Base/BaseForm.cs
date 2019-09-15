@@ -5,7 +5,7 @@
     using System.Data;
     using System.Windows.Forms;
 
-    public abstract class BaseForm : Form
+    public class BaseForm : Form
     {
         #region "Protected Members"
         protected bool FormInitialized = false;
@@ -22,7 +22,7 @@
         #endregion
 
         #region "Virtual Members"
-        protected virtual void comboBoxGeneral_Enter(object sender, EventArgs e)
+        protected virtual void OnComboBoxGeneralEnter(object sender)
         {
             var combobox = sender as ComboBox;
 
@@ -62,45 +62,14 @@
         #endregion
 
         #region "Abstract Methods"
-        protected abstract ComboBox ComboBoxTruckerName { get; }
-        protected abstract void LoadData(int id);
-        protected abstract void BindLineItems(DataTable dtLineItems);
-        protected abstract void RecalculateTotals();
-        protected abstract void HandleCellEvent(object sender, DataGridViewCellEventArgs e, bool isClick = false);
+        protected virtual ComboBox ComboBoxTruckerName { get; }
+        protected virtual void LoadData(int id) { }
+        protected virtual void BindLineItems(DataTable dtLineItems) { }
+        protected virtual void RecalculateTotals() { }
+        protected virtual void HandleCellEvent(object sender, DataGridViewCellEventArgs e, bool isClick = false) { }
         #endregion
 
         #region "Protected Methods"
-        protected void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            this.HandleCellEvent(sender, e);
-        }
-
-        protected void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            HandleCellEvent(sender, e, true);
-        }
-
-        protected void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            e.ThrowException = false;
-        }
-
-        protected void Form1_Activated(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(DBManager.NewTruckerId))
-            {
-                var data = DBManager.GetDataTable("Truckers_GetAll");
-                this.LoadTruckers(this.ComboBoxTruckerName, data, DBManager.NewTruckerId);
-                DBManager.NewTruckerId = string.Empty;
-                return;
-            }
-
-            if (DBManager.isDataLoaded == false)
-            {
-                this.LoadData(0);
-                this.InitialDataLoaded = 1;
-            }
-        }
         #endregion
     }
 }
