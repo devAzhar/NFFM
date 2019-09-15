@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NFFM.Base;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,10 +8,9 @@ using System.Windows.Forms;
 
 namespace NFFM
 {
-    public partial class BillOfLading : Form
+    public partial class BillOfLading : BaseForm
     {
-        private bool FormInitialized = false;
-
+        #region "Constructor"
         public BillOfLading()
         {
             DBManager.NewTruckerId = string.Empty;
@@ -19,79 +19,106 @@ namespace NFFM
             InitializeComponent();
             this.Text = "NFFM";
         }
+        #endregion
 
-        int initialDataLoaded = 0;
-        int isButtonClicked = 0;
-        string currentReceivingId = "0";
-        string currentTruckerId = "0";
-        int previousReceivingId = 0;
-        int firstReceivingId = 0;
-        int nextReceivingId = 0;
-        int lastReceivingId = 0;
-        int IsNewRecord = 0;
-        int lineItemId;
-        DataGridViewRow row;
-        Dictionary<string, string> ddlCustomers = new Dictionary<string, string>();
-        Dictionary<string, string> ddlShippers = new Dictionary<string, string>();
-        Dictionary<string, string> ddlSalesCode = new Dictionary<string, string>();
-        Dictionary<string, string> items = new Dictionary<string, string>();
-        DataTable dtCustomers;
-        DataTable dtShippers;
-        DataTable dtSalesCode;
-        private void btnAdd_Click(object sender, EventArgs e)
+        #region "Private Members"
+        private string currentReceivingId = "0";
+        private string currentTruckerId = "0";
+        private int previousReceivingId = 0;
+        private int firstReceivingId = 0;
+        private int nextReceivingId = 0;
+        private int lastReceivingId = 0;
+        #endregion
+
+        #region "Implementation of abstract methods"
+        protected override ComboBox ComboBoxTruckerName
         {
-            currentReceivingId = "0";
-            currentTruckerId = "0";
-            //datePickerReceived.Value = new DateTime(2010, 01, 01);
-            //datePickerWeekEnding.Value = new DateTime(2010, 01, 01);
-            //txtBatchId.Text = "";
-            ddlTruckerName.Text = "";
-            txtTruckingTotal.Text = "";
-            //DataTable dataTable = (DataTable)dataGridView1.DataSource;
-            //DataRow drToAdd = dataTable.NewRow();
-
-            //drToAdd["Shipper"] = "Value1";
-            //drToAdd["SalesCode"] = "Value2";
-
-            //dataTable.Rows.Add(drToAdd);
-            //dataTable.AcceptChanges();
-            //dataGridView1.DataSource = dataTable;
-            //dataGridView1.AllowUserToAddRows = false;
-            //dataGridView1.Ta.Text = "No Data to display"
-            IsNewRecord = 1;
-            //foreach (DataGridViewRow item in this.dataGridView1.Rows)
-            //{
-            //    dataGridView1.Rows.RemoveAt(item.Index);
-            //}
-            LoadData(-1);
-        }
-
-        private void LoadTruckers(DataTable dtTruckers, string selectedValue = "")
-        {
-            FormInitialized = false;
-            if (dtTruckers.Rows.Count > 0)
+            get
             {
-                items.Clear();
-
-                items.Add("-1", "<<Add New Trucker>>");
-
-                for (int i = 0; i < dtTruckers.Rows.Count; i++)
-                {
-                    items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), dtTruckers.Rows[i]["Trucker"].ToString());
-                }
-                ddlTruckerName.DataSource = new BindingSource(items, null);
-                ddlTruckerName.DisplayMember = "Value";
-                ddlTruckerName.ValueMember = "Key";
-
-                if(!string.IsNullOrEmpty(selectedValue))
-                {
-                    ddlTruckerName.SelectedValue = selectedValue;
-                }
-
-                FormInitialized = true;
+                return this.ddlTruckerName;
             }
         }
-        public void LoadData(int receivingId)
+
+        protected override void HandleCellEvent(object sender, DataGridViewCellEventArgs e, bool isClick = false)
+        {
+            if (this.HandleCellEventFlag)
+            {
+                return;
+            }
+
+            this.HandleCellEventFlag = true;
+
+            if (e.ColumnIndex == 0 && isClick)
+            {
+                string lineItemIdToDelete = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
+                if (lineItemIdToDelete != "")
+                {
+                    if (MessageBox.Show("You are about to delete 1 record(s).\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
+                        SqlConnection con = new SqlConnection(str);
+                        SqlCommand cmd = new SqlCommand("LineItem_Delete", con);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        MessageBox.Show("Line item is deleted successfully.");
+                        LoadData(nextReceivingId);
+                    }
+                }
+            }
+
+            if (isClick)
+            {
+                this.HandleCellEventFlag = false;
+                return;
+            }
+
+            if (e.ColumnIndex > -1 && e.RowIndex > -1)
+            {
+                // Bind grid cell with combobox and than bind combobox with datasource.  
+                DataGridViewComboBoxCell l_objGridDropbox = new DataGridViewComboBoxCell();
+
+                // Check the column  cell, in which it click.  
+                if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
+                {
+                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                    {
+                        // On click of datagridview cell, attched combobox with this click cell of datagridview  
+                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+
+                        l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
+                        l_objGridDropbox.DisplayMember = "Name";
+                        l_objGridDropbox.ValueMember = "Name";
+                    }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
+                {
+                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                    {
+                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+                        l_objGridDropbox.DataSource = dtShippers;
+                        l_objGridDropbox.ValueMember = "Shipper";
+                        l_objGridDropbox.DisplayMember = "Shipper";
+                    }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("SalesCode"))
+                {
+                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                    {
+                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+                        l_objGridDropbox.DataSource = dtSalesCode;
+                        l_objGridDropbox.ValueMember = "Sales Code";
+                        l_objGridDropbox.DisplayMember = "Sales Code";
+                    }
+                }
+            }
+
+            this.HandleCellEventFlag = false;
+        }
+
+        protected override void LoadData(int receivingId)
         {
             String SPName = "BillOfLading_GetAll";
             //ddlCustomers.Clear();
@@ -116,21 +143,7 @@ namespace NFFM
             {
                 if (items.Count == 0)
                 {
-                    LoadTruckers(dtTruckers);
-                    //FormInitialized = false;
-                    //if (dtTruckers.Rows.Count > 0)
-                    //{
-                    //    items.Add("-1", "<<Add New Trucker>>");
-
-                    //    for (int i = 0; i < dtTruckers.Rows.Count; i++)
-                    //    {
-                    //        items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), dtTruckers.Rows[i]["Trucker"].ToString());
-                    //    }
-                    //    ddlTruckerName.DataSource = new BindingSource(items, null);
-                    //    ddlTruckerName.DisplayMember = "Value";
-                    //    ddlTruckerName.ValueMember = "Key";
-                    //    FormInitialized = true;
-                    //}
+                    this.LoadTruckers(ddlTruckerName, dtTruckers);
                 }
                 if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
                 {
@@ -138,9 +151,6 @@ namespace NFFM
                     {
                         ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
                     }
-                    //ddlTruckerName.DataSource = new BindingSource(items, null);
-                    //ddlTruckerName.DisplayMember = "Value";
-                    //ddlTruckerName.ValueMember = "Key";
                 }
                 if (dtShippers.Rows.Count > 0 && ddlShippers.Count == 0)
                 {
@@ -203,7 +213,8 @@ namespace NFFM
                 }
             }
         }
-        public void BindLineItems(DataTable dtLineItems)
+
+        protected override void BindLineItems(DataTable dtLineItems)
         {
             Decimal totalTrucking = 0;
             if (dtLineItems.Rows.Count > 0)
@@ -293,23 +304,35 @@ namespace NFFM
                 dataGridView1.Columns["Qty"].ReadOnly = true;
             }
         }
-        private void Form1_Activated(object sender, EventArgs e)
+
+        protected override void RecalculateTotals()
         {
-            if (!string.IsNullOrEmpty(DBManager.NewTruckerId))
+            var total = 0d;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                var data = DBManager.GetDataTable("Truckers_GetAll");
-                LoadTruckers(data, DBManager.NewTruckerId);
-                DBManager.NewTruckerId = string.Empty;
-                //ddlTruckerName.SelectedValue = DBManager.NewTruckerId;
-                return;
+                if (row.Cells[11].Value != null)
+                {
+                    var rowTotal = 0d;
+                    var rowTotalValue = row.Cells[11].Value.ToString().Replace("$", string.Empty);
+
+                    double.TryParse(rowTotalValue, out rowTotal);
+                    total += rowTotal;
+                }
             }
 
-            if (DBManager.isDataLoaded == false)
-            {
-                LoadData(0);
-                initialDataLoaded = 1;
-            }
-            // LoadData();
+            txtTruckingTotal.Text = "$" + Math.Round(total, 2);
+        }
+        #endregion
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            currentReceivingId = "0";
+            currentTruckerId = "0";
+            ddlTruckerName.Text = "";
+            txtTruckingTotal.Text = "";
+            IsNewRecord = 1;
+            LoadData(-1);
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -331,7 +354,7 @@ namespace NFFM
             {
                 columnIndex = e.ColumnIndex;
             }
-            if (dataGridView1.Rows.Count > 0 && initialDataLoaded == 1)
+            if (dataGridView1.Rows.Count > 0 && InitialDataLoaded == 1)
             {
                 if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
                 {
@@ -350,7 +373,7 @@ namespace NFFM
                     {
                         var rows = dtSalesCode.Select("[Sales Code]='" + salesCode + "'");
 
-                        if(rows.Length > 0)
+                        if (rows.Length > 0)
                         {
                             var priceValue = 0d;
                             double.TryParse(rows[0]["Price"].ToString(), out priceValue);
@@ -395,36 +418,13 @@ namespace NFFM
             //lineItemId = Convert.ToInt32(row.Cells[1].Value);
         }
 
-        private void RecalculateTotals()
-        {
-            var total = 0d;
-
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (row.Cells[11].Value != null)
-                {
-                    var rowTotal = 0d;
-                    var rowTotalValue = row.Cells[11].Value.ToString().Replace("$", string.Empty);
-
-                    double.TryParse(rowTotalValue, out rowTotal);
-                    total += rowTotal;
-                }
-            }
-
-            txtTruckingTotal.Text = "$" + Math.Round(total, 2);
-        }
-
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            //currentTruckerId = "0";
-            isButtonClicked = 1;
             LoadData(previousReceivingId);
         }
 
         private void btnFirst_Click(object sender, EventArgs e)
         {
-            //currentTruckerId = "0";
-            isButtonClicked = 1;
             LoadData(firstReceivingId);
         }
 
@@ -450,11 +450,11 @@ namespace NFFM
             }
 
             string truckerName = ((KeyValuePair<string, string>)ddlTruckerName.SelectedItem).Value;
-            if (currentTruckerId != truckerId && currentTruckerId != "0" && initialDataLoaded == 1 && IsNewRecord == 0)
+            if (currentTruckerId != truckerId && currentTruckerId != "0" && InitialDataLoaded == 1 && IsNewRecord == 0)
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", truckerId, "");
             }
-            else if (currentTruckerId != truckerId && truckerId != "1" && initialDataLoaded == 1 && IsNewRecord == 1)
+            else if (currentTruckerId != truckerId && truckerId != "1" && InitialDataLoaded == 1 && IsNewRecord == 1)
             {
                 IsNewRecord = 0;
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, truckerId, txtBatchId.Text);
@@ -464,7 +464,7 @@ namespace NFFM
 
         private void txtBatchId_Leave(object sender, EventArgs e)
         {
-            if (initialDataLoaded == 1 && IsNewRecord == 0)
+            if (InitialDataLoaded == 1 && IsNewRecord == 0)
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", "0", txtBatchId.Text);
             }
@@ -472,14 +472,15 @@ namespace NFFM
 
         private void datePickerReceived_Leave(object sender, EventArgs e)
         {
-            if (initialDataLoaded == 1 && IsNewRecord == 0)
+            if (InitialDataLoaded == 1 && IsNewRecord == 0)
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, "0", "");
             }
         }
+
         private void datePickerWeekEnding_Leave(object sender, EventArgs e)
         {
-            if (initialDataLoaded == 1 && IsNewRecord == 0)
+            if (InitialDataLoaded == 1 && IsNewRecord == 0)
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, "0", "");
             }
@@ -499,19 +500,8 @@ namespace NFFM
                 con.Close();
                 //DBManager.isDataLoaded = false;
                 MessageBox.Show("Bill of Lading is deleted successfully.");
-                isButtonClicked = 1;
                 LoadData(nextReceivingId);
             }
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            HandleCellEvent(sender, e, true);
-        }
-
-        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            e.ThrowException = false;
         }
 
         private void datePickerReceived_ValueChanged(object sender, EventArgs e)
@@ -538,10 +528,6 @@ namespace NFFM
             }
         }
 
-        private void dataGridView1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-        }
-
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter)
@@ -561,7 +547,7 @@ namespace NFFM
 
                     var cell = dataGridView1[index, iRow + 1];
 
-                    while(!cell.Visible)
+                    while (!cell.Visible)
                     {
                         index++;
                         cell = dataGridView1[index, iRow + 1];
@@ -590,99 +576,6 @@ namespace NFFM
                     dataGridView1.CurrentCell = cell;
                 }
             }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            HandleCellEvent(sender, e);
-        }
-
-        private bool HandleCellEventFlag = false;
-
-        private void HandleCellEvent(object sender, DataGridViewCellEventArgs e, bool isClick = false)
-        {
-
-            if (this.HandleCellEventFlag)
-            {
-                return;
-            }
-
-            this.HandleCellEventFlag = true;
-
-            if (e.ColumnIndex == 0 && isClick)
-            {
-                string lineItemIdToDelete = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
-                if (lineItemIdToDelete != "")
-                {
-                    if (MessageBox.Show("You are about to delete 1 record(s).\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                    {
-                        String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-                        SqlConnection con = new SqlConnection(str);
-                        SqlCommand cmd = new SqlCommand("LineItem_Delete", con);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                        MessageBox.Show("Line item is deleted successfully.");
-                        isButtonClicked = 1;
-                        LoadData(nextReceivingId);
-                    }
-                }
-            }
-
-            if (isClick)
-            {
-                this.HandleCellEventFlag = false;
-                return;
-            }
-
-            if (e.ColumnIndex > -1 && e.RowIndex > -1)
-            {
-                // Bind grid cell with combobox and than bind combobox with datasource.  
-                DataGridViewComboBoxCell l_objGridDropbox = new DataGridViewComboBoxCell();
-
-                // Check the column  cell, in which it click.  
-                if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
-                {
-                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                    {
-                        // On click of datagridview cell, attched combobox with this click cell of datagridview  
-                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-
-                        l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
-                        l_objGridDropbox.DisplayMember = "Name";
-                        l_objGridDropbox.ValueMember = "Name";
-                    }
-                }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
-                {
-                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                    {
-                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                        l_objGridDropbox.DataSource = dtShippers;
-                        l_objGridDropbox.ValueMember = "Shipper";
-                        l_objGridDropbox.DisplayMember = "Shipper";
-                    }
-                }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("SalesCode"))
-                {
-                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                    {
-                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                        l_objGridDropbox.DataSource = dtSalesCode;
-                        l_objGridDropbox.ValueMember = "Sales Code";
-                        l_objGridDropbox.DisplayMember = "Sales Code";
-                    }
-                }
-            }
-
-            this.HandleCellEventFlag = false;
         }
     }
 }
