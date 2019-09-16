@@ -1,13 +1,13 @@
-﻿using NFFM.Base;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace NFFM
+﻿namespace NFFM
 {
+    using Base;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     public partial class BillOfLading : BaseForm
     {
         #region "Constructor"
@@ -30,6 +30,91 @@ namespace NFFM
         private int lastReceivingId = 0;
         #endregion
 
+        #region "Private Methods"
+        private void OnCellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            string lineItemID = "";
+            string receivingID = "";
+            string billOfLading = "";
+            string customerName = "";
+            string shipper = "";
+            string salesCode = "";
+            string quantity = "";
+            int rowIndex = 0;
+            int columnIndex = 0;
+            if (e.RowIndex > 0)
+            {
+                rowIndex = e.RowIndex;
+            }
+            if (e.ColumnIndex > 0)
+            {
+                columnIndex = e.ColumnIndex;
+            }
+            if (dataGridView1.Rows.Count > 0 && InitialDataLoaded == 1)
+            {
+                if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
+                {
+                    receivingID = dataGridView1.Rows[rowIndex].Cells[1].Value.ToString();
+                    if (receivingID == "")
+                    {
+                        receivingID = currentReceivingId;
+                    }
+                    lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+                    billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
+                    customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
+                    shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
+                    salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
+
+                    if (columnIndex == 6)
+                    {
+                        var rows = dtSalesCode.Select("[Sales Code]='" + salesCode + "'");
+
+                        if (rows.Length > 0)
+                        {
+                            var priceValue = 0d;
+                            double.TryParse(rows[0]["Price"].ToString(), out priceValue);
+                            dataGridView1.Rows[rowIndex].Cells[10].Value = priceValue;
+                            dataGridView1.Rows[rowIndex].Cells[7].Value = rows[0]["Description"].ToString();
+                            dataGridView1.Rows[rowIndex].Cells[8].Value = rows[0]["Unit of Measure"].ToString();
+                        }
+                    }
+
+                    quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
+                    string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
+                    float fPrice = 0f;
+                    float.TryParse(price, out fPrice);
+                    var iQuantity = 0;
+                    int.TryParse(quantity, out iQuantity);
+
+                    var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
+
+                    if (dataGridView1.Rows[rowIndex].Cells[11].Value.ToString() != (iQuantity * fPrice).ToString())
+                    {
+                        dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
+                        this.RecalculateTotals();
+                    }
+
+                    if (string.IsNullOrEmpty(lineItemID))
+                    {
+                        dataGridView1.Rows[rowIndex].Cells[2].Value = newLineItemId;
+                    }
+
+                    if (newLineItemId < 1)
+                    {
+                        MessageBox.Show("Error Occurred.");
+                    }
+                }
+            }
+
+            // row = dataGridView1.Rows[c];
+            //a = Convert.ToInt32(row.Cells[b].Value);
+            //lineItemId = e.RowIndex;
+            //DataGridViewRow row = dataGridView1.Rows[lineItemId];
+            //currentReceivingId = Convert.ToInt32(row.Cells[0].Value);
+            //lineItemId = Convert.ToInt32(row.Cells[1].Value);
+        }
+        #endregion
+
         #region "Implementation of abstract methods"
         protected override ComboBox ComboBoxTruckerName
         {
@@ -44,6 +129,20 @@ namespace NFFM
             if (this.HandleCellEventFlag)
             {
                 return;
+            }
+
+            if (e.ColumnIndex <= 0 && e.RowIndex > 0)
+            {
+                var lineItemId = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
+
+                if (string.IsNullOrEmpty(lineItemId))
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        this.CopyOverNewRow(dataGridView1);
+                    });
+                    return;
+                }
             }
 
             this.HandleCellEventFlag = true;
@@ -338,6 +437,8 @@ namespace NFFM
 
         protected void Form1_Activated(object sender, EventArgs e)
         {
+            Control.CheckForIllegalCrossThreadCalls = false;
+
             if (!string.IsNullOrEmpty(DBManager.NewTruckerId))
             {
                 var data = DBManager.GetDataTable("Truckers_GetAll");
@@ -375,85 +476,7 @@ namespace NFFM
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            string lineItemID = "";
-            string receivingID = "";
-            string billOfLading = "";
-            string customerName = "";
-            string shipper = "";
-            string salesCode = "";
-            string quantity = "";
-            int rowIndex = 0;
-            int columnIndex = 0;
-            if (e.RowIndex > 0)
-            {
-                rowIndex = e.RowIndex;
-            }
-            if (e.ColumnIndex > 0)
-            {
-                columnIndex = e.ColumnIndex;
-            }
-            if (dataGridView1.Rows.Count > 0 && InitialDataLoaded == 1)
-            {
-                if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
-                {
-                    receivingID = dataGridView1.Rows[rowIndex].Cells[1].Value.ToString();
-                    if (receivingID == "")
-                    {
-                        receivingID = currentReceivingId;
-                    }
-                    lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
-                    billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
-                    customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
-                    shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
-                    salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
-
-                    if (columnIndex == 6)
-                    {
-                        var rows = dtSalesCode.Select("[Sales Code]='" + salesCode + "'");
-
-                        if (rows.Length > 0)
-                        {
-                            var priceValue = 0d;
-                            double.TryParse(rows[0]["Price"].ToString(), out priceValue);
-                            dataGridView1.Rows[rowIndex].Cells[10].Value = priceValue;
-                            dataGridView1.Rows[rowIndex].Cells[7].Value = rows[0]["Description"].ToString();
-                            dataGridView1.Rows[rowIndex].Cells[8].Value = rows[0]["Unit of Measure"].ToString();
-                        }
-                    }
-
-                    quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
-                    string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
-                    float fPrice = 0f;
-                    float.TryParse(price, out fPrice);
-                    var iQuantity = 0;
-                    int.TryParse(quantity, out iQuantity);
-
-                    var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
-
-                    if (dataGridView1.Rows[rowIndex].Cells[11].Value.ToString() != (iQuantity * fPrice).ToString())
-                    {
-                        dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
-                        this.RecalculateTotals();
-                    }
-
-                    if (string.IsNullOrEmpty(lineItemID))
-                    {
-                        dataGridView1.Rows[rowIndex].Cells[2].Value = newLineItemId;
-                    }
-
-                    if (newLineItemId < 1)
-                    {
-                        MessageBox.Show("Error Occurred.");
-                    }
-                }
-            }
-
-            // row = dataGridView1.Rows[c];
-            //a = Convert.ToInt32(row.Cells[b].Value);
-            //lineItemId = e.RowIndex;
-            //DataGridViewRow row = dataGridView1.Rows[lineItemId];
-            //currentReceivingId = Convert.ToInt32(row.Cells[0].Value);
-            //lineItemId = Convert.ToInt32(row.Cells[1].Value);
+            OnCellValueChanged(sender, e);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -568,53 +591,13 @@ namespace NFFM
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != Keys.Enter)
-            {
-                return;
-            }
-
-            e.SuppressKeyPress = true;
-            int iColumn = dataGridView1.CurrentCell.ColumnIndex;
-            int iRow = dataGridView1.CurrentCell.RowIndex;
-
-            if (iColumn == dataGridView1.ColumnCount - 1)
-            {
-                if (dataGridView1.RowCount > (iRow + 1))
-                {
-                    var index = 1;
-
-                    var cell = dataGridView1[index, iRow + 1];
-
-                    while (!cell.Visible)
-                    {
-                        index++;
-                        cell = dataGridView1[index, iRow + 1];
-                    }
-
-                    if (cell != null && cell.Visible)
-                    {
-                        dataGridView1.CurrentCell = cell;
-                    }
-                }
-                else
-                {
-                }
-            }
-            else
-            {
-                var cell = dataGridView1[iColumn + 1, iRow];
-
-                if (!cell.Visible)
-                {
-                    cell = dataGridView1[iColumn + 2, iRow];
-                }
-
-                if (cell.Visible)
-                {
-                    dataGridView1.CurrentCell = cell;
-                }
-            }
+            OnDataGridViewKeyDown(dataGridView1, e);
         }
         #endregion
+
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            // Application.DoEvents();
+        }
     }
 }
