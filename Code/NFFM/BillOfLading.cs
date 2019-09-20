@@ -178,7 +178,6 @@
             {
                 // Bind grid cell with combobox and than bind combobox with datasource.  
                 DataGridViewComboBoxCell l_objGridDropbox = new DataGridViewComboBoxCell();
-
                 // Check the column  cell, in which it click.  
                 if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
                 {
@@ -598,6 +597,27 @@
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             // Application.DoEvents();
+        }
+
+        private void btnAddShipper_Click(object sender, EventArgs e)
+        {
+            Shipper_AddUpdate add = new Shipper_AddUpdate();
+            add.ShowDialog();
+            return;
+        }
+
+        private void btnCustomer_click(object sender, EventArgs e)
+        {
+            Customers_AddUpdate add = new Customers_AddUpdate();
+            add.ShowDialog();
+            return;
+        }
+
+        private void btnSalesCode_click(object sender, EventArgs e)
+        {
+            SalesCode_AddUpdate add = new SalesCode_AddUpdate();
+            add.ShowDialog();
+            return;
         }
     }
 }
