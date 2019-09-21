@@ -103,6 +103,7 @@
             // 
             this.txtSalesCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSalesCode.Location = new System.Drawing.Point(195, 89);
+            this.txtSalesCode.MaxLength = 1;
             this.txtSalesCode.MinimumSize = new System.Drawing.Size(170, 30);
             this.txtSalesCode.Name = "txtSalesCode";
             this.txtSalesCode.Size = new System.Drawing.Size(170, 26);

@@ -12,7 +12,7 @@ namespace NFFM
     {
         public static bool isDataLoaded = false;
         public static string NewTruckerId = string.Empty;
-
+        public static int currentRecordId = 0;
         public static DataTable GetDataTable(string SPName)
         {
             String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;

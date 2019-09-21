@@ -28,6 +28,7 @@
         private int firstReceivingId = 0;
         private int nextReceivingId = 0;
         private int lastReceivingId = 0;
+        
         #endregion
 
         #region "Private Methods"
@@ -218,6 +219,7 @@
 
         protected override void LoadData(int receivingId)
         {
+            DBManager.currentRecordId = receivingId;
             String SPName = "BillOfLading_GetAll";
             //ddlCustomers.Clear();
             //ddlShippers.Clear();
@@ -448,7 +450,7 @@
 
             if (DBManager.isDataLoaded == false)
             {
-                this.LoadData(0);
+                this.LoadData(DBManager.currentRecordId);
                 this.InitialDataLoaded = 1;
             }
         }
@@ -603,21 +605,22 @@
         {
             Shipper_AddUpdate add = new Shipper_AddUpdate();
             add.ShowDialog();
-            return;
+            LoadData(DBManager.currentRecordId);
+            // return;
         }
 
         private void btnCustomer_click(object sender, EventArgs e)
         {
             Customers_AddUpdate add = new Customers_AddUpdate();
             add.ShowDialog();
-            return;
+            LoadData(DBManager.currentRecordId);
         }
 
         private void btnSalesCode_click(object sender, EventArgs e)
         {
             SalesCode_AddUpdate add = new SalesCode_AddUpdate();
             add.ShowDialog();
-            return;
+            LoadData(DBManager.currentRecordId);
         }
     }
 }
