@@ -167,7 +167,7 @@
                             cmd.ExecuteNonQuery();
                             con.Close();
                             MessageBox.Show("Line item is deleted successfully.");
-                            LoadData(nextReceivingId);
+                            LoadData(DBManager.currentRecordId);
                         }
                     }
                 }
