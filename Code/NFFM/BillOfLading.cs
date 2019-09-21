@@ -132,86 +132,93 @@
                 return;
             }
 
-            if (e.ColumnIndex <= 0 && e.RowIndex > 0)
+            try
             {
-                var lineItemId = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
 
-                if (string.IsNullOrEmpty(lineItemId))
+                if (e.ColumnIndex <= 0 && e.RowIndex > 0)
                 {
-                    this.Invoke((MethodInvoker)delegate
+                    var lineItemId = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
+
+                    if (string.IsNullOrEmpty(lineItemId))
                     {
-                        this.CopyOverNewRow(dataGridView1);
-                    });
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            this.CopyOverNewRow(dataGridView1);
+                        });
+                        return;
+                    }
+                }
+
+                this.HandleCellEventFlag = true;
+
+                if (e.ColumnIndex == 0 && isClick)
+                {
+                    string lineItemIdToDelete = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
+                    if (lineItemIdToDelete != "")
+                    {
+                        if (MessageBox.Show("You are about to delete 1 record(s).\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        {
+                            String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
+                            SqlConnection con = new SqlConnection(str);
+                            SqlCommand cmd = new SqlCommand("LineItem_Delete", con);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                            MessageBox.Show("Line item is deleted successfully.");
+                            LoadData(nextReceivingId);
+                        }
+                    }
+                }
+
+                if (isClick)
+                {
+                    this.HandleCellEventFlag = false;
                     return;
                 }
-            }
 
-            this.HandleCellEventFlag = true;
-
-            if (e.ColumnIndex == 0 && isClick)
-            {
-                string lineItemIdToDelete = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
-                if (lineItemIdToDelete != "")
+                if (e.ColumnIndex > -1 && e.RowIndex > -1)
                 {
-                    if (MessageBox.Show("You are about to delete 1 record(s).\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    // Bind grid cell with combobox and than bind combobox with datasource.  
+                    DataGridViewComboBoxCell l_objGridDropbox = new DataGridViewComboBoxCell();
+                    // Check the column  cell, in which it click.  
+                    if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
                     {
-                        String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-                        SqlConnection con = new SqlConnection(str);
-                        SqlCommand cmd = new SqlCommand("LineItem_Delete", con);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                        MessageBox.Show("Line item is deleted successfully.");
-                        LoadData(nextReceivingId);
+                        if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                        {
+                            // On click of datagridview cell, attched combobox with this click cell of datagridview  
+                            dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+
+                            l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
+                            l_objGridDropbox.DisplayMember = "Name";
+                            l_objGridDropbox.ValueMember = "Name";
+                        }
+                    }
+                    else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
+                    {
+                        if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                        {
+                            dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+                            l_objGridDropbox.DataSource = dtShippers;
+                            l_objGridDropbox.ValueMember = "Shipper";
+                            l_objGridDropbox.DisplayMember = "Shipper";
+                        }
+                    }
+                    else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("SalesCode"))
+                    {
+                        if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
+                        {
+                            dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
+                            l_objGridDropbox.DataSource = dtSalesCode;
+                            l_objGridDropbox.ValueMember = "Sales Code";
+                            l_objGridDropbox.DisplayMember = "Sales Code";
+                        }
                     }
                 }
             }
-
-            if (isClick)
+            catch (Exception exp)
             {
-                this.HandleCellEventFlag = false;
-                return;
-            }
-
-            if (e.ColumnIndex > -1 && e.RowIndex > -1)
-            {
-                // Bind grid cell with combobox and than bind combobox with datasource.  
-                DataGridViewComboBoxCell l_objGridDropbox = new DataGridViewComboBoxCell();
-                // Check the column  cell, in which it click.  
-                if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
-                {
-                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                    {
-                        // On click of datagridview cell, attched combobox with this click cell of datagridview  
-                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-
-                        l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
-                        l_objGridDropbox.DisplayMember = "Name";
-                        l_objGridDropbox.ValueMember = "Name";
-                    }
-                }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
-                {
-                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                    {
-                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                        l_objGridDropbox.DataSource = dtShippers;
-                        l_objGridDropbox.ValueMember = "Shipper";
-                        l_objGridDropbox.DisplayMember = "Shipper";
-                    }
-                }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("SalesCode"))
-                {
-                    if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                    {
-                        dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                        l_objGridDropbox.DataSource = dtSalesCode;
-                        l_objGridDropbox.ValueMember = "Sales Code";
-                        l_objGridDropbox.DisplayMember = "Sales Code";
-                    }
-                }
             }
 
             this.HandleCellEventFlag = false;
@@ -601,6 +608,7 @@
             // Application.DoEvents();
         }
 
+        #region "Additional Buttons"
         private void btnAddShipper_Click(object sender, EventArgs e)
         {
             Shipper_AddUpdate add = new Shipper_AddUpdate();
@@ -622,5 +630,6 @@
             add.ShowDialog();
             LoadData(DBManager.currentRecordId);
         }
+        #endregion
     }
 }
