@@ -35,6 +35,9 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSalesCode = new System.Windows.Forms.Button();
+            this.btnCustomer = new System.Windows.Forms.Button();
+            this.btnAddShipper = new System.Windows.Forms.Button();
             this.txtBatchId = new System.Windows.Forms.TextBox();
             this.ddlTruckerName = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,7 +64,7 @@
             this.lblHeading.AutoSize = true;
             this.lblHeading.Font = new System.Drawing.Font("Century Gothic", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
-            this.lblHeading.Location = new System.Drawing.Point(373, 9);
+            this.lblHeading.Location = new System.Drawing.Point(265, 9);
             this.lblHeading.Name = "lblHeading";
             this.lblHeading.Size = new System.Drawing.Size(444, 25);
             this.lblHeading.TabIndex = 9;
@@ -109,6 +112,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Silver;
+            this.panel1.Controls.Add(this.btnSalesCode);
+            this.panel1.Controls.Add(this.btnCustomer);
+            this.panel1.Controls.Add(this.btnAddShipper);
             this.panel1.Controls.Add(this.txtBatchId);
             this.panel1.Controls.Add(this.ddlTruckerName);
             this.panel1.Controls.Add(this.label5);
@@ -126,6 +132,48 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1096, 140);
             this.panel1.TabIndex = 20;
+            // 
+            // btnSalesCode
+            // 
+            this.btnSalesCode.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnSalesCode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSalesCode.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalesCode.ForeColor = System.Drawing.Color.White;
+            this.btnSalesCode.Location = new System.Drawing.Point(945, 24);
+            this.btnSalesCode.Name = "btnSalesCode";
+            this.btnSalesCode.Size = new System.Drawing.Size(130, 28);
+            this.btnSalesCode.TabIndex = 32;
+            this.btnSalesCode.Text = "Add Sales C&ode";
+            this.btnSalesCode.UseVisualStyleBackColor = false;
+            this.btnSalesCode.Click += new System.EventHandler(this.btnSalesCode_click);
+            // 
+            // btnCustomer
+            // 
+            this.btnCustomer.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCustomer.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomer.ForeColor = System.Drawing.Color.White;
+            this.btnCustomer.Location = new System.Drawing.Point(715, 24);
+            this.btnCustomer.Name = "btnCustomer";
+            this.btnCustomer.Size = new System.Drawing.Size(111, 28);
+            this.btnCustomer.TabIndex = 31;
+            this.btnCustomer.Text = "Add &Customer";
+            this.btnCustomer.UseVisualStyleBackColor = false;
+            this.btnCustomer.Click += new System.EventHandler(this.btnCustomer_click);
+            // 
+            // btnAddShipper
+            // 
+            this.btnAddShipper.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnAddShipper.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnAddShipper.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddShipper.ForeColor = System.Drawing.Color.White;
+            this.btnAddShipper.Location = new System.Drawing.Point(832, 24);
+            this.btnAddShipper.Name = "btnAddShipper";
+            this.btnAddShipper.Size = new System.Drawing.Size(107, 28);
+            this.btnAddShipper.TabIndex = 30;
+            this.btnAddShipper.Text = "Add &Shipper";
+            this.btnAddShipper.UseVisualStyleBackColor = false;
+            this.btnAddShipper.Click += new System.EventHandler(this.btnAddShipper_Click);
             // 
             // txtBatchId
             // 
@@ -145,6 +193,7 @@
             this.ddlTruckerName.Size = new System.Drawing.Size(180, 25);
             this.ddlTruckerName.TabIndex = 28;
             this.ddlTruckerName.SelectedIndexChanged += new System.EventHandler(this.ddlTruckerName_SelectedIndexChanged);
+            this.ddlTruckerName.Enter += new System.EventHandler(this.comboBoxGeneral_Enter);
             // 
             // label5
             // 
@@ -155,7 +204,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 17);
             this.label5.TabIndex = 27;
-            this.label5.Text = "Batch ID:";
+            this.label5.Text = "&Batch ID:";
             // 
             // label4
             // 
@@ -166,7 +215,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 17);
             this.label4.TabIndex = 26;
-            this.label4.Text = "Trucker Name:";
+            this.label4.Text = "Trucker &Name:";
             // 
             // datePickerWeekEnding
             // 
@@ -186,6 +235,7 @@
             this.datePickerReceived.Name = "datePickerReceived";
             this.datePickerReceived.Size = new System.Drawing.Size(97, 23);
             this.datePickerReceived.TabIndex = 24;
+            this.datePickerReceived.ValueChanged += new System.EventHandler(this.datePickerReceived_ValueChanged);
             this.datePickerReceived.Leave += new System.EventHandler(this.datePickerReceived_Leave);
             // 
             // label3
@@ -197,7 +247,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(132, 17);
             this.label3.TabIndex = 23;
-            this.label3.Text = "Week Ending Date:";
+            this.label3.Text = "&Week Ending Date:";
             // 
             // label2
             // 
@@ -208,7 +258,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 17);
             this.label2.TabIndex = 22;
-            this.label2.Text = "Shipped Date:";
+            this.label2.Text = "Shipped &Date:";
             // 
             // dataGridView1
             // 
@@ -237,10 +287,10 @@
             this.dataGridView1.Size = new System.Drawing.Size(1044, 311);
             this.dataGridView1.TabIndex = 22;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
+            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
             // Action
@@ -339,7 +389,9 @@
             this.Controls.Add(this.panel1);
             this.Name = "FreightForwardingBOL";
             this.Text = "BillOfLading";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Activated += new System.EventHandler(this.Form1_Activated);
+            this.Load += new System.EventHandler(this.Form1_Activated);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -372,5 +424,8 @@
         private System.Windows.Forms.DataGridViewButtonColumn Action;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtTruckingTotal;
+        private System.Windows.Forms.Button btnAddShipper;
+        private System.Windows.Forms.Button btnCustomer;
+        private System.Windows.Forms.Button btnSalesCode;
     }
 }

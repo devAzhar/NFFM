@@ -15,7 +15,7 @@
         {
             DBManager.NewTruckerId = string.Empty;
             DBManager.isDataLoaded = false;
-
+            DBManager.currentRecordId = 0;
             InitializeComponent();
             this.Text = "NFFM";
         }
