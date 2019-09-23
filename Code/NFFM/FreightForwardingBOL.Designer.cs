@@ -1,4 +1,6 @@
-﻿namespace NFFM
+﻿using NFFM.Base;
+
+namespace NFFM
 {
     partial class FreightForwardingBOL
     {
@@ -46,7 +48,7 @@
             this.datePickerReceived = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView1 = new MyDataGridView();
             this.Action = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnFirst = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
