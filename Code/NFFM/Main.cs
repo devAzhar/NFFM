@@ -31,7 +31,7 @@ namespace NFFM
         private void btnCustomer_Click(object sender, EventArgs e)
         {
             Customers cust = new Customers();
-            cust.ShowDialog();
+            cust.Show();
         }
 
         private void Form1_Activated(object sender, EventArgs e)
@@ -43,43 +43,43 @@ namespace NFFM
         private void btnSalesCode_Click(object sender, EventArgs e)
         {
             SalesCode SC = new SalesCode();
-            SC.ShowDialog();
+            SC.Show();
         }
 
         private void btnShipper_Click(object sender, EventArgs e)
         {
             Shipper shipper = new Shipper();
-            shipper.ShowDialog();
+            shipper.Show();
         }
 
         private void btnTrucker_Click(object sender, EventArgs e)
         {
             Trucker trucker = new Trucker();
-            trucker.ShowDialog();
+            trucker.Show();
         }
 
         private void btnBOL_Click(object sender, EventArgs e)
         {
             BillOfLading BOL = new BillOfLading();
-            BOL.ShowDialog();
+            BOL.Show();
         }
 
         private void btnFFBOL_Click(object sender, EventArgs e)
         {
             FreightForwardingBOL FFBOL = new FreightForwardingBOL();
-            FFBOL.ShowDialog();
+            FFBOL.Show();
         }
 
         private void btnBOLReport_Click(object sender, EventArgs e)
         {
             BillOfLading_Report BOLReport = new BillOfLading_Report();
-            BOLReport.ShowDialog();
+            BOLReport.Show();
         }
 
         private void btnFFBOLReport_Click(object sender, EventArgs e)
         {
             FreightForwardingBOL_Report FFBOLReport = new FreightForwardingBOL_Report();
-            FFBOLReport.ShowDialog();
+            FFBOLReport.Show();
         }
     }
 }
