@@ -50,6 +50,9 @@
     <Compile Include="Base\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Base\MyDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FreightForwardingBOL_Report.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,4 +1,6 @@
-﻿namespace NFFM
+﻿using NFFM.Base;
+
+namespace NFFM
 {
     partial class BillOfLading
     {
@@ -46,7 +48,7 @@
             this.datePickerReceived = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView1 = new NFFM.Base.MyDataGridView();
             this.Action = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnFirst = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
@@ -64,9 +66,10 @@
             this.lblHeading.AutoSize = true;
             this.lblHeading.Font = new System.Drawing.Font("Century Gothic", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
-            this.lblHeading.Location = new System.Drawing.Point(349, 9);
+            this.lblHeading.Location = new System.Drawing.Point(465, 11);
+            this.lblHeading.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(356, 25);
+            this.lblHeading.Size = new System.Drawing.Size(457, 32);
             this.lblHeading.TabIndex = 9;
             this.lblHeading.Text = "Receiving Bill of Lading Entry Form";
             // 
@@ -76,9 +79,10 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDelete.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(941, 58);
+            this.btnDelete.Location = new System.Drawing.Point(1255, 123);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(130, 54);
+            this.btnDelete.Size = new System.Drawing.Size(173, 66);
             this.btnDelete.TabIndex = 8;
             this.btnDelete.Text = "&Delete Displayed Bill of Lading";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -90,9 +94,10 @@
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAdd.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(828, 58);
+            this.btnAdd.Location = new System.Drawing.Point(1104, 123);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(107, 54);
+            this.btnAdd.Size = new System.Drawing.Size(143, 66);
             this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "&Add a New Bill of Lading";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -103,9 +108,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(424, 143);
+            this.label1.Location = new System.Drawing.Point(574, 228);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(221, 17);
+            this.label1.Size = new System.Drawing.Size(285, 21);
             this.label1.TabIndex = 21;
             this.label1.Text = "Click a heading to sort the data.";
             // 
@@ -128,8 +134,9 @@
             this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1124, 140);
+            this.panel1.Size = new System.Drawing.Size(1499, 203);
             this.panel1.TabIndex = 20;
             // 
             // btnSalesCode
@@ -138,9 +145,10 @@
             this.btnSalesCode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSalesCode.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalesCode.ForeColor = System.Drawing.Color.White;
-            this.btnSalesCode.Location = new System.Drawing.Point(941, 24);
+            this.btnSalesCode.Location = new System.Drawing.Point(1279, 55);
+            this.btnSalesCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSalesCode.Name = "btnSalesCode";
-            this.btnSalesCode.Size = new System.Drawing.Size(130, 28);
+            this.btnSalesCode.Size = new System.Drawing.Size(148, 34);
             this.btnSalesCode.TabIndex = 32;
             this.btnSalesCode.Text = "Add Sales C&ode";
             this.btnSalesCode.UseVisualStyleBackColor = false;
@@ -152,9 +160,10 @@
             this.btnCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCustomer.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnCustomer.Location = new System.Drawing.Point(711, 24);
+            this.btnCustomer.Location = new System.Drawing.Point(973, 55);
+            this.btnCustomer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCustomer.Name = "btnCustomer";
-            this.btnCustomer.Size = new System.Drawing.Size(111, 28);
+            this.btnCustomer.Size = new System.Drawing.Size(148, 34);
             this.btnCustomer.TabIndex = 31;
             this.btnCustomer.Text = "Add &Customer";
             this.btnCustomer.UseVisualStyleBackColor = false;
@@ -166,9 +175,10 @@
             this.btnAddShipper.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAddShipper.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddShipper.ForeColor = System.Drawing.Color.White;
-            this.btnAddShipper.Location = new System.Drawing.Point(828, 24);
+            this.btnAddShipper.Location = new System.Drawing.Point(1126, 55);
+            this.btnAddShipper.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddShipper.Name = "btnAddShipper";
-            this.btnAddShipper.Size = new System.Drawing.Size(107, 28);
+            this.btnAddShipper.Size = new System.Drawing.Size(148, 34);
             this.btnAddShipper.TabIndex = 30;
             this.btnAddShipper.Text = "Add &Shipper";
             this.btnAddShipper.UseVisualStyleBackColor = false;
@@ -177,9 +187,10 @@
             // txtBatchId
             // 
             this.txtBatchId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBatchId.Location = new System.Drawing.Point(601, 90);
+            this.txtBatchId.Location = new System.Drawing.Point(801, 163);
+            this.txtBatchId.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBatchId.Name = "txtBatchId";
-            this.txtBatchId.Size = new System.Drawing.Size(180, 22);
+            this.txtBatchId.Size = new System.Drawing.Size(239, 26);
             this.txtBatchId.TabIndex = 29;
             this.txtBatchId.Leave += new System.EventHandler(this.txtBatchId_Leave);
             // 
@@ -187,9 +198,10 @@
             // 
             this.ddlTruckerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ddlTruckerName.FormattingEnabled = true;
-            this.ddlTruckerName.Location = new System.Drawing.Point(601, 57);
+            this.ddlTruckerName.Location = new System.Drawing.Point(801, 122);
+            this.ddlTruckerName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ddlTruckerName.Name = "ddlTruckerName";
-            this.ddlTruckerName.Size = new System.Drawing.Size(180, 24);
+            this.ddlTruckerName.Size = new System.Drawing.Size(239, 28);
             this.ddlTruckerName.TabIndex = 28;
             this.ddlTruckerName.SelectedIndexChanged += new System.EventHandler(this.ddlTruckerName_SelectedIndexChanged);
             this.ddlTruckerName.Enter += new System.EventHandler(this.comboBoxGeneral_Enter);
@@ -199,9 +211,10 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(498, 93);
+            this.label5.Location = new System.Drawing.Point(664, 166);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 17);
+            this.label5.Size = new System.Drawing.Size(88, 21);
             this.label5.TabIndex = 27;
             this.label5.Text = "&Batch ID:";
             // 
@@ -210,9 +223,10 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(498, 60);
+            this.label4.Location = new System.Drawing.Point(664, 126);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 17);
+            this.label4.Size = new System.Drawing.Size(130, 21);
             this.label4.TabIndex = 26;
             this.label4.Text = "Trucker &Name:";
             // 
@@ -220,9 +234,10 @@
             // 
             this.datePickerWeekEnding.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.datePickerWeekEnding.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.datePickerWeekEnding.Location = new System.Drawing.Point(347, 90);
+            this.datePickerWeekEnding.Location = new System.Drawing.Point(463, 163);
+            this.datePickerWeekEnding.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.datePickerWeekEnding.Name = "datePickerWeekEnding";
-            this.datePickerWeekEnding.Size = new System.Drawing.Size(97, 23);
+            this.datePickerWeekEnding.Size = new System.Drawing.Size(128, 27);
             this.datePickerWeekEnding.TabIndex = 25;
             this.datePickerWeekEnding.Leave += new System.EventHandler(this.datePickerWeekEnding_Leave);
             // 
@@ -230,9 +245,10 @@
             // 
             this.datePickerReceived.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.datePickerReceived.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.datePickerReceived.Location = new System.Drawing.Point(347, 57);
+            this.datePickerReceived.Location = new System.Drawing.Point(463, 122);
+            this.datePickerReceived.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.datePickerReceived.Name = "datePickerReceived";
-            this.datePickerReceived.Size = new System.Drawing.Size(97, 23);
+            this.datePickerReceived.Size = new System.Drawing.Size(128, 27);
             this.datePickerReceived.TabIndex = 24;
             this.datePickerReceived.ValueChanged += new System.EventHandler(this.datePickerReceived_ValueChanged);
             this.datePickerReceived.Leave += new System.EventHandler(this.datePickerReceived_Leave);
@@ -242,9 +258,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(194, 93);
+            this.label3.Location = new System.Drawing.Point(259, 166);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(132, 17);
+            this.label3.Size = new System.Drawing.Size(171, 21);
             this.label3.TabIndex = 23;
             this.label3.Text = "&Week Ending Date:";
             // 
@@ -253,9 +270,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(194, 59);
+            this.label2.Location = new System.Drawing.Point(259, 125);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 17);
+            this.label2.Size = new System.Drawing.Size(143, 21);
             this.label2.TabIndex = 22;
             this.label2.Text = "&Received Date:";
             // 
@@ -280,10 +298,11 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView1.Location = new System.Drawing.Point(29, 164);
+            this.dataGridView1.Location = new System.Drawing.Point(39, 253);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(1045, 312);
+            this.dataGridView1.Size = new System.Drawing.Size(1393, 384);
             this.dataGridView1.TabIndex = 22;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
@@ -303,9 +322,10 @@
             // 
             // btnFirst
             // 
-            this.btnFirst.Location = new System.Drawing.Point(29, 482);
+            this.btnFirst.Location = new System.Drawing.Point(39, 641);
+            this.btnFirst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnFirst.Name = "btnFirst";
-            this.btnFirst.Size = new System.Drawing.Size(31, 23);
+            this.btnFirst.Size = new System.Drawing.Size(41, 28);
             this.btnFirst.TabIndex = 23;
             this.btnFirst.Text = "|<";
             this.btnFirst.UseVisualStyleBackColor = true;
@@ -313,9 +333,10 @@
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(67, 482);
+            this.btnPrevious.Location = new System.Drawing.Point(89, 641);
+            this.btnPrevious.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(26, 23);
+            this.btnPrevious.Size = new System.Drawing.Size(35, 28);
             this.btnPrevious.TabIndex = 24;
             this.btnPrevious.Text = "&<";
             this.btnPrevious.UseVisualStyleBackColor = true;
@@ -323,9 +344,10 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(215, 482);
+            this.btnNext.Location = new System.Drawing.Point(287, 641);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(28, 23);
+            this.btnNext.Size = new System.Drawing.Size(37, 28);
             this.btnNext.TabIndex = 25;
             this.btnNext.Text = "&>";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -333,9 +355,10 @@
             // 
             // btnLast
             // 
-            this.btnLast.Location = new System.Drawing.Point(249, 482);
+            this.btnLast.Location = new System.Drawing.Point(332, 641);
+            this.btnLast.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLast.Name = "btnLast";
-            this.btnLast.Size = new System.Drawing.Size(29, 23);
+            this.btnLast.Size = new System.Drawing.Size(39, 28);
             this.btnLast.TabIndex = 26;
             this.btnLast.Text = ">|";
             this.btnLast.UseVisualStyleBackColor = true;
@@ -344,9 +367,10 @@
             // txtRecords
             // 
             this.txtRecords.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            this.txtRecords.Location = new System.Drawing.Point(99, 482);
+            this.txtRecords.Location = new System.Drawing.Point(132, 641);
+            this.txtRecords.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtRecords.Name = "txtRecords";
-            this.txtRecords.Size = new System.Drawing.Size(108, 21);
+            this.txtRecords.Size = new System.Drawing.Size(143, 24);
             this.txtRecords.TabIndex = 30;
             this.txtRecords.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -355,27 +379,29 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(876, 488);
+            this.label6.Location = new System.Drawing.Point(1168, 649);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(99, 17);
+            this.label6.Size = new System.Drawing.Size(128, 21);
             this.label6.TabIndex = 30;
             this.label6.Text = "Trucking Total:";
             // 
             // txtTruckingTotal
             // 
             this.txtTruckingTotal.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTruckingTotal.Location = new System.Drawing.Point(981, 485);
+            this.txtTruckingTotal.Location = new System.Drawing.Point(1308, 645);
+            this.txtTruckingTotal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtTruckingTotal.Name = "txtTruckingTotal";
             this.txtTruckingTotal.ReadOnly = true;
-            this.txtTruckingTotal.Size = new System.Drawing.Size(93, 23);
+            this.txtTruckingTotal.Size = new System.Drawing.Size(123, 27);
             this.txtTruckingTotal.TabIndex = 31;
             this.txtTruckingTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // BillOfLading
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1124, 556);
+            this.ClientSize = new System.Drawing.Size(1499, 684);
             this.Controls.Add(this.txtTruckingTotal);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtRecords);
@@ -386,6 +412,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "BillOfLading";
             this.Text = "BillOfLading";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -414,7 +441,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtBatchId;
         private System.Windows.Forms.ComboBox ddlTruckerName;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnFirst;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnNext;
@@ -426,5 +452,6 @@
         private System.Windows.Forms.Button btnAddShipper;
         private System.Windows.Forms.Button btnCustomer;
         private System.Windows.Forms.Button btnSalesCode;
+        private MyDataGridView dataGridView1;
     }
 }

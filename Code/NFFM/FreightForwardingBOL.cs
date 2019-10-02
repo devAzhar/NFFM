@@ -135,7 +135,7 @@
             try
             {
 
-                if (e.ColumnIndex <= 0 && e.RowIndex > 0)
+                if (e.ColumnIndex <= 3 && e.RowIndex > 0)
                 {
                     var lineItemId = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
 
@@ -166,7 +166,7 @@
                             con.Open();
                             cmd.ExecuteNonQuery();
                             con.Close();
-                            MessageBox.Show("Line item is deleted successfully.");
+                            // MessageBox.Show("Line item is deleted successfully.");
                             LoadData(DBManager.currentRecordId);
                         }
                     }
