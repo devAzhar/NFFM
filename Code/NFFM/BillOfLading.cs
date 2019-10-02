@@ -28,7 +28,7 @@
         private int firstReceivingId = 0;
         private int nextReceivingId = 0;
         private int lastReceivingId = 0;
-        
+
         #endregion
 
         #region "Private Methods"
@@ -135,7 +135,7 @@
             try
             {
 
-                if (e.ColumnIndex <= 0 && e.RowIndex > 0)
+                if (e.ColumnIndex <= 3 && e.RowIndex > 0)
                 {
                     var lineItemId = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
 
@@ -166,7 +166,7 @@
                             con.Open();
                             cmd.ExecuteNonQuery();
                             con.Close();
-                            MessageBox.Show("Line item is deleted successfully.");
+                            // MessageBox.Show("Line item is deleted successfully.");
                             LoadData(DBManager.currentRecordId);
                         }
                     }
@@ -339,19 +339,21 @@
 
             dataGridView1.Columns["receivingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
-            dataGridView1.Columns["BillOfLadingNumber"].Width = 120;
+            dataGridView1.Columns["BillOfLadingNumber"].Width = 155;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
-            dataGridView1.Columns["CustomerName"].Width = 199;
-            dataGridView1.Columns["CustomerName"].HeaderText = "Co-Op Member";
-            dataGridView1.Columns["SalesCode"].Width = 100;
+            dataGridView1.Columns["CustomerName"].Width = 320;
+            dataGridView1.Columns["CustomerName"].HeaderText = "Customer";
+            dataGridView1.Columns["Shipper"].Width = 150;
+            dataGridView1.Columns["SalesCode"].Width = 130;
             dataGridView1.Columns["SalesCode"].HeaderText = "Sales Code";
+            dataGridView1.Columns["Description"].Width = 145;
             dataGridView1.Columns["UnitOfMeasure"].HeaderText = "Unit of Measure";
-            dataGridView1.Columns["UnitOfMeasure"].Width = 120;
-            dataGridView1.Columns["Qty"].Width = 50;
-            dataGridView1.Columns["Price"].Width = 50;
+            dataGridView1.Columns["UnitOfMeasure"].Width = 250;
+            dataGridView1.Columns["Qty"].Width = 100;
+            dataGridView1.Columns["Price"].Width = 100;
             dataGridView1.Columns["Price"].ValueType = typeof(double);
 
-            dataGridView1.Columns["Ext"].Width = 50;
+            dataGridView1.Columns["Ext"].Width = 120;
 
             dataGridView1.BorderStyle = BorderStyle.None;
             //dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
@@ -373,7 +375,7 @@
             dataGridView1.Columns["Price"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             DBManager.isDataLoaded = true;
             //dataGridView1.AllowUserToAddRows = true;
 
@@ -388,10 +390,10 @@
             dataGridView1.Columns["Price"].ReadOnly = true;
             dataGridView1.Columns["Ext"].ReadOnly = true;
 
-            dataGridView1.Columns["BillOfLadingNumber"].Width = 135;
-            dataGridView1.Columns["Shipper"].Width = 123;
-            dataGridView1.Columns["SalesCode"].Width = 115;
-            dataGridView1.Columns["UnitOfMeasure"].Width = 150;
+            //dataGridView1.Columns["BillOfLadingNumber"].Width = 155;
+            //dataGridView1.Columns["Shipper"].Width = 123;
+            //dataGridView1.Columns["SalesCode"].Width = 115;
+            //dataGridView1.Columns["UnitOfMeasure"].Width = 150;
 
             label1.Text = "Click a heading to sort the data.";
             label1.Font = new Font(label1.Font, FontStyle.Regular);

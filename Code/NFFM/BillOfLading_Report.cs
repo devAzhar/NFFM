@@ -68,7 +68,7 @@ namespace NFFM
         bool IsInvoiceChecked = true;
         bool IsBillOfLadingChecked = true;
         bool IsCustomerChecked = true;
-
+       
         
         public void LoadData(string receivedDate, string batchId, string invoideNumbers, string billOfLadingNumber, string customerName)
         {
@@ -281,25 +281,26 @@ namespace NFFM
             dataGridView1.DataSource = dtLineItems;
 
             dataGridView1.Columns["ReceivedDate"].HeaderText = "Received Date";
-            dataGridView1.Columns["ReceivedDate"].Width = 135;
+            dataGridView1.Columns["ReceivedDate"].Width = 140;
             dataGridView1.Columns["BatchID"].HeaderText = "Batch ID";
-            //dataGridView1.Columns["BatchID"].Width = 110;
+            dataGridView1.Columns["BatchID"].Width = 110;
 
             dataGridView1.Columns["receivingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
-            dataGridView1.Columns["BillOfLadingNumber"].Width = 133;
+            dataGridView1.Columns["BillOfLadingNumber"].Width = 150;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
-            //dataGridView1.Columns["InvoiceNumber"].Width = 120;
+            dataGridView1.Columns["InvoiceNumber"].Width = 110;
             dataGridView1.Columns["InvoiceNumber"].HeaderText = "Invoice #";
-            dataGridView1.Columns["CustomerName"].Width = 199;
-            dataGridView1.Columns["CustomerName"].HeaderText = "Co-Op Member";
-            dataGridView1.Columns["SalesCode"].Width = 77;
+            dataGridView1.Columns["CustomerName"].Width = 250;
+            dataGridView1.Columns["CustomerName"].HeaderText = "Customer";
+            dataGridView1.Columns["SalesCode"].Width = 130;
             dataGridView1.Columns["SalesCode"].HeaderText = "Sales Code";
+            dataGridView1.Columns["Description"].Width = 120;
             dataGridView1.Columns["UnitOfMeasure"].HeaderText = "Unit of Measure";
-            dataGridView1.Columns["UnitOfMeasure"].Width = 140;
-            dataGridView1.Columns["Qty"].Width = 40;
-            dataGridView1.Columns["Price"].Width = 50;
-            dataGridView1.Columns["Ext"].Width = 50;
+            dataGridView1.Columns["UnitOfMeasure"].Width = 195;
+            dataGridView1.Columns["Qty"].Width = 50;
+            dataGridView1.Columns["Price"].Width = 75;
+            dataGridView1.Columns["Ext"].Width = 75;
 
             dataGridView1.BorderStyle = BorderStyle.None;
             //dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
@@ -321,7 +322,7 @@ namespace NFFM
             dataGridView1.Columns["Price"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             DBManager.isDataLoaded = true;
             //dataGridView1.AllowUserToAddRows = true;
 

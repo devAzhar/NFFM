@@ -45,7 +45,7 @@ namespace NFFM
         string selectedshippedDate = "0";
         string selectedBatch = "0";
         string selectedFreightForwardingBOL = "0";
-        string selectedCustomerName = "0"; 
+        string selectedCustomerName = "0";
         int previousshippingId = 0;
         int firstshippingId = 0;
         int nextshippingId = 0;
@@ -69,7 +69,7 @@ namespace NFFM
         bool IsFreightForwardingBOLChecked = true;
         bool IsCustomerChecked = true;
 
-        
+
         public void LoadData(string shippedDate, string batchId, string invoideNumbers, string BillOfLadingNumber, string customerName)
         {
             String SPName = "FreightForwardingBOL_Report_GetAll";
@@ -83,7 +83,7 @@ namespace NFFM
             DataSet ds = DBManager.GetDataSet_FreightForwardingReport(SPName, shippedDate, batchId, invoideNumbers, BillOfLadingNumber, customerName);
             // DataSet ds = DBManager.GetDataSet(SPName, cmd);
 
-            
+
 
             DataTable dtLineItems = ds.Tables[0];
             dtReceived = ds.Tables[1];
@@ -123,7 +123,7 @@ namespace NFFM
                     ddlShipped.DisplayMember = "Value";
                     ddlShipped.ValueMember = "Key";
                 }
-               
+
                 if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
                 {
                     for (int i = 0; i < dtBatch.Rows.Count; i++)
@@ -178,7 +178,7 @@ namespace NFFM
         {
             string shippedDateId = ((KeyValuePair<string, string>)ddlShipped.SelectedItem).Key;
             string shippedDate = ((KeyValuePair<string, string>)ddlShipped.SelectedItem).Value;
-          
+
             if (selectedshippedDate != shippedDate && selectedshippedDate != "0" && initialDataLoaded == 1)
             {
                 string batchId = selectedBatch;
@@ -213,7 +213,7 @@ namespace NFFM
                 }
                 selectedBatch = batchId;
                 LoadData(shipDate, selectedBatch, "", BOL, "");
-                
+
             }
         }
         private void ddlFreightForwardingBOL_SelectedIndexChanged(object sender, EventArgs e)
@@ -235,7 +235,7 @@ namespace NFFM
                 }
                 selectedFreightForwardingBOL = FreightForwardingBOL;
                 LoadData(shipDate, batchId, "", selectedFreightForwardingBOL, "");
-                
+
             }
         }
         private void ddlCustomer_SelectedIndexChanged(object sender, EventArgs e)
@@ -281,25 +281,26 @@ namespace NFFM
             dataGridView1.DataSource = dtLineItems;
 
             dataGridView1.Columns["shippedDate"].HeaderText = "Shipped Date";
-            dataGridView1.Columns["shippedDate"].Width = 135;
+            dataGridView1.Columns["shippedDate"].Width = 140;
             dataGridView1.Columns["BatchID"].HeaderText = "Batch ID";
             //dataGridView1.Columns["BatchID"].Width = 110;
 
             dataGridView1.Columns["shippingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
-            dataGridView1.Columns["BillOfLadingNumber"].Width = 133;
+            dataGridView1.Columns["BillOfLadingNumber"].Width = 150;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
-            //dataGridView1.Columns["InvoiceNumber"].Width = 120;
+            dataGridView1.Columns["InvoiceNumber"].Width = 110;
             dataGridView1.Columns["InvoiceNumber"].HeaderText = "Invoice #";
-            dataGridView1.Columns["CustomerName"].Width = 199;
+            dataGridView1.Columns["CustomerName"].Width = 250;
             dataGridView1.Columns["CustomerName"].HeaderText = "Customer";
-            dataGridView1.Columns["SalesCode"].Width = 77;
+            dataGridView1.Columns["SalesCode"].Width = 130;
             dataGridView1.Columns["SalesCode"].HeaderText = "Sales Code";
+            dataGridView1.Columns["Description"].Width = 120;
             dataGridView1.Columns["UnitOfMeasure"].HeaderText = "Unit of Measure";
-            dataGridView1.Columns["UnitOfMeasure"].Width = 140;
-            dataGridView1.Columns["Qty"].Width = 40;
-            dataGridView1.Columns["Price"].Width = 50;
-            dataGridView1.Columns["Ext"].Width = 50;
+            dataGridView1.Columns["UnitOfMeasure"].Width = 193;
+            dataGridView1.Columns["Qty"].Width = 50;
+            dataGridView1.Columns["Price"].Width = 75;
+            dataGridView1.Columns["Ext"].Width = 75;
 
             dataGridView1.BorderStyle = BorderStyle.None;
             //dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
@@ -321,7 +322,7 @@ namespace NFFM
             dataGridView1.Columns["Price"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             DBManager.isDataLoaded = true;
             //dataGridView1.AllowUserToAddRows = true;
 
@@ -380,7 +381,7 @@ namespace NFFM
             rbtFreightForwardingBOL.Checked = true;
             //ddlShipped.Text = "";
             ddlFreightForwardingBOL.Enabled = true;
-            
+
         }
         private void rbtCustomer_Click(object sender, EventArgs e)
         {
@@ -415,7 +416,7 @@ namespace NFFM
                 shipDate = "";
             }
             LoadData(shipDate, "", "", "", "");
-            
+
         }
         private void rbtFreightForwardingBOLAll_Click(object sender, EventArgs e)
         {
@@ -434,7 +435,7 @@ namespace NFFM
                 batchId = "";
             }
             LoadData(shipDate, batchId, "", "", "");
-            
+
         }
         private void rbtCustomerAll_Click(object sender, EventArgs e)
         {

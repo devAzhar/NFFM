@@ -67,7 +67,7 @@
             // 
             this.btnCustomer.BackColor = System.Drawing.Color.SeaGreen;
             this.btnCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCustomer.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCustomer.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCustomer.ForeColor = System.Drawing.Color.White;
             this.btnCustomer.Location = new System.Drawing.Point(26, 124);
             this.btnCustomer.Name = "btnCustomer";
@@ -84,17 +84,17 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1069, 72);
+            this.panel1.Size = new System.Drawing.Size(1069, 77);
             this.panel1.TabIndex = 18;
             // 
             // lblHeading
             // 
             this.lblHeading.AutoSize = true;
-            this.lblHeading.Font = new System.Drawing.Font("Century Gothic", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeading.Font = new System.Drawing.Font("Century Gothic", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
-            this.lblHeading.Location = new System.Drawing.Point(435, 20);
+            this.lblHeading.Location = new System.Drawing.Point(390, 19);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(214, 32);
+            this.lblHeading.Size = new System.Drawing.Size(275, 41);
             this.lblHeading.TabIndex = 6;
             this.lblHeading.Text = "NFFM Launcher";
             // 
@@ -102,7 +102,7 @@
             // 
             this.btnSalesCode.BackColor = System.Drawing.Color.SeaGreen;
             this.btnSalesCode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSalesCode.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSalesCode.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalesCode.ForeColor = System.Drawing.Color.White;
             this.btnSalesCode.Location = new System.Drawing.Point(283, 124);
             this.btnSalesCode.Name = "btnSalesCode";
@@ -116,7 +116,7 @@
             // 
             this.btnShipper.BackColor = System.Drawing.Color.SeaGreen;
             this.btnShipper.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnShipper.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.btnShipper.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShipper.ForeColor = System.Drawing.Color.White;
             this.btnShipper.Location = new System.Drawing.Point(540, 124);
             this.btnShipper.Name = "btnShipper";
@@ -130,7 +130,7 @@
             // 
             this.btnTrucker.BackColor = System.Drawing.Color.SeaGreen;
             this.btnTrucker.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnTrucker.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.btnTrucker.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTrucker.ForeColor = System.Drawing.Color.White;
             this.btnTrucker.Location = new System.Drawing.Point(797, 124);
             this.btnTrucker.Name = "btnTrucker";
@@ -144,7 +144,7 @@
             // 
             this.btnBOL.BackColor = System.Drawing.Color.SeaGreen;
             this.btnBOL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnBOL.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBOL.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBOL.ForeColor = System.Drawing.Color.White;
             this.btnBOL.Location = new System.Drawing.Point(26, 250);
             this.btnBOL.Name = "btnBOL";
@@ -158,7 +158,7 @@
             // 
             this.btnFFBOL.BackColor = System.Drawing.Color.SeaGreen;
             this.btnFFBOL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnFFBOL.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnFFBOL.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFFBOL.ForeColor = System.Drawing.Color.White;
             this.btnFFBOL.Location = new System.Drawing.Point(283, 250);
             this.btnFFBOL.Name = "btnFFBOL";
@@ -172,7 +172,7 @@
             // 
             this.btnBOLReport.BackColor = System.Drawing.Color.SeaGreen;
             this.btnBOLReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnBOLReport.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBOLReport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBOLReport.ForeColor = System.Drawing.Color.White;
             this.btnBOLReport.Location = new System.Drawing.Point(540, 250);
             this.btnBOLReport.Name = "btnBOLReport";
@@ -186,7 +186,7 @@
             // 
             this.btnFFBOLReport.BackColor = System.Drawing.Color.SeaGreen;
             this.btnFFBOLReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnFFBOLReport.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnFFBOLReport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFFBOLReport.ForeColor = System.Drawing.Color.White;
             this.btnFFBOLReport.Location = new System.Drawing.Point(797, 250);
             this.btnFFBOLReport.Name = "btnFFBOLReport";

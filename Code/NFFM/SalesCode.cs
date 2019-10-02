@@ -39,12 +39,12 @@ namespace NFFM
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGridView1.Columns["Sales Code"].Width = 115;
-            dataGridView1.Columns["Description"].Width = 180; 
-            dataGridView1.Columns["Unit of Measure"].Width = 180;
-            dataGridView1.Columns["Price"].Width = 73;
-            dataGridView1.Columns["FF Tier 1"].Width = 95;
-            dataGridView1.Columns["FF Tier 2"].Width = 95;
-            dataGridView1.Columns["FF Tier 3"].Width = 95;
+            dataGridView1.Columns["Description"].Width = 282; 
+            dataGridView1.Columns["Unit of Measure"].Width = 300;
+            dataGridView1.Columns["Price"].Width = 88;
+            //dataGridView1.Columns["FF Tier 1"].Width = 95;
+            //dataGridView1.Columns["FF Tier 2"].Width = 95;
+            //dataGridView1.Columns["FF Tier 3"].Width = 95;
             DBManager.isDataLoaded = true;
         }
        
@@ -143,9 +143,9 @@ namespace NFFM
             add.txtDescription.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
             add.txtUOM.Text = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
             add.txtPrice.Text = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
-            add.txtFFTier1.Text = dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
-            add.txtFFTier2.Text = dataGridView1.SelectedRows[0].Cells[6].Value.ToString();
-            add.txtFFTier3.Text = dataGridView1.SelectedRows[0].Cells[7].Value.ToString();
+            //add.txtFFTier1.Text = dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
+            //add.txtFFTier2.Text = dataGridView1.SelectedRows[0].Cells[6].Value.ToString();
+            //add.txtFFTier3.Text = dataGridView1.SelectedRows[0].Cells[7].Value.ToString();
             add.btnAdd.Text = "Update";
             add.lblAddUpdate.Text = "Update Sales Codes Information";
             add.ShowDialog();

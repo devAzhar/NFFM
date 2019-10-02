@@ -37,9 +37,9 @@ namespace NFFM
             cmd.Parameters.Add("CustomerId", customerId);
             cmd.Parameters.Add("CustomerNo", txtCustNo.Text);
             cmd.Parameters.Add("Name", txtName.Text);
-            cmd.Parameters.Add("FFTier", txtFFtier.Text);
-            cmd.Parameters.Add("IsCoop", chkCoop.Checked);
-            cmd.Parameters.Add("Price", txtPrice.Text);
+            cmd.Parameters.Add("FFTier", "0");
+            cmd.Parameters.Add("IsCoop", true);
+            cmd.Parameters.Add("Price", "0");
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();

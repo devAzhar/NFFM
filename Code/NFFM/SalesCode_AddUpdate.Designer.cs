@@ -41,12 +41,6 @@
             this.lblHeading = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.txtFFTier1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtFFTier2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtFFTier3 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,7 +135,7 @@
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCancel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(284, 390);
+            this.btnCancel.Location = new System.Drawing.Point(286, 276);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(79, 33);
             this.btnCancel.TabIndex = 13;
@@ -167,7 +161,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(495, 62);
+            this.panel1.Size = new System.Drawing.Size(487, 62);
             this.panel1.TabIndex = 19;
             // 
             // btnAdd
@@ -176,70 +170,13 @@
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnAdd.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(195, 390);
+            this.btnAdd.Location = new System.Drawing.Point(197, 276);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(83, 33);
             this.btnAdd.TabIndex = 20;
             this.btnAdd.Text = "&Add";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // txtFFTier1
-            // 
-            this.txtFFTier1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFFTier1.Location = new System.Drawing.Point(195, 271);
-            this.txtFFTier1.Name = "txtFFTier1";
-            this.txtFFTier1.Size = new System.Drawing.Size(170, 26);
-            this.txtFFTier1.TabIndex = 22;
-            this.txtFFTier1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFFtier_KeyPress);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(68, 278);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 18);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "FF Tier &1";
-            // 
-            // txtFFTier2
-            // 
-            this.txtFFTier2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFFTier2.Location = new System.Drawing.Point(195, 314);
-            this.txtFFTier2.Name = "txtFFTier2";
-            this.txtFFTier2.Size = new System.Drawing.Size(170, 26);
-            this.txtFFTier2.TabIndex = 24;
-            this.txtFFTier2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFFtier_KeyPress);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(68, 322);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 18);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "FF Tier &2";
-            // 
-            // txtFFTier3
-            // 
-            this.txtFFTier3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFFTier3.Location = new System.Drawing.Point(195, 358);
-            this.txtFFTier3.Name = "txtFFTier3";
-            this.txtFFTier3.Size = new System.Drawing.Size(170, 26);
-            this.txtFFTier3.TabIndex = 26;
-            this.txtFFTier3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFFtier_KeyPress);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(68, 366);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 18);
-            this.label7.TabIndex = 25;
-            this.label7.Text = "FF Tier &3";
             // 
             // SalesCode_AddUpdate
             // 
@@ -248,13 +185,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(495, 452);
-            this.Controls.Add(this.txtFFTier3);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtFFTier2);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtFFTier1);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(487, 338);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnCancel);
@@ -290,11 +221,5 @@
         private System.Windows.Forms.Label lblHeading;
         private System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.Button btnAdd;
-        public System.Windows.Forms.TextBox txtFFTier1;
-        private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox txtFFTier2;
-        private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.TextBox txtFFTier3;
-        private System.Windows.Forms.Label label7;
     }
 }

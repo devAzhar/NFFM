@@ -39,9 +39,9 @@ namespace NFFM
             cmd.Parameters.Add("Description", txtDescription.Text);
             cmd.Parameters.Add("UnityOfMeasure", txtUOM.Text);
             cmd.Parameters.Add("Price", txtPrice.Text);
-            cmd.Parameters.Add("FFTier1", txtFFTier1.Text);
-            cmd.Parameters.Add("FFTier2", txtFFTier2.Text);
-            cmd.Parameters.Add("FFTier3", txtFFTier3.Text);
+            cmd.Parameters.Add("FFTier1", "0");
+            cmd.Parameters.Add("FFTier2", "0");
+            cmd.Parameters.Add("FFTier3", "0");
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();

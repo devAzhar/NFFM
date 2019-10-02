@@ -27,7 +27,7 @@ namespace NFFM
             DataTable dt = DBManager.GetDataTable(SPName);
             dataGridView1.DataSource = dt;
             dataGridView1.Columns["ShipperID"].Visible = false;
-            dataGridView1.Columns[1].Width = 303;
+            dataGridView1.Columns[1].Width = 304;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
