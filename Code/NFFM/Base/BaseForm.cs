@@ -76,6 +76,9 @@
             dataGridView1.EndEdit();
 
             var idColumnIndex = 2;
+            var billOfLandingColumnIndex = 3;
+            var quantityColumnIndex = 9;
+
             var totalRows = dataGridView1.Rows.Count;
             var lastRowIndex = totalRows - 1;
             var lastValidRowIndex = lastRowIndex - 1;
@@ -89,21 +92,22 @@
 
             for (var index = 0; index < dataGridView1.ColumnCount; index++)
             {
-                if (index != idColumnIndex)
+                if (index != idColumnIndex && index != billOfLandingColumnIndex)
                 {
                     dataGridView1[index, lastRowIndex].Value = dataGridView1[index, lastValidRowIndex].Value;
                 }
             }
-            var quantityCell = dataGridView1.Rows[lastRowIndex].Cells[9];
+            var quantityCell = dataGridView1.Rows[lastRowIndex].Cells[quantityColumnIndex];
+            var billOfLandingCell = dataGridView1.Rows[lastRowIndex].Cells[billOfLandingColumnIndex];
             quantityCell.Value = 0;
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Display);
 
-            Task.Delay(100).ContinueWith(t => RefreshGrid(dataGridView1, quantityCell));
+            Task.Delay(100).ContinueWith(t => RefreshGrid(dataGridView1, billOfLandingCell));
         }
 
-        protected void RefreshGrid(DataGridView dataGridView1, DataGridViewCell quantityCell)
+        protected void RefreshGrid(DataGridView dataGridView1, DataGridViewCell currentCell)
         {
-            dataGridView1.CurrentCell = quantityCell;
+            dataGridView1.CurrentCell = currentCell;
             dataGridView1.BeginEdit(false);
             SendKeys.SendWait("{TAB}");
             SendKeys.SendWait("+{TAB}");
