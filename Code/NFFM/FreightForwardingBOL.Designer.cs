@@ -49,7 +49,7 @@ namespace NFFM
             this.datePickerReceived = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new MyDataGridView();
+            this.dataGridView1 = new NFFM.Base.MyDataGridView();
             this.Action = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnFirst = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
@@ -69,7 +69,7 @@ namespace NFFM
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
             this.lblHeading.Location = new System.Drawing.Point(538, 9);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(407, 28);
+            this.lblHeading.Size = new System.Drawing.Size(508, 28);
             this.lblHeading.TabIndex = 9;
             this.lblHeading.Text = "Freight Forwarding Bill of Lading Entry Form";
             // 
@@ -81,7 +81,7 @@ namespace NFFM
             this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Location = new System.Drawing.Point(1439, 74);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(130, 54);
+            this.btnDelete.Size = new System.Drawing.Size(130, 53);
             this.btnDelete.TabIndex = 8;
             this.btnDelete.Text = "&Delete Displayed Bill of Lading";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -95,7 +95,7 @@ namespace NFFM
             this.btnAdd.ForeColor = System.Drawing.Color.White;
             this.btnAdd.Location = new System.Drawing.Point(1326, 74);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(107, 54);
+            this.btnAdd.Size = new System.Drawing.Size(107, 53);
             this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "&Add a New Bill of Lading";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -141,9 +141,9 @@ namespace NFFM
             this.btnSalesCode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSalesCode.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalesCode.ForeColor = System.Drawing.Color.White;
-            this.btnSalesCode.Location = new System.Drawing.Point(1439, 11);
+            this.btnSalesCode.Location = new System.Drawing.Point(1439, 12);
             this.btnSalesCode.Name = "btnSalesCode";
-            this.btnSalesCode.Size = new System.Drawing.Size(130, 54);
+            this.btnSalesCode.Size = new System.Drawing.Size(130, 53);
             this.btnSalesCode.TabIndex = 32;
             this.btnSalesCode.Text = "Add Sales C&ode";
             this.btnSalesCode.UseVisualStyleBackColor = false;
@@ -258,7 +258,7 @@ namespace NFFM
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(247, 57);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(171, 24);
+            this.label2.Size = new System.Drawing.Size(154, 24);
             this.label2.TabIndex = 22;
             this.label2.Text = "Shipped &Date:";
             // 
@@ -328,7 +328,7 @@ namespace NFFM
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(320, 778);
+            this.btnNext.Location = new System.Drawing.Point(515, 778);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(28, 33);
             this.btnNext.TabIndex = 25;
@@ -338,7 +338,7 @@ namespace NFFM
             // 
             // btnLast
             // 
-            this.btnLast.Location = new System.Drawing.Point(354, 778);
+            this.btnLast.Location = new System.Drawing.Point(549, 778);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(33, 33);
             this.btnLast.TabIndex = 26;
@@ -351,7 +351,7 @@ namespace NFFM
             this.txtRecords.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRecords.Location = new System.Drawing.Point(96, 778);
             this.txtRecords.Name = "txtRecords";
-            this.txtRecords.Size = new System.Drawing.Size(218, 33);
+            this.txtRecords.Size = new System.Drawing.Size(413, 33);
             this.txtRecords.TabIndex = 30;
             this.txtRecords.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -419,7 +419,6 @@ namespace NFFM
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtBatchId;
         private System.Windows.Forms.ComboBox ddlTruckerName;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnFirst;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnNext;
@@ -431,5 +430,6 @@ namespace NFFM
         private System.Windows.Forms.Button btnAddShipper;
         private System.Windows.Forms.Button btnCustomer;
         private System.Windows.Forms.Button btnSalesCode;
+        private MyDataGridView dataGridView1;
     }
 }
