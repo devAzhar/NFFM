@@ -71,6 +71,17 @@
         #endregion
 
         #region "Protected Methods"
+        protected void OntxtBatchId_KeyUp(DataGridView dataGridView, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab) && !e.Shift)
+            {
+                dataGridView.Focus();
+                SendKeys.SendWait("{TAB}");
+                SendKeys.SendWait(" ");
+                SendKeys.SendWait("{BACKSPACE}");
+            }
+        }
+
         protected virtual void CopyOverNewRow(DataGridView dataGridView1)
         {
             dataGridView1.EndEdit();

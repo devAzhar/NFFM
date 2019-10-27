@@ -626,5 +626,10 @@
             LoadData(DBManager.currentRecordId);
         }
         #endregion
+
+        private void txtBatchId_KeyUp(object sender, KeyEventArgs e)
+        {
+            OntxtBatchId_KeyUp(dataGridView1, e);
+        }
     }
 }

@@ -184,6 +184,7 @@ namespace NFFM
             this.txtBatchId.Name = "txtBatchId";
             this.txtBatchId.Size = new System.Drawing.Size(207, 29);
             this.txtBatchId.TabIndex = 29;
+            this.txtBatchId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtBatchId_KeyUp);
             this.txtBatchId.Leave += new System.EventHandler(this.txtBatchId_Leave);
             // 
             // ddlTruckerName

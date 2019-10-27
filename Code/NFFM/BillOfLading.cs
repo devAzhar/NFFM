@@ -534,12 +534,16 @@
             }
         }
 
-        private void txtBatchId_Leave(object sender, EventArgs e)
+        private void OntxtBatchId_Leave()
         {
             if (InitialDataLoaded == 1 && IsNewRecord == 0)
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", "0", txtBatchId.Text);
             }
+        }
+        private void txtBatchId_Leave(object sender, EventArgs e)
+        {
+            OntxtBatchId_Leave();
         }
 
         private void datePickerReceived_Leave(object sender, EventArgs e)
@@ -634,5 +638,10 @@
             LoadData(DBManager.currentRecordId);
         }
         #endregion
+
+        private void txtBatchId_KeyUp(object sender, KeyEventArgs e)
+        {
+            OntxtBatchId_KeyUp(dataGridView1, e);
+        }
     }
 }
