@@ -71,6 +71,17 @@
         #endregion
 
         #region "Protected Methods"
+        protected void OndataGridView1_EditingControlShowing(DataGridViewEditingControlShowingEventArgs e)
+        {
+            var control = (e.Control as ComboBox);
+
+            if (control != null)
+            {
+                control.AutoCompleteMode = AutoCompleteMode.Suggest;
+                control.AutoCompleteSource = AutoCompleteSource.ListItems;
+            }
+        }
+
         protected void OntxtBatchId_KeyUp(DataGridView dataGridView, KeyEventArgs e)
         {
             if ((e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab) && !e.Shift)

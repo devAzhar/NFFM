@@ -189,6 +189,8 @@ namespace NFFM
             // 
             // ddlTruckerName
             // 
+            this.ddlTruckerName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.ddlTruckerName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ddlTruckerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ddlTruckerName.FormattingEnabled = true;
             this.ddlTruckerName.Location = new System.Drawing.Point(877, 56);
@@ -297,6 +299,7 @@ namespace NFFM
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
+            this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
             this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 

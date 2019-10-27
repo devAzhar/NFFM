@@ -181,7 +181,10 @@
                 if (e.ColumnIndex > -1 && e.RowIndex > -1)
                 {
                     // Bind grid cell with combobox and than bind combobox with datasource.  
-                    DataGridViewComboBoxCell l_objGridDropbox = new DataGridViewComboBoxCell();
+                    var l_objGridDropbox = new DataGridViewComboBoxCell();
+                    l_objGridDropbox.AutoComplete = true;
+
+                    //l_objGridDropbox.DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton;
                     // Check the column  cell, in which it click.  
                     if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
                     {
@@ -630,6 +633,11 @@
         private void txtBatchId_KeyUp(object sender, KeyEventArgs e)
         {
             OntxtBatchId_KeyUp(dataGridView1, e);
+        }
+
+        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            OndataGridView1_EditingControlShowing(e);
         }
     }
 }
