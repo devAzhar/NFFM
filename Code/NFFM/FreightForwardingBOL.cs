@@ -331,6 +331,7 @@
 
             dataGridView1.Columns["shippingId"].Visible = false;
             dataGridView1.Columns["lineitemId"].Visible = false;
+            dataGridView1.Columns["Action"].Width = 30;
             dataGridView1.Columns["BillOfLadingNumber"].Width = 155;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
             dataGridView1.Columns["CustomerName"].Width = 320;
