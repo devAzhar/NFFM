@@ -77,8 +77,6 @@
             {
                 dataGridView.Focus();
                 SendKeys.SendWait("{TAB}");
-                SendKeys.SendWait(" ");
-                SendKeys.SendWait("{BACKSPACE}");
             }
         }
 
