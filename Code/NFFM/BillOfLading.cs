@@ -6,6 +6,7 @@
     using System.Data;
     using System.Data.SqlClient;
     using System.Drawing;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     public partial class BillOfLading : BaseForm
@@ -183,7 +184,21 @@
                     // Bind grid cell with combobox and than bind combobox with datasource.  
                     DataGridViewComboBoxCell l_objGridDropbox = new DataGridViewComboBoxCell();
                     // Check the column  cell, in which it click.  
-                    if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
+                    if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Description"))
+                    {
+                        var quantityColumnIndex = 9;
+                        var quantityCell = dataGridView1.Rows[e.RowIndex].Cells[quantityColumnIndex];
+                        //dataGridView1.CurrentCell = quantityCell;
+
+                        //Task.Delay(200).ContinueWith(t => { SendKeys.SendWait("{TAB}"); SendKeys.SendWait("{TAB}"); });
+
+                        //this.Invoke((MethodInvoker)delegate
+                        //{
+                        //    SendKeys.SendWait("{TAB}");
+                        //    SendKeys.SendWait("{TAB}");
+                        //});
+                    }
+                    else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
                     {
                         if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
                         {
