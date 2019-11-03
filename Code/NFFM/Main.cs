@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+
 namespace NFFM
 {
     public partial class Main : Form
@@ -31,7 +32,11 @@ namespace NFFM
         private void btnCustomer_Click(object sender, EventArgs e)
         {
             Customers cust = new Customers();
-            cust.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(Customers));
+            if (isFormOpen == false)
+            {
+                cust.Show();
+            }
         }
 
         private void Form1_Activated(object sender, EventArgs e)
@@ -43,43 +48,85 @@ namespace NFFM
         private void btnSalesCode_Click(object sender, EventArgs e)
         {
             SalesCode SC = new SalesCode();
-            SC.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(SalesCode));
+            if (isFormOpen == false)
+            {
+                SC.Show();
+            }
         }
 
         private void btnShipper_Click(object sender, EventArgs e)
         {
             Shipper shipper = new Shipper();
-            shipper.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(Shipper));
+            if (isFormOpen == false)
+            {
+                shipper.Show();
+            }
         }
 
         private void btnTrucker_Click(object sender, EventArgs e)
         {
             Trucker trucker = new Trucker();
-            trucker.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(Trucker));
+            if (isFormOpen == false)
+            {
+                trucker.Show();
+            }
         }
-
+        public static bool IsAlreadyOpen(Type formType)
+        {
+            bool isOpen = false;
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.GetType() == formType)
+                {
+                    DBManager.isDataLoaded = true;
+                    f.BringToFront();
+                    isOpen = true;
+                   
+                }
+            }
+            return isOpen;
+        }
         private void btnBOL_Click(object sender, EventArgs e)
         {
             BillOfLading BOL = new BillOfLading();
-            BOL.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(BillOfLading));
+            if (isFormOpen == false)
+            {
+                BOL.Show();
+            }
         }
 
         private void btnFFBOL_Click(object sender, EventArgs e)
         {
             FreightForwardingBOL FFBOL = new FreightForwardingBOL();
-            FFBOL.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(FreightForwardingBOL));
+            if (isFormOpen == false)
+            {
+                FFBOL.Show();
+            }
         }
 
         private void btnBOLReport_Click(object sender, EventArgs e)
         {
             BillOfLading_Report BOLReport = new BillOfLading_Report();
-            BOLReport.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(BillOfLading_Report));
+            if (isFormOpen == false)
+            {
+                BOLReport.Show();
+            }
         }
 
         private void btnFFBOLReport_Click(object sender, EventArgs e)
         {
             FreightForwardingBOL_Report FFBOLReport = new FreightForwardingBOL_Report();
-            FFBOLReport.Show();
+            bool isFormOpen = IsAlreadyOpen(typeof(FreightForwardingBOL_Report));
+            if (isFormOpen == false)
+            {
+                FFBOLReport.Show();
+            }
         }
     }
 }

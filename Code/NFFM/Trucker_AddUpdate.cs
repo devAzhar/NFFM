@@ -46,6 +46,10 @@ namespace NFFM
                 if(TruckerID == 0)
                 {
                     DBManager.NewTruckerId = dt.Rows[0]["TruckerID"].ToString();
+                    if (DBManager.currentRecordId == -1)
+                    {
+                        int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", "0", "", "", "", "", "", "", "", "", DBManager.NewTruckerId, "");
+                    }
                 }
             }
 

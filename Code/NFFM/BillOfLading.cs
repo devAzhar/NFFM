@@ -29,6 +29,7 @@
         private int firstReceivingId = 0;
         private int nextReceivingId = 0;
         private int lastReceivingId = 0;
+        private int pagerClicked = 0;
 
         #endregion
 
@@ -66,7 +67,73 @@
                     customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
                     shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
                     salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
+                    quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
 
+
+                    dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.White;
+                    dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.White;
+                    dataGridView1.Rows[rowIndex].Cells[5].Style.BackColor = Color.White;
+                    dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.White;
+                    dataGridView1.Rows[rowIndex].Cells[9].Style.BackColor = Color.White;
+
+                    int previousRowIndex = 0;
+                    bool incompleteFlag = false;
+                    if (rowIndex > 0)
+                    {
+                        previousRowIndex = rowIndex - 1;
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[3].Value.ToString()))
+                        {
+                            dataGridView1.Rows[previousRowIndex].Cells[3].Style.BackColor = Color.Red;
+                            incompleteFlag = true;
+                        }
+                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[4].Value.ToString()))
+                        {
+                            dataGridView1.Rows[previousRowIndex].Cells[4].Style.BackColor = Color.Red;
+                            incompleteFlag = true;
+                        }
+                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[5].Value.ToString()))
+                        {
+                            dataGridView1.Rows[previousRowIndex].Cells[5].Style.BackColor = Color.Red;
+                            incompleteFlag = true;
+                        }
+                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[6].Value.ToString()))
+                        {
+                            dataGridView1.Rows[previousRowIndex].Cells[6].Style.BackColor = Color.Red;
+                            incompleteFlag = true;
+                        }
+                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[9].Value.ToString()))
+                        {
+                            dataGridView1.Rows[previousRowIndex].Cells[9].Style.BackColor = Color.Red;
+                            incompleteFlag = true;
+                        }
+                        if (incompleteFlag)
+                        {
+                            MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
+                            return;
+                        }
+                    }
+                    //if (string.IsNullOrEmpty(billOfLading))
+                    //{
+                    //    dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.Red;
+                    //}
+                    //else if (string.IsNullOrEmpty(customerName))
+                    //{
+                    //    dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.Red;
+                    //    //dataGridView1.Rows[rowIndex].Cells[4].Style.ForeColor = Color.Yellow;
+                    //}
+                    //else if (string.IsNullOrEmpty(shipper))
+                    //{
+                    //    dataGridView1.Rows[rowIndex].Cells[5].Style.BackColor = Color.Red;
+                    //}
+                    //else if (string.IsNullOrEmpty(salesCode)) {
+                    //    dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.Red;
+                    //}
+                    //else if (string.IsNullOrEmpty(quantity))
+                    //{
+                    //    dataGridView1.Rows[rowIndex].Cells[9].Style.BackColor = Color.Red;
+                    //}
+
+                    //dataGridView1.Columns["BillOfLadingNumber"].DefaultCellStyle.BackColor = Color.Red;
                     if (columnIndex == 6)
                     {
                         var rows = dtSalesCode.Select("[Sales Code]='" + salesCode + "'");
@@ -81,7 +148,6 @@
                         }
                     }
 
-                    quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
                     string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
                     float fPrice = 0f;
                     float.TryParse(price, out fPrice);
@@ -294,8 +360,25 @@
                 }
                 if (ds.Tables[1].Rows.Count > 0)
                 {
-                    datePickerReceived.Text = ds.Tables[1].Rows[0]["ReceivedDate"].ToString();
-                    datePickerWeekEnding.Text = ds.Tables[1].Rows[0]["WeekEndingDate"].ToString();
+                    if (ds.Tables[1].Rows[0]["ReceivedDate"].ToString() == "1/1/1900 12:00:00 AM")
+                    {
+                        DayOfWeek weekStart = DayOfWeek.Monday; // or Sunday, or whenever
+                        DateTime startingDate = DateTime.Today;
+
+                        while (startingDate.DayOfWeek != weekStart)
+                            startingDate = startingDate.AddDays(-1);
+
+                        DateTime previousWeekStart = startingDate.AddDays(-7);
+                        DateTime previousWeekEnd = startingDate.AddDays(-3);
+                        txtBatchId.Text = "";
+                        datePickerReceived.Text = previousWeekStart.ToShortDateString();
+                        datePickerWeekEnding.Text = previousWeekEnd.ToShortDateString();
+                    }
+                    else
+                    {
+                        datePickerReceived.Text = ds.Tables[1].Rows[0]["ReceivedDate"].ToString();
+                        datePickerWeekEnding.Text = ds.Tables[1].Rows[0]["WeekEndingDate"].ToString();
+                    }
                     txtBatchId.Text = ds.Tables[1].Rows[0]["BatchID"].ToString();
                     ddlTruckerName.Text = ds.Tables[1].Rows[0]["Trucker"].ToString();
                     currentTruckerId = ds.Tables[1].Rows[0]["TruckerID"].ToString();
@@ -415,7 +498,7 @@
             //dataGridView1.Columns["SalesCode"].Width = 115;
             //dataGridView1.Columns["UnitOfMeasure"].Width = 150;
 
-            label1.Text = "Click a heading to sort the data.";
+            label1.Text = "";
             label1.Font = new Font(label1.Font, FontStyle.Regular);
             label1.Font = new System.Drawing.Font(label1.Font.FontFamily.Name, 10);
             label1.BackColor = Color.Transparent;
@@ -431,6 +514,7 @@
                 dataGridView1.Columns["Shipper"].ReadOnly = true;
                 dataGridView1.Columns["SalesCode"].ReadOnly = true;
                 dataGridView1.Columns["Qty"].ReadOnly = true;
+                pagerClicked = 0;
             }
         }
 
@@ -496,6 +580,17 @@
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            DayOfWeek weekStart = DayOfWeek.Monday; // or Sunday, or whenever
+            DateTime startingDate = DateTime.Today;
+
+            while (startingDate.DayOfWeek != weekStart)
+                startingDate = startingDate.AddDays(-1);
+
+            DateTime previousWeekStart = startingDate.AddDays(-7);
+            DateTime previousWeekEnd = startingDate.AddDays(-3);
+            txtBatchId.Text = "";
+            datePickerReceived.Text = previousWeekStart.ToShortDateString();
+            datePickerWeekEnding.Text = previousWeekEnd.ToShortDateString();
             currentReceivingId = "0";
             currentTruckerId = "0";
             ddlTruckerName.Text = "";
@@ -511,21 +606,25 @@
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
+            pagerClicked = 1;
             LoadData(previousReceivingId);
         }
 
         private void btnFirst_Click(object sender, EventArgs e)
         {
+            pagerClicked = 1;
             LoadData(firstReceivingId);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            pagerClicked = 1;
             LoadData(nextReceivingId);
         }
 
         private void btnLast_Click(object sender, EventArgs e)
         {
+            pagerClicked = 1;
             LoadData(lastReceivingId);
         }
 
@@ -545,7 +644,7 @@
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", truckerId, "");
             }
-            else if (currentTruckerId != truckerId && truckerId != "1" && InitialDataLoaded == 1 && IsNewRecord == 1)
+            else if (currentTruckerId != truckerId && truckerId != "1" && InitialDataLoaded == 1 && IsNewRecord == 1 && pagerClicked == 0)
             {
                 IsNewRecord = 0;
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", datePickerReceived.Text, datePickerWeekEnding.Text, truckerId, txtBatchId.Text);

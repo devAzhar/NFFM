@@ -106,7 +106,7 @@ namespace NFFM
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(640, 148);
+            this.label1.Location = new System.Drawing.Point(578, 124);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(264, 21);
             this.label1.TabIndex = 21;
@@ -123,6 +123,7 @@ namespace NFFM
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.datePickerWeekEnding);
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.datePickerReceived);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
@@ -132,7 +133,7 @@ namespace NFFM
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1604, 145);
+            this.panel1.Size = new System.Drawing.Size(1596, 148);
             this.panel1.TabIndex = 20;
             // 
             // btnSalesCode
@@ -288,12 +289,12 @@ namespace NFFM
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 145);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 148);
             this.dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowTemplate.Height = 45;
-            this.dataGridView1.Size = new System.Drawing.Size(1604, 700);
+            this.dataGridView1.Size = new System.Drawing.Size(1596, 697);
             this.dataGridView1.TabIndex = 22;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
@@ -385,7 +386,7 @@ namespace NFFM
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1604, 845);
+            this.ClientSize = new System.Drawing.Size(1596, 845);
             this.Controls.Add(this.txtTruckingTotal);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtRecords);
@@ -394,7 +395,6 @@ namespace NFFM
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnFirst);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Name = "BillOfLading";
             this.Text = "BillOfLading";
