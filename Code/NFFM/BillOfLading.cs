@@ -108,10 +108,15 @@
                         }
                         if (incompleteFlag)
                         {
-                            MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
-                            return;
+                            if (!this.IsAlertShown)
+                            {
+                                this.IsAlertShown = true;
+                                var res = MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
+                                return;
+                            }
                         }
                     }
+
                     //if (string.IsNullOrEmpty(billOfLading))
                     //{
                     //    dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.Red;
@@ -516,6 +521,11 @@
                 dataGridView1.Columns["Qty"].ReadOnly = true;
                 pagerClicked = 0;
             }
+            else
+            {
+                //Foccus to the Bill of Lading
+                //SendKeys.SendWait("{TAB}");
+            }
         }
 
         protected override void RecalculateTotals()
@@ -643,6 +653,7 @@
             if (currentTruckerId != truckerId && currentTruckerId != "0" && InitialDataLoaded == 1 && IsNewRecord == 0)
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", truckerId, "");
+                //SendKeys.SendWait("{TAB}"); //Foccus to the Bill of Lading
             }
             else if (currentTruckerId != truckerId && truckerId != "1" && InitialDataLoaded == 1 && IsNewRecord == 1 && pagerClicked == 0)
             {
@@ -659,6 +670,7 @@
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", "0", txtBatchId.Text);
             }
         }
+
         private void txtBatchId_Leave(object sender, EventArgs e)
         {
             OntxtBatchId_Leave();
@@ -765,6 +777,17 @@
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             OndataGridView1_EditingControlShowing(e);
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            var BOLReport = new BillOfLading_Report();
+            var isFormOpen = IsAlreadyOpen(typeof(BillOfLading_Report));
+
+            if (!isFormOpen)
+            {
+                BOLReport.Show();
+            }
         }
     }
 }

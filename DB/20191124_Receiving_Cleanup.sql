@@ -1,0 +1,3 @@
+drop table tblShippingInfo
+drop table tblLineItems_Shipping
+drop table tblShippingInfo_LineItems
