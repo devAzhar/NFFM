@@ -22,6 +22,22 @@
         protected DataTable dtSalesCode;
         #endregion
 
+        protected static bool IsAlreadyOpen(Type formType)
+        {
+            bool isOpen = false;
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.GetType() == formType)
+                {
+                    f.BringToFront();
+                    isOpen = true;
+                    break;
+                }
+            }
+            return isOpen;
+        }
+        protected bool IsAlertShown { get; set; } = false;
+
         #region "Virtual Members"
         protected virtual void OnComboBoxGeneralEnter(object sender)
         {
@@ -81,13 +97,22 @@
                 control.AutoCompleteSource = AutoCompleteSource.ListItems;
             }
         }
+        protected void OnDataGridFocus(DataGridView dataGridView, bool focusFirstField = false)
+        {
+            dataGridView.Focus();
+            SendKeys.SendWait("{TAB}");
+
+            if(focusFirstField)
+            {
+                SendKeys.SendWait("{TAB}");
+            }
+        }
 
         protected void OntxtBatchId_KeyUp(DataGridView dataGridView, KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab) && !e.Shift)
+            if ((e.KeyCode == Keys.Enter) && !e.Shift)
             {
-                dataGridView.Focus();
-                SendKeys.SendWait("{TAB}");
+                OnDataGridFocus(dataGridView);
             }
         }
 

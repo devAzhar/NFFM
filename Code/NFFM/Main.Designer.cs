@@ -39,9 +39,7 @@
             this.btnShipper = new System.Windows.Forms.Button();
             this.btnTrucker = new System.Windows.Forms.Button();
             this.btnBOL = new System.Windows.Forms.Button();
-            this.btnFFBOL = new System.Windows.Forms.Button();
             this.btnBOLReport = new System.Windows.Forms.Button();
-            this.btnFFBOLReport = new System.Windows.Forms.Button();
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tblCustomersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nFFM_be_sqlDataSet1)).BeginInit();
@@ -69,7 +67,7 @@
             this.btnCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCustomer.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnCustomer.Location = new System.Drawing.Point(26, 124);
+            this.btnCustomer.Location = new System.Drawing.Point(140, 118);
             this.btnCustomer.Name = "btnCustomer";
             this.btnCustomer.Size = new System.Drawing.Size(248, 109);
             this.btnCustomer.TabIndex = 3;
@@ -104,7 +102,7 @@
             this.btnSalesCode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSalesCode.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalesCode.ForeColor = System.Drawing.Color.White;
-            this.btnSalesCode.Location = new System.Drawing.Point(283, 124);
+            this.btnSalesCode.Location = new System.Drawing.Point(397, 118);
             this.btnSalesCode.Name = "btnSalesCode";
             this.btnSalesCode.Size = new System.Drawing.Size(248, 109);
             this.btnSalesCode.TabIndex = 20;
@@ -118,7 +116,7 @@
             this.btnShipper.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnShipper.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShipper.ForeColor = System.Drawing.Color.White;
-            this.btnShipper.Location = new System.Drawing.Point(540, 124);
+            this.btnShipper.Location = new System.Drawing.Point(654, 118);
             this.btnShipper.Name = "btnShipper";
             this.btnShipper.Size = new System.Drawing.Size(248, 109);
             this.btnShipper.TabIndex = 21;
@@ -132,7 +130,7 @@
             this.btnTrucker.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnTrucker.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTrucker.ForeColor = System.Drawing.Color.White;
-            this.btnTrucker.Location = new System.Drawing.Point(797, 124);
+            this.btnTrucker.Location = new System.Drawing.Point(140, 244);
             this.btnTrucker.Name = "btnTrucker";
             this.btnTrucker.Size = new System.Drawing.Size(248, 109);
             this.btnTrucker.TabIndex = 22;
@@ -146,7 +144,7 @@
             this.btnBOL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnBOL.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBOL.ForeColor = System.Drawing.Color.White;
-            this.btnBOL.Location = new System.Drawing.Point(26, 250);
+            this.btnBOL.Location = new System.Drawing.Point(397, 244);
             this.btnBOL.Name = "btnBOL";
             this.btnBOL.Size = new System.Drawing.Size(248, 109);
             this.btnBOL.TabIndex = 23;
@@ -154,47 +152,19 @@
             this.btnBOL.UseVisualStyleBackColor = false;
             this.btnBOL.Click += new System.EventHandler(this.btnBOL_Click);
             // 
-            // btnFFBOL
-            // 
-            this.btnFFBOL.BackColor = System.Drawing.Color.SeaGreen;
-            this.btnFFBOL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnFFBOL.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFFBOL.ForeColor = System.Drawing.Color.White;
-            this.btnFFBOL.Location = new System.Drawing.Point(283, 250);
-            this.btnFFBOL.Name = "btnFFBOL";
-            this.btnFFBOL.Size = new System.Drawing.Size(248, 109);
-            this.btnFFBOL.TabIndex = 24;
-            this.btnFFBOL.Text = "&Freight Forwarding Bill of Lading";
-            this.btnFFBOL.UseVisualStyleBackColor = false;
-            this.btnFFBOL.Click += new System.EventHandler(this.btnFFBOL_Click);
-            // 
             // btnBOLReport
             // 
             this.btnBOLReport.BackColor = System.Drawing.Color.SeaGreen;
             this.btnBOLReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnBOLReport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBOLReport.ForeColor = System.Drawing.Color.White;
-            this.btnBOLReport.Location = new System.Drawing.Point(540, 250);
+            this.btnBOLReport.Location = new System.Drawing.Point(654, 244);
             this.btnBOLReport.Name = "btnBOLReport";
             this.btnBOLReport.Size = new System.Drawing.Size(248, 109);
             this.btnBOLReport.TabIndex = 25;
             this.btnBOLReport.Text = "Receiving &Bill of Lading Report";
             this.btnBOLReport.UseVisualStyleBackColor = false;
             this.btnBOLReport.Click += new System.EventHandler(this.btnBOLReport_Click);
-            // 
-            // btnFFBOLReport
-            // 
-            this.btnFFBOLReport.BackColor = System.Drawing.Color.SeaGreen;
-            this.btnFFBOLReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnFFBOLReport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFFBOLReport.ForeColor = System.Drawing.Color.White;
-            this.btnFFBOLReport.Location = new System.Drawing.Point(797, 250);
-            this.btnFFBOLReport.Name = "btnFFBOLReport";
-            this.btnFFBOLReport.Size = new System.Drawing.Size(248, 109);
-            this.btnFFBOLReport.TabIndex = 26;
-            this.btnFFBOLReport.Text = "Freight F&orwarding Bill of Lading Report";
-            this.btnFFBOLReport.UseVisualStyleBackColor = false;
-            this.btnFFBOLReport.Click += new System.EventHandler(this.btnFFBOLReport_Click);
             // 
             // form1BindingSource
             // 
@@ -205,9 +175,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(1069, 389);
-            this.Controls.Add(this.btnFFBOLReport);
             this.Controls.Add(this.btnBOLReport);
-            this.Controls.Add(this.btnFFBOL);
             this.Controls.Add(this.btnBOL);
             this.Controls.Add(this.btnTrucker);
             this.Controls.Add(this.btnShipper);
@@ -241,9 +209,7 @@
         private System.Windows.Forms.Button btnShipper;
         private System.Windows.Forms.Button btnTrucker;
         private System.Windows.Forms.Button btnBOL;
-        private System.Windows.Forms.Button btnFFBOL;
         private System.Windows.Forms.Button btnBOLReport;
-        private System.Windows.Forms.Button btnFFBOLReport;
     }
 }
 

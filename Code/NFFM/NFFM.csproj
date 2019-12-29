@@ -12,6 +12,24 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>\\Mac\Home\Desktop\Export\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +49,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1A69962CF5F5E88CA7B781D2FCCBA4790DF4B804</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>NFFM_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -58,29 +88,29 @@
     <Compile Include="Base\MyDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FreightForwardingBOL_Report.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FreightForwardingBOL_Report.Designer.cs">
-      <DependentUpon>FreightForwardingBOL_Report.cs</DependentUpon>
-    </Compile>
     <Compile Include="BillOfLading_Report.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BillOfLading_Report.Designer.cs">
       <DependentUpon>BillOfLading_Report.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
     <Compile Include="FreightForwardingBOL.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FreightForwardingBOL.Designer.cs">
       <DependentUpon>FreightForwardingBOL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FreightForwardingBOL_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FreightForwardingBOL_Report.Designer.cs">
+      <DependentUpon>FreightForwardingBOL_Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="BillOfLading.cs">
       <SubType>Form</SubType>
@@ -149,17 +179,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FreightForwardingBOL_Report.resx">
-      <DependentUpon>FreightForwardingBOL_Report.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="BillOfLading_Report.resx">
       <DependentUpon>BillOfLading_Report.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FreightForwardingBOL.resx">
       <DependentUpon>FreightForwardingBOL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FreightForwardingBOL_Report.resx">
+      <DependentUpon>FreightForwardingBOL_Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BillOfLading.resx">
       <DependentUpon>BillOfLading.cs</DependentUpon>
@@ -235,6 +265,18 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

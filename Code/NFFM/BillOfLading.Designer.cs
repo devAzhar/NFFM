@@ -38,6 +38,7 @@ namespace NFFM
             this.btnAdd = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnReport = new System.Windows.Forms.Button();
             this.btnSalesCode = new System.Windows.Forms.Button();
             this.btnCustomer = new System.Windows.Forms.Button();
             this.btnAddShipper = new System.Windows.Forms.Button();
@@ -115,6 +116,7 @@ namespace NFFM
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Silver;
+            this.panel1.Controls.Add(this.btnReport);
             this.panel1.Controls.Add(this.btnSalesCode);
             this.panel1.Controls.Add(this.btnCustomer);
             this.panel1.Controls.Add(this.btnAddShipper);
@@ -135,6 +137,20 @@ namespace NFFM
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1596, 148);
             this.panel1.TabIndex = 20;
+            // 
+            // btnReport
+            // 
+            this.btnReport.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnReport.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReport.ForeColor = System.Drawing.Color.White;
+            this.btnReport.Location = new System.Drawing.Point(1219, 76);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(107, 54);
+            this.btnReport.TabIndex = 33;
+            this.btnReport.Text = "&Report";
+            this.btnReport.UseVisualStyleBackColor = false;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // btnSalesCode
             // 
@@ -190,8 +206,8 @@ namespace NFFM
             // 
             // ddlTruckerName
             // 
-            this.ddlTruckerName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.ddlTruckerName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            //this.ddlTruckerName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            //this.ddlTruckerName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ddlTruckerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ddlTruckerName.FormattingEnabled = true;
             this.ddlTruckerName.Location = new System.Drawing.Point(968, 60);
@@ -436,5 +452,6 @@ namespace NFFM
         private System.Windows.Forms.Button btnCustomer;
         private System.Windows.Forms.Button btnSalesCode;
         private MyDataGridView dataGridView1;
+        private System.Windows.Forms.Button btnReport;
     }
 }
