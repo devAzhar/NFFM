@@ -65,6 +65,7 @@
             this.txtTruckingTotal = new System.Windows.Forms.TextBox();
             this.BOL_PrintPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.BOL_Print = new System.Drawing.Printing.PrintDocument();
+            this.btnCreateReport = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -99,6 +100,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Silver;
+            this.panel1.Controls.Add(this.btnCreateReport);
             this.panel1.Controls.Add(this.groupBox5);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.groupBox4);
@@ -456,6 +458,20 @@
             // 
             this.BOL_Print.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.BOL_Print_PrintPage);
             // 
+            // btnCreateReport
+            // 
+            this.btnCreateReport.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnCreateReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCreateReport.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCreateReport.ForeColor = System.Drawing.Color.White;
+            this.btnCreateReport.Location = new System.Drawing.Point(1386, 60);
+            this.btnCreateReport.Name = "btnCreateReport";
+            this.btnCreateReport.Size = new System.Drawing.Size(130, 49);
+            this.btnCreateReport.TabIndex = 33;
+            this.btnCreateReport.Text = "&Create Report";
+            this.btnCreateReport.UseVisualStyleBackColor = false;
+            this.btnCreateReport.Click += new System.EventHandler(this.btnCreateReport_Click_1);
+            // 
             // BillOfLading_Report
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -523,5 +539,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PrintPreviewDialog BOL_PrintPreviewDialog;
         private System.Drawing.Printing.PrintDocument BOL_Print;
+        private System.Windows.Forms.Button btnCreateReport;
     }
 }

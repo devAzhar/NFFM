@@ -45,7 +45,7 @@ namespace NFFM
         string selectedReceivedDate = "0";
         string selectedBatch = "0";
         string selectedBillOfLading = "0";
-        string selectedCustomerName = "0"; 
+        string selectedCustomerName = "0";
         int previousReceivingId = 0;
         int firstReceivingId = 0;
         int nextReceivingId = 0;
@@ -68,8 +68,8 @@ namespace NFFM
         bool IsInvoiceChecked = true;
         bool IsBillOfLadingChecked = true;
         bool IsCustomerChecked = true;
-       
-        
+
+
         public void LoadData(string receivedDate, string batchId, string invoideNumbers, string billOfLadingNumber, string customerName)
         {
             String SPName = "BillOfLading_Report_GetAll";
@@ -80,10 +80,10 @@ namespace NFFM
             //cmd.CommandText = SPName;
             //cmd.Parameters.Add("receivingId", receivingId);
             //cmd.CommandType = CommandType.StoredProcedure;
-            DataSet ds = DBManager.GetDataSet_Report(SPName, receivedDate, batchId, invoideNumbers, billOfLadingNumber, customerName);
+            DataSet ds = DBManager.GetDataSet_Report(SPName, receivedDate, batchId, invoideNumbers, billOfLadingNumber, customerName, false);
             // DataSet ds = DBManager.GetDataSet(SPName, cmd);
 
-            
+
 
             DataTable dtLineItems = ds.Tables[0];
             dtReceived = ds.Tables[1];
@@ -123,7 +123,7 @@ namespace NFFM
                     ddlReceived.DisplayMember = "Value";
                     ddlReceived.ValueMember = "Key";
                 }
-               
+
                 if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
                 {
                     for (int i = 0; i < dtBatch.Rows.Count; i++)
@@ -178,22 +178,49 @@ namespace NFFM
         {
             string receivedDateId = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Key;
             string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
-          
-            if (selectedReceivedDate != receivedDate && selectedReceivedDate != "0" && initialDataLoaded == 1)
+
+            string recDate = receivedDate;
+            string batchId = selectedBatch;
+            string bol = selectedBillOfLading;
+            string custName = selectedCustomerName;
+            selectedReceivedDate = receivedDate;
+
+            if (rbtReceivedAll.Checked)
             {
-                string batchId = selectedBatch;
-                if (rbtBatchAll.Checked)
-                {
-                    batchId = "";
-                }
-                string BOL = selectedBillOfLading;
-                if (rbtBillOfLadingAll.Checked)
-                {
-                    BOL = "";
-                }
-                selectedReceivedDate = receivedDate;
-                LoadData(receivedDate, batchId, "", BOL, "");
+                recDate = "";
             }
+            if (rbtBatchAll.Checked)
+            {
+                batchId = "";
+            }
+            if (rbtBillOfLadingAll.Checked)
+            {
+                bol = "";
+            }
+            if (rbtCustomerAll.Checked)
+            {
+                custName = "";
+            }
+
+
+            //            DataSet ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName);
+
+            LoadData(recDate, batchId, "", bol, custName);
+            //if (selectedReceivedDate != receivedDate && selectedReceivedDate != "0" && initialDataLoaded == 1)
+            //{
+            //    string batchId = selectedBatch;
+            //    if (rbtBatchAll.Checked)
+            //    {
+            //        batchId = "";
+            //    }
+            //    string BOL = selectedBillOfLading;
+            //    if (rbtBillOfLadingAll.Checked)
+            //    {
+            //        BOL = "";
+            //    }
+            //    selectedReceivedDate = receivedDate;
+            //    LoadData(receivedDate, batchId, "", BOL, "");
+            //}
         }
         private void ddlBatch_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -213,7 +240,7 @@ namespace NFFM
                 }
                 selectedBatch = batchId;
                 LoadData(recDate, selectedBatch, "", BOL, "");
-                
+
             }
         }
         private void ddlBillOfLading_SelectedIndexChanged(object sender, EventArgs e)
@@ -235,7 +262,7 @@ namespace NFFM
                 }
                 selectedBillOfLading = BillOfLading;
                 LoadData(recDate, batchId, "", selectedBillOfLading, "");
-                
+
             }
         }
         private void ddlCustomer_SelectedIndexChanged(object sender, EventArgs e)
@@ -285,8 +312,8 @@ namespace NFFM
             dataGridView1.Columns["BatchID"].HeaderText = "Batch ID";
             dataGridView1.Columns["BatchID"].Width = 110;
 
-            dataGridView1.Columns["receivingId"].Visible = false;
-            dataGridView1.Columns["lineitemId"].Visible = false;
+            //dataGridView1.Columns["receivingId"].Visible = false;
+            //dataGridView1.Columns["lineitemId"].Visible = false;
             dataGridView1.Columns["BillOfLadingNumber"].Width = 150;
             dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
             dataGridView1.Columns["InvoiceNumber"].Width = 110;
@@ -381,7 +408,7 @@ namespace NFFM
             rbtBillOfLading.Checked = true;
             //ddlReceived.Text = "";
             ddlBillOfLading.Enabled = true;
-            
+
         }
         private void rbtCustomer_Click(object sender, EventArgs e)
         {
@@ -396,12 +423,25 @@ namespace NFFM
             rbtReceived.Checked = false;
             //ddlReceived.Text = "";
             ddlReceived.Enabled = false;
-            string batchId = selectedBatch;
+
+            string batchId = selectedReceivedDate;
+            string bol = selectedBillOfLading;
+            string custName = selectedCustomerName;
+
             if (rbtBatchAll.Checked)
             {
                 batchId = "";
             }
-            LoadData("", batchId, "", "", "");
+            if (rbtBillOfLadingAll.Checked)
+            {
+                bol = "";
+            }
+            if (rbtCustomerAll.Checked)
+            {
+                custName = "";
+            }
+
+            LoadData("", batchId, "", bol, custName);
         }
 
         private void rbtBatchAll_Click(object sender, EventArgs e)
@@ -410,13 +450,26 @@ namespace NFFM
             rbtBatch.Checked = false;
             //ddlReceived.Text = "";
             ddlBatch.Enabled = false;
+
             string recDate = selectedReceivedDate;
+            string bol = selectedBillOfLading;
+            string custName = selectedCustomerName;
+
             if (rbtReceivedAll.Checked)
             {
                 recDate = "";
             }
-            LoadData(recDate, "", "", "", "");
-            
+            if (rbtBillOfLadingAll.Checked)
+            {
+                bol = "";
+            }
+            if (rbtCustomerAll.Checked)
+            {
+                custName = "";
+            }
+
+            LoadData(recDate, "", "", bol, custName);
+
         }
         private void rbtBillOfLadingAll_Click(object sender, EventArgs e)
         {
@@ -424,18 +477,26 @@ namespace NFFM
             rbtBillOfLading.Checked = false;
             //ddlReceived.Text = "";
             ddlBillOfLading.Enabled = false;
+
             string recDate = selectedReceivedDate;
+            string batchId = selectedBatch;
+            string custName = selectedCustomerName;
+
             if (rbtReceivedAll.Checked)
             {
                 recDate = "";
             }
-            string batchId = selectedBatch;
             if (rbtBatchAll.Checked)
             {
                 batchId = "";
             }
-            LoadData(recDate, batchId, "", "", "");
-            
+            if (rbtCustomerAll.Checked)
+            {
+                custName = "";
+            }
+
+            LoadData(recDate, batchId, "", "", custName);
+
         }
         private void rbtCustomerAll_Click(object sender, EventArgs e)
         {
@@ -443,86 +504,93 @@ namespace NFFM
             rbtCustomer.Checked = false;
             //ddlReceived.Text = "";
             ddlCustomer.Enabled = false;
+
             string recDate = selectedReceivedDate;
+            string batchId = selectedBatch;
+            string BOL = selectedBillOfLading;
+
             if (rbtReceivedAll.Checked)
             {
                 recDate = "";
             }
-            string batchId = selectedBatch;
             if (rbtBatchAll.Checked)
             {
                 batchId = "";
             }
-            string BOL = selectedBillOfLading;
             if (rbtBillOfLadingAll.Checked)
             {
                 BOL = "";
             }
             LoadData(recDate, batchId, "", BOL, "");
         }
-        Bitmap bitmap;
         private void btnCreateReport_Click(object sender, EventArgs e)
         {
-            //BOL_PrintPreviewDialog.Document = BOL_Print;
-            //BOL_PrintPreviewDialog.ShowDialog();
-
-
-            int height = dataGridView1.Height;
-            int Width = dataGridView1.Width;
-            dataGridView1.Height = dataGridView1.RowCount * dataGridView1.RowTemplate.Height;
-
-            //Create a Bitmap and draw the DataGridView on it.
-            bitmap = new Bitmap(this.dataGridView1.Width, this.dataGridView1.Height);
-            dataGridView1.DrawToBitmap(bitmap, new Rectangle(0, 0, this.dataGridView1.Width, this.dataGridView1.Height));
-
-            BOL_Print.DefaultPageSettings.Landscape = true;
-
-            //BOL_Print.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("custom", 1330, height);
-
-            //Resize DataGridView back to original height.
-            dataGridView1.Height = height;
-            //Show the Print Preview Dialog.
-            BOL_PrintPreviewDialog.Document = BOL_Print;
-            BOL_PrintPreviewDialog.PrintPreviewControl.Zoom = 1;
-            BOL_PrintPreviewDialog.ShowDialog();
-
-            //Bitmap bitmap;
-
-            ////Resize DataGridView to full height.
-            //int height = dataGridView1.Height;
-            //dataGridView1.Height = dataGridView1.RowCount * dataGridView1.RowTemplate.Height;
-
-            ////Create a Bitmap and draw the DataGridView on it.
-            //bitmap = new Bitmap(this.dataGridView1.Width, this.dataGridView1.Height);
-            //dataGridView1.DrawToBitmap(bitmap, new Rectangle(0, 0, this.dataGridView1.Width, this.dataGridView1.Height));
-
-            ////Resize DataGridView back to original height.
-            //dataGridView1.Height = height;
-
-            ////Show the Print Preview Dialog.
-            //printPreviewDialog1.Document = printDocument1;
-            //printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-            //printPreviewDialog1.ShowDialog();
-
         }
 
         private void BOL_Print_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            e.Graphics.DrawImage(bitmap, 0, 0);
         }
-        //private void dataGridView1_Paint(object sender, PaintEventArgs e)
-        //{
 
-        //    //DataGridView datagridview1 = (DataGridView)sender;
+        private void btnCreateReport_Click_1(object sender, EventArgs e)
+        {
+            label1.Text = "Data is Exporting in Excel, Please wait...";
+            label1.ForeColor = Color.Red;
+            label1.Font = new Font(label1.Font, label1.Font.Style | FontStyle.Bold);
+            String SPName = "BillOfLading_Report_GetAll";
 
-        //    //if (datagridview1.Rows.Count == 1)
-        //    //{
-        //    //    using (Graphics g = e.Graphics)
-        //    //    {
-        //    //        g.FillRectangle(Brushes.Yellow, new Rectangle(new Point(), new Size(datagridview1.Width, 25)));
-        //    //        g.DrawString("Select a Trucker Name to continue.", new Font("Arial", 12), Brushes.Red, new PointF(3, 3));
-        //    //    }
-        //    //}
-        //}
+            string recDate = selectedReceivedDate;
+            string batchId = selectedBatch;
+            string bol = selectedBillOfLading;
+            string custName = selectedCustomerName;
+
+            if (rbtReceivedAll.Checked)
+            {
+                recDate = "";
+            }
+            if (rbtBatchAll.Checked)
+            {
+                batchId = "";
+            }
+            if (rbtBillOfLadingAll.Checked)
+            {
+                bol = "";
+            }
+            if (rbtCustomerAll.Checked)
+            {
+                custName = "";
+            }
+            DataSet ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName, true);
+
+            Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+            Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+            DataTable dtBOLReport = ds.Tables[0];
+
+            worksheet = workbook.Sheets["Sheet1"];
+            worksheet = workbook.ActiveSheet;
+            worksheet.Name = "BillOfLading";
+            for (int i = 1; i < dtBOLReport.Columns.Count + 1; i++)
+            {
+                worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
+            }
+            for (int i = 0; i < dtBOLReport.Rows.Count - 1; i++) // tmep - 1
+            {
+                for (int j = 0; j < dtBOLReport.Columns.Count; j++)
+                {
+                    worksheet.Cells[i + 2, j + 1] = dtBOLReport.Rows[i][j];
+                }
+            }
+            var saveFileDialogue = new SaveFileDialog();
+            saveFileDialogue.FileName = "BillOfLadingReport_" + DateTime.Now.Ticks;
+            saveFileDialogue.DefaultExt = ".xlsx";
+            if (saveFileDialogue.ShowDialog() == DialogResult.OK)
+            {
+                workbook.SaveAs(saveFileDialogue.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+            }
+            label1.Text = "Click a heading to sort the data.";
+            label1.ForeColor = Color.Black;
+            label1.Font = new Font(label1.Font, label1.Font.Style & ~FontStyle.Bold);
+            app.Quit();
+        }
     }
 }

@@ -65,7 +65,7 @@ namespace NFFM
 
             return ds;
         }
-       public static DataSet GetDataSet_Report(string SPName, string receivedDate,string batchId,string invoiceNumber, string billOfLadingNumber, string customerName)
+       public static DataSet GetDataSet_Report(string SPName, string receivedDate,string batchId,string invoiceNumber, string billOfLadingNumber, string customerName, bool ExportToExcel)
         {
             String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
             SqlConnection conn = new SqlConnection(str);
@@ -75,6 +75,7 @@ namespace NFFM
             cmd.Parameters.AddWithValue("batchId", batchId);
             cmd.Parameters.AddWithValue("billOfLadingNumber", billOfLadingNumber);
             cmd.Parameters.AddWithValue("customerName", customerName);
+            cmd.Parameters.AddWithValue("ExportToExcel", ExportToExcel); 
             cmd.CommandText = SPName;
             cmd.CommandType = CommandType.StoredProcedure;
             da.SelectCommand = cmd;
