@@ -94,6 +94,7 @@
     <Compile Include="BillOfLading_Report.Designer.cs">
       <DependentUpon>BillOfLading_Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="CSV\DataTableExtensions.cs" />
     <Compile Include="FreightForwardingBOL.cs">
       <SubType>Form</SubType>
     </Compile>

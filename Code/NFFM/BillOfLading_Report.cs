@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace NFFM
+﻿namespace NFFM
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     public partial class BillOfLading_Report : Form
     {
         public BillOfLading_Report()
@@ -39,6 +35,7 @@ namespace NFFM
             ddlCustomer.Text = "";
             ddlCustomer.Enabled = false;
         }
+
         int initialDataLoaded = 0;
         int isButtonClicked = 0;
         string currentReceivingId = "0";
@@ -559,38 +556,43 @@ namespace NFFM
             {
                 custName = "";
             }
-            DataSet ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName, true);
-
-            Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
-            Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
-            DataTable dtBOLReport = ds.Tables[0];
-
-            worksheet = workbook.Sheets["Sheet1"];
-            worksheet = workbook.ActiveSheet;
-            worksheet.Name = "BillOfLading";
-            for (int i = 1; i < dtBOLReport.Columns.Count + 1; i++)
+            using (var ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName, true))
             {
-                worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
-            }
-            for (int i = 0; i < dtBOLReport.Rows.Count - 1; i++) // tmep - 1
-            {
-                for (int j = 0; j < dtBOLReport.Columns.Count; j++)
+                var dtBOLReport = ds.Tables[0];
+
+                //Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
+                //Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+                //Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+
+                //worksheet = workbook.Sheets["Sheet1"];
+                //worksheet = workbook.ActiveSheet;
+                //worksheet.Name = "BillOfLading";
+                //for (int i = 1; i < dtBOLReport.Columns.Count + 1; i++)
+                //{
+                //    worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
+                //}
+                //for (int i = 0; i < dtBOLReport.Rows.Count - 1; i++) // tmep - 1
+                //{
+                //    for (int j = 0; j < dtBOLReport.Columns.Count; j++)
+                //    {
+                //        worksheet.Cells[i + 2, j + 1] = dtBOLReport.Rows[i][j];
+                //    }
+                //}
+                var saveFileDialogue = new SaveFileDialog();
+                saveFileDialogue.FileName = "BillOfLadingReport_" + DateTime.Now.Ticks;
+                saveFileDialogue.DefaultExt = ".csv";
+
+                if (saveFileDialogue.ShowDialog() == DialogResult.OK)
                 {
-                    worksheet.Cells[i + 2, j + 1] = dtBOLReport.Rows[i][j];
+                    dtBOLReport.WriteToCsvFile(saveFileDialogue.FileName);
+                    // workbook.SaveAs(saveFileDialogue.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
                 }
             }
-            var saveFileDialogue = new SaveFileDialog();
-            saveFileDialogue.FileName = "BillOfLadingReport_" + DateTime.Now.Ticks;
-            saveFileDialogue.DefaultExt = ".xlsx";
-            if (saveFileDialogue.ShowDialog() == DialogResult.OK)
-            {
-                workbook.SaveAs(saveFileDialogue.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-            }
+
             label1.Text = "Click a heading to sort the data.";
             label1.ForeColor = Color.Black;
             label1.Font = new Font(label1.Font, label1.Font.Style & ~FontStyle.Bold);
-            app.Quit();
+            //app.Quit();
         }
     }
 }
