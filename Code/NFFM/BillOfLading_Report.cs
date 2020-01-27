@@ -579,7 +579,7 @@
                 //    }
                 //}
                 var saveFileDialogue = new SaveFileDialog();
-                saveFileDialogue.FileName = "BillOfLadingReport_" + DateTime.Now.Ticks;
+                saveFileDialogue.FileName = "BillOfLadingReport_" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("yy");
                 saveFileDialogue.DefaultExt = ".csv";
 
                 if (saveFileDialogue.ShowDialog() == DialogResult.OK)

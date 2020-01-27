@@ -206,8 +206,6 @@ namespace NFFM
             // 
             // ddlTruckerName
             // 
-            //this.ddlTruckerName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            //this.ddlTruckerName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ddlTruckerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ddlTruckerName.FormattingEnabled = true;
             this.ddlTruckerName.Location = new System.Drawing.Point(968, 60);
@@ -304,13 +302,12 @@ namespace NFFM
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 148);
             this.dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowTemplate.Height = 45;
-            this.dataGridView1.Size = new System.Drawing.Size(1596, 697);
+            this.dataGridView1.Size = new System.Drawing.Size(1596, 634);
             this.dataGridView1.TabIndex = 22;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
@@ -330,7 +327,7 @@ namespace NFFM
             // 
             // btnFirst
             // 
-            this.btnFirst.Location = new System.Drawing.Point(26, 774);
+            this.btnFirst.Location = new System.Drawing.Point(21, 800);
             this.btnFirst.Name = "btnFirst";
             this.btnFirst.Size = new System.Drawing.Size(24, 33);
             this.btnFirst.TabIndex = 23;
@@ -340,7 +337,7 @@ namespace NFFM
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(54, 774);
+            this.btnPrevious.Location = new System.Drawing.Point(51, 800);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(20, 33);
             this.btnPrevious.TabIndex = 24;
@@ -350,7 +347,7 @@ namespace NFFM
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(521, 774);
+            this.btnNext.Location = new System.Drawing.Point(518, 800);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(21, 33);
             this.btnNext.TabIndex = 25;
@@ -360,7 +357,7 @@ namespace NFFM
             // 
             // btnLast
             // 
-            this.btnLast.Location = new System.Drawing.Point(547, 774);
+            this.btnLast.Location = new System.Drawing.Point(544, 800);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(25, 33);
             this.btnLast.TabIndex = 26;
@@ -371,7 +368,7 @@ namespace NFFM
             // txtRecords
             // 
             this.txtRecords.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRecords.Location = new System.Drawing.Point(78, 774);
+            this.txtRecords.Location = new System.Drawing.Point(75, 800);
             this.txtRecords.Name = "txtRecords";
             this.txtRecords.Size = new System.Drawing.Size(437, 33);
             this.txtRecords.TabIndex = 30;
@@ -382,7 +379,7 @@ namespace NFFM
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(1288, 783);
+            this.label6.Location = new System.Drawing.Point(1288, 803);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(151, 24);
             this.label6.TabIndex = 30;
@@ -391,7 +388,7 @@ namespace NFFM
             // txtTruckingTotal
             // 
             this.txtTruckingTotal.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTruckingTotal.Location = new System.Drawing.Point(1445, 780);
+            this.txtTruckingTotal.Location = new System.Drawing.Point(1445, 800);
             this.txtTruckingTotal.Name = "txtTruckingTotal";
             this.txtTruckingTotal.ReadOnly = true;
             this.txtTruckingTotal.Size = new System.Drawing.Size(130, 33);
