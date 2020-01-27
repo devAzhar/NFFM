@@ -1,0 +1,94 @@
+use NFFM_be_sql
+GO
+Delete from tblCustomers where [Customer No] like '01-%'
+GO
+ALTER procedure [dbo].[BillOfLading_GetAll] 
+(
+@receivingId nvarchar(100) = Null
+)
+
+As Begin
+Declare @TotalRecords as int = 0;
+Exec Truckers_GetAll @SortBy = 'Trucker' -- table1
+
+IF ISNULL(@receivingId, 0) = 0
+BEGIN
+Set @receivingId = (Select max(receivingId) from tblReceivingInfo Where Deleted = 0)
+END
+
+select Distinct ROW_NUMBER() OVER (Order by receivingId) AS CurrentRecord, r.receivingID, r.truckerID, r.ReceivedDate, r.WeekEndingDate,r.BatchID,t.Trucker 
+into #tempReceivingInfo
+from tblReceivingInfo r -- table2
+inner join tblTruckers t on t.truckerID = r.truckerID
+Where  r.Deleted = 0
+
+--********
+
+Declare @CurrentRow as int, @firstReceivingId as int, @previousReceivingId as int, @nextReceivingId as int,  @lastReceivingId as int
+IF @receivingId IS NULL
+BEGIN
+Set @receivingId = (Select max(receivingId) from tblReceivingInfo Where Deleted = 0)
+END
+
+--select * from #tempReceivingInfo where receivingId = @receivingId
+
+set @CurrentRow = (select currentRecord from #tempReceivingInfo where receivingId = @receivingId)
+set @firstReceivingId = (select receivingId from #tempReceivingInfo where currentRecord = 1)
+set @previousReceivingId = (select receivingId from #tempReceivingInfo where currentRecord =  @CurrentRow - 1)
+set @nextReceivingId = (select receivingId from #tempReceivingInfo where currentRecord =  @CurrentRow + 1)
+set @lastReceivingId = (select max(receivingId) from #tempReceivingInfo)
+
+
+--*******
+
+Set @TotalRecords = (select count(1) From #tempReceivingInfo)
+
+select @TotalRecords As TotalRecords, @firstReceivingId as firstReceivingId, Isnull(@previousReceivingId, 0) aS previousReceivingId, Isnull(@nextReceivingId, 0) aS nextReceivingId, @lastReceivingId As lastReceivingId, * from #tempReceivingInfo r
+where (r.receivingID = @receivingId)
+ --where batchId like '%cw050505%' and r.truckerID = '540' and r.WeekEndingDate = '2019-01-03 00:00:00.000'
+
+If exists(select  receivingId
+from tblLineItems_Receiving lineitem
+inner join tblReceivingInfo_LineItems info on info.lineItemID = lineitem.lineItemID
+where receivingId = @receivingId and info.deleted = 0)
+BEGIN
+update info
+set deleted = 1
+from tblReceivingInfo_LineItems  info
+inner join tblLineItems_Receiving lineitem on info.lineItemID = lineitem.lineItemID
+where receivingId = @receivingId and Quantity <= 0
+
+update lineitem
+set deleted = 1
+from tblReceivingInfo_LineItems  info
+inner join tblLineItems_Receiving lineitem on info.lineItemID = lineitem.lineItemID
+where receivingId = @receivingId and Quantity <= 0
+
+select  receivingId,info.lineitemid,BillOfLadingNumber,cust.Name As CustomerName, Shipper,sc.[Sales Code] As SalesCode, sc.Description, sc.[Unit of Measure] As UnitOfMeasure, lineitem.Quantity As Qty, -- table3
+sc.Price, lineitem.Quantity * Isnull(sc.Price, 0) As Ext from tblLineItems_Receiving lineitem
+inner join tblReceivingInfo_LineItems info on info.lineItemID = lineitem.lineItemID
+Left join tblCustomers cust on cust.customerID = lineitem.customerID
+left join tblShippers ship on ship.shipperID = lineitem.shipperID
+left join tblSalesCodes sc on sc.salesCodeID = lineitem.salesCodeID
+where receivingId = @receivingId and info.deleted = 0
+order by lineitemId
+--where lineItemID in (select lineItemid from tblReceivingInfo_LineItems where receivingId = 110544)
+END
+ELSE
+BEGIN
+select  @receivingId receivingId, '' lineitemid, '' BillOfLadingNumber, '' As CustomerName, '' Shipper,'' As SalesCode, '' [Description], '' As UnitOfMeasure, 0 As Qty, -- table6
+cast(0 as float) As Price, cast(0 as float) As Ext
+END
+
+Exec Customers_GetAll @ShowAll = 0 -- table 3
+
+Exec Shippers_GetAll -- table 4
+
+Exec SalesCode_GetAll -- table 5
+
+
+select  @receivingId receivingId, '' lineitemid, '' BillOfLadingNumber, '' As CustomerName, '' Shipper,'' As SalesCode, '' [Description], '' As UnitOfMeasure, 0 As Qty, -- table6
+0 As Price, 0 As Ext
+
+END
+
