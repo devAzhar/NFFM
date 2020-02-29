@@ -551,6 +551,13 @@
         #region "Event Handlers"
         protected void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
+            //Handle cell skip...
+            if (dataGridView1.CurrentRow.Cells[e.ColumnIndex].ReadOnly && Control.ModifierKeys != Keys.Shift && e.ColumnIndex > 1)
+            {
+                SendKeys.Send("{tab}");
+                return;
+            }
+
             this.HandleCellEvent(sender, e);
         }
 
