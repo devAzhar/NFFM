@@ -159,13 +159,14 @@
                     var iQuantity = 0;
                     int.TryParse(quantity, out iQuantity);
 
-                    var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
-
                     if (dataGridView1.Rows[rowIndex].Cells[11].Value.ToString() != (iQuantity * fPrice).ToString())
                     {
                         dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
                         this.RecalculateTotals();
                     }
+
+                    var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
+
 
                     if (string.IsNullOrEmpty(lineItemID))
                     {

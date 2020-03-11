@@ -102,7 +102,7 @@
             dataGridView.Focus();
             SendKeys.SendWait("{TAB}");
 
-            if(focusFirstField)
+            if (focusFirstField)
             {
                 SendKeys.SendWait("{TAB}");
             }
@@ -147,17 +147,25 @@
             quantityCell.Value = 0;
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Display);
 
-            Task.Delay(100).ContinueWith(t => RefreshGrid(dataGridView1, billOfLandingCell));
+            Task.Delay(10).ContinueWith(t => RefreshGrid(dataGridView1, billOfLandingCell));
         }
 
         protected void RefreshGrid(DataGridView dataGridView1, DataGridViewCell currentCell)
         {
-            dataGridView1.CurrentCell = currentCell;
-            dataGridView1.BeginEdit(false);
-            SendKeys.SendWait("{TAB}");
-            SendKeys.SendWait("+{TAB}");
-            SendKeys.SendWait("0");
-            SendKeys.SendWait("{BACKSPACE}");
+            try
+            {
+                dataGridView1.CurrentCell = currentCell;
+                dataGridView1.BeginEdit(false);
+                SendKeys.SendWait("{TAB}");
+                SendKeys.SendWait("+{TAB}");
+                SendKeys.SendWait("0");
+                SendKeys.SendWait("{BACKSPACE}");
+                // Scroll towards the end >>
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         protected void OnDataGridViewKeyDown(DataGridView dataGridView1, KeyEventArgs e)
