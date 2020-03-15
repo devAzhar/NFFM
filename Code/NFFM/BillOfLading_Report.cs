@@ -391,6 +391,29 @@
             rbtReceived.Checked = true;
             //ddlReceived.Text = "";
             ddlReceived.Enabled = true;
+
+            string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
+
+            selectedReceivedDate = receivedDate;
+
+            string batchId = selectedReceivedDate;
+            string bol = selectedBillOfLading;
+            string custName = selectedCustomerName;
+
+            if (rbtBatchAll.Checked)
+            {
+                batchId = "";
+            }
+            if (rbtBillOfLadingAll.Checked)
+            {
+                bol = "";
+            }
+            if (rbtCustomerAll.Checked)
+            {
+                custName = "";
+            }
+
+            LoadData(selectedReceivedDate, batchId, "", bol, custName);
         }
         private void rbtBatch_Click(object sender, EventArgs e)
         {
@@ -593,6 +616,16 @@
             label1.ForeColor = Color.Black;
             label1.Font = new Font(label1.Font, label1.Font.Style & ~FontStyle.Bold);
             //app.Quit();
+        }
+
+        private void rbtReceived_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbtReceivedAll_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

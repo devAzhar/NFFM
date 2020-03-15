@@ -72,23 +72,21 @@ namespace NFFM
 
         public void LoadData(string shippedDate, string batchId, string invoideNumbers, string BillOfLadingNumber, string customerName)
         {
-            String SPName = "FreightForwardingBOL_Report_GetAll";
+            var SPName = "FreightForwardingBOL_Report_GetAll";
             //ddlCustomers.Clear();
             //ddlshippedDate.Clear();
             //ddlBatch1.Clear();
-            SqlCommand cmd = new SqlCommand();
+            var cmd = new SqlCommand();
             //cmd.CommandText = SPName;
             //cmd.Parameters.Add("shippingId", shippingId);
             //cmd.CommandType = CommandType.StoredProcedure;
-            DataSet ds = DBManager.GetDataSet_FreightForwardingReport(SPName, shippedDate, batchId, invoideNumbers, BillOfLadingNumber, customerName);
+            var ds = DBManager.GetDataSet_FreightForwardingReport(SPName, shippedDate, batchId, invoideNumbers, BillOfLadingNumber, customerName);
             // DataSet ds = DBManager.GetDataSet(SPName, cmd);
 
-
-
-            DataTable dtLineItems = ds.Tables[0];
+            var dtLineItems = ds.Tables[0];
             dtReceived = ds.Tables[1];
             dtBatch = ds.Tables[2];
-            DataTable dtFreightForwardingBOL = ds.Tables[3];
+            var dtFreightForwardingBOL = ds.Tables[3];
             dtCustomers = ds.Tables[4];
             // dtReceived = ds.Tables[4];
             // dtBatch = ds.Tables[5];

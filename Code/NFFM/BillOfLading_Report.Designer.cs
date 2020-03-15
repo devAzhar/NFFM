@@ -35,6 +35,7 @@
             this.lblHeading = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCreateReport = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.ddlCustomer = new System.Windows.Forms.ComboBox();
             this.rbtCustomer = new System.Windows.Forms.RadioButton();
@@ -65,7 +66,6 @@
             this.txtTruckingTotal = new System.Windows.Forms.TextBox();
             this.BOL_PrintPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.BOL_Print = new System.Drawing.Printing.PrintDocument();
-            this.btnCreateReport = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -117,6 +117,20 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1604, 151);
             this.panel1.TabIndex = 20;
+            // 
+            // btnCreateReport
+            // 
+            this.btnCreateReport.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnCreateReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCreateReport.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCreateReport.ForeColor = System.Drawing.Color.White;
+            this.btnCreateReport.Location = new System.Drawing.Point(1386, 60);
+            this.btnCreateReport.Name = "btnCreateReport";
+            this.btnCreateReport.Size = new System.Drawing.Size(130, 49);
+            this.btnCreateReport.TabIndex = 33;
+            this.btnCreateReport.Text = "&Create Report";
+            this.btnCreateReport.UseVisualStyleBackColor = false;
+            this.btnCreateReport.Click += new System.EventHandler(this.btnCreateReport_Click_1);
             // 
             // groupBox5
             // 
@@ -186,6 +200,7 @@
             this.rbtReceivedAll.TabStop = true;
             this.rbtReceivedAll.Text = "All";
             this.rbtReceivedAll.UseVisualStyleBackColor = true;
+            this.rbtReceivedAll.CheckedChanged += new System.EventHandler(this.rbtReceivedAll_CheckedChanged);
             this.rbtReceivedAll.Click += new System.EventHandler(this.rbtReceivedAll_Click);
             // 
             // ddlReceived
@@ -206,6 +221,7 @@
             this.rbtReceived.TabIndex = 42;
             this.rbtReceived.TabStop = true;
             this.rbtReceived.UseVisualStyleBackColor = true;
+            this.rbtReceived.CheckedChanged += new System.EventHandler(this.rbtReceived_CheckedChanged);
             this.rbtReceived.Click += new System.EventHandler(this.rbtReceived_Click);
             // 
             // groupBox4
@@ -457,20 +473,6 @@
             // BOL_Print
             // 
             this.BOL_Print.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.BOL_Print_PrintPage);
-            // 
-            // btnCreateReport
-            // 
-            this.btnCreateReport.BackColor = System.Drawing.Color.SeaGreen;
-            this.btnCreateReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCreateReport.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateReport.ForeColor = System.Drawing.Color.White;
-            this.btnCreateReport.Location = new System.Drawing.Point(1386, 60);
-            this.btnCreateReport.Name = "btnCreateReport";
-            this.btnCreateReport.Size = new System.Drawing.Size(130, 49);
-            this.btnCreateReport.TabIndex = 33;
-            this.btnCreateReport.Text = "&Create Report";
-            this.btnCreateReport.UseVisualStyleBackColor = false;
-            this.btnCreateReport.Click += new System.EventHandler(this.btnCreateReport_Click_1);
             // 
             // BillOfLading_Report
             // 
