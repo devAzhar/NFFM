@@ -4,6 +4,7 @@
 
 /Code/.vs/NFFM/v14
 /Code/NFFM/bin
+/Code/NFFM/obj
 *.dll
 *.exe
 *.pdb
@@ -11,6 +12,10 @@
 /Code/NFFM/obj
 /Code/NFFM/bin
 *.user
-/Code/NFFM.zip
-/Code/NFFM (2).zip
+/Code/*.zip
 /Code/.vs
+/Code/NFFM-Web/bin
+/Code/NFFM-Web/obj
+/Code/NFFM-Web.Tests/obj
+/Code/NFFM-Web.Tests/bin
+/Code/packages
