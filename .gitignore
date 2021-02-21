@@ -19,3 +19,5 @@
 /Code/NFFM-Web.Tests/obj
 /Code/NFFM-Web.Tests/bin
 /Code/packages
+/Code/NFFM-Utility/obj
+/Code/NFFM-Utility/bin/Debug/netstandard2.0

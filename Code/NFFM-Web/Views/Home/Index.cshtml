@@ -1,31 +1,92 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "NFFM Web";
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>NFFM - Web Demo</h1>
+    <h2>Receiving Bill of Lading Entry Form</h2>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-7 search-bar">
+        <div class="col-md-2">Received Date:</div>
+        <div class="col-md-3"><input type="text" class="form-control" /></div>
+        <div class="col-md-1"></div>
+
+        <div class="col-md-2">Trucker Name:</div>
+        <div class="col-md-3"><input type="text" class="form-control" /></div>
+        <div class="col-md-1"></div>
+
+        <div class="col-md-2">Week Ending Date:</div>
+        <div class="col-md-3"><input type="text" class="form-control" /></div>
+        <div class="col-md-1"></div>
+
+        <div class="col-md-2">Batch ID:</div>
+        <div class="col-md-3"><input type="text" class="form-control" /></div>
+        <div class="col-md-1"></div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-12 search-result-list">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Bill of Landing#</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Shipper</th>
+                    <th scope="col">Sales Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Unit of Measure</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Ext</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">9</th>
+                    <td>G&amp;G Seafood, Inc.</td>
+                    <td>H&amp;Seco</td>
+                    <td>H</td>
+                    <td class="calculated">50-65 lbs</td>
+                    <td class="calculated">total weight</td>
+                    <td>9</td>
+                    <td class="calculated">$0.60</td>
+                    <td class="calculated">$5.40</td>
+                </tr>
+                <tr>
+                    <th scope="row">10</th>
+                    <td>G&amp;G Seafood, Inc.</td>
+                    <td>H&amp;Seco</td>
+                    <td>H</td>
+                    <td class="calculated">50-65 lbs</td>
+                    <td class="calculated">total weight</td>
+                    <td>9</td>
+                    <td class="calculated">$0.60</td>
+                    <td class="calculated">$5.40</td>
+                </tr>
+                <tr>
+                    <th scope="row">11</th>
+                    <td>G&amp;G Seafood, Inc.</td>
+                    <td>H&amp;Seco</td>
+                    <td>H</td>
+                    <td class="calculated">50-65 lbs</td>
+                    <td class="calculated">total weight</td>
+                    <td>9</td>
+                    <td class="calculated">$0.60</td>
+                    <td class="calculated">$5.40</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6"></td>
+                    <td colspan="2" class="total">Trucking Total:</td>
+                    <td>
+                        <input type="text" class="form-control" readonly />
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </div>

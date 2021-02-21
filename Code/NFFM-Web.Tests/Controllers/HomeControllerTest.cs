@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFFM_Web;
-using NFFM_Web.Controllers;
+using NFFM.Web;
+using NFFM.Web.Controllers;
 
-namespace NFFM_Web.Tests.Controllers
+namespace NFFM.Web.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest

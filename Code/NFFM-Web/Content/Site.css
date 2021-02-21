@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+td.calculated {
+    background: yellow;
+}
+
+td.total {
+    text-align: right;
+    padding-right: 5px;
+}

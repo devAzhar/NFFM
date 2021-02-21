@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace NFFM_Web
+namespace NFFM.Web
 {
     public class FilterConfig
     {

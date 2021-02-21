@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace NFFM_Web
+namespace NFFM.Web
 {
     public class BundleConfig
     {

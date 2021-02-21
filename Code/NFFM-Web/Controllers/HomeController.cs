@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NFFM_Web.Controllers
+namespace NFFM.Web.Controllers
 {
     public class HomeController : Controller
     {

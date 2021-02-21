@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace NFFM_Web
+namespace NFFM.Web
 {
     public class RouteConfig
     {

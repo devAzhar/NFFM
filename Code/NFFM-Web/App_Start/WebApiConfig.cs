@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace NFFM_Web
+namespace NFFM.Web
 {
     public static class WebApiConfig
     {

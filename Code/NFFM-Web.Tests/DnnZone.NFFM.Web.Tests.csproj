@@ -9,8 +9,8 @@
     <ProjectGuid>{E58256CA-21C9-4371-A435-314755453BD7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NFFM_Web.Tests</RootNamespace>
-    <AssemblyName>NFFM-Web.Tests</AssemblyName>
+    <RootNamespace>DnnZone.NFFM.Web.Tests</RootNamespace>
+    <AssemblyName>DnnZone.NFFM.Web.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -99,9 +99,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NFFM-Web\NFFM-Web.csproj">
+    <ProjectReference Include="..\NFFM-Web\DnnZone.NFFM.Web.csproj">
       <Project>{D633BC1D-A3F5-4AD6-8AE9-06B8AA03CA51}</Project>
-      <Name>NFFM-Web</Name>
+      <Name>DnnZone.NFFM.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
