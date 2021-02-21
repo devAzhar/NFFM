@@ -1,9 +1,7 @@
 ﻿namespace NFFM.Web
 {
-    using System;
-    using System.Collections.Generic;
+    using NFFM.Utility;
     using System.Configuration;
-    using System.Linq;
     using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
@@ -29,7 +27,7 @@
         public static void Init(HttpApplication app)
         {
             Start(app);
-            ConnectionString = ConfigurationManager.ConnectionStrings["NFFM"]?.ConnectionString;
+            Database.ConnectionString = ApplicationConfig.ConnectionString = ConfigurationManager.ConnectionStrings["NFFM"]?.ConnectionString;
         }
     }
 }

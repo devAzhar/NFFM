@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NFFM.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace NFFM.Web.Controllers
     {
         public ActionResult Index()
         {
+            var data = Database.GetDataTable("select * from tblTruckers;");
             return View();
         }
 
