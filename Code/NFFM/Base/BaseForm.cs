@@ -51,29 +51,31 @@
 
         protected virtual void LoadTruckers(ComboBox ddlTruckerName, DataTable dtTruckers, string selectedValue = "")
         {
-            this.FormInitialized = false;
-
+            FormInitialized = false;
             if (dtTruckers.Rows.Count > 0)
             {
                 items.Clear();
-
                 items.Add("-1", "<<Add New Trucker>>");
-
+                AutoCompleteStringCollection autoCompleteStringCollection = new AutoCompleteStringCollection();
                 for (int i = 0; i < dtTruckers.Rows.Count; i++)
                 {
-                    items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), dtTruckers.Rows[i]["Trucker"].ToString());
+                    string value = dtTruckers.Rows[i]["Trucker"].ToString();
+                    items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), value);
+                    autoCompleteStringCollection.Add(value);
                 }
-
                 ddlTruckerName.DataSource = new BindingSource(items, null);
                 ddlTruckerName.DisplayMember = "Value";
                 ddlTruckerName.ValueMember = "Key";
-
+                if (ddlTruckerName.AutoCompleteMode != 0)
+                {
+                    ddlTruckerName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    ddlTruckerName.AutoCompleteCustomSource = autoCompleteStringCollection;
+                }
                 if (!string.IsNullOrEmpty(selectedValue))
                 {
                     ddlTruckerName.SelectedValue = selectedValue;
                 }
-
-                this.FormInitialized = true;
+                FormInitialized = true;
             }
         }
         #endregion
