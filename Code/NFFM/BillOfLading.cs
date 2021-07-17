@@ -35,7 +35,7 @@
 
         #region "Private Methods"
         protected override void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false)
-        {   
+        {
             if (DBManager.CopyInProgress)
             {
                 return;
@@ -55,12 +55,12 @@
             {
                 rowIndex = eventRowIndex;
             }
-            
+
             if (eventColumnIndex > 0)
             {
                 columnIndex = eventColumnIndex;
             }
-            
+
             if (dataGridView1.Rows.Count > 0 && InitialDataLoaded == 1)
             {
                 if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
@@ -149,7 +149,7 @@
                     //dataGridView1.Columns["BillOfLadingNumber"].DefaultCellStyle.BackColor = Color.Red;
                     if (columnIndex == 6)
                     {
-                        var rows = dtSalesCode.Select("[Sales Code]='" + salesCode + "'");
+                        var rows = SalesCode.Select("[Sales Code]='" + salesCode + "'");
 
                         if (rows.Length > 0)
                         {
@@ -173,7 +173,7 @@
                         this.RecalculateTotals();
                     }
 
-                        if (!ignoreDBSave)
+                    if (!ignoreDBSave)
                     {
                         var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
 
@@ -208,6 +208,44 @@
             }
         }
 
+        private void HandleNewRow(int rowIndex)
+        {
+            var lineItemId = dataGridView1.Rows[rowIndex].Cells["lineitemid"].Value.ToString();
+
+            if (string.IsNullOrEmpty(lineItemId))
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    this.CopyOverNewRow(dataGridView1);
+                });
+                return;
+            }
+        }
+        private void HandleDelete(int rowIndex)
+        {
+            string lineItemIdToDelete = dataGridView1.Rows[rowIndex].Cells["lineitemid"].Value.ToString();
+
+            if (lineItemIdToDelete != "")
+            {
+                if (MessageBox.Show("You are about to delete 1 record.\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("LineItem_Delete", con))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("lineitemid", lineItemIdToDelete);
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                            // MessageBox.Show("Line item is deleted successfully.");
+                            LoadData(DBManager.currentRecordId);
+                        }
+                    }
+                }
+            }
+        }
+
         protected override void HandleCellEvent(object sender, DataGridViewCellEventArgs e, bool isClick = false)
         {
             if (this.HandleCellEventFlag)
@@ -217,45 +255,17 @@
 
             try
             {
-
                 if (e.ColumnIndex <= 3 && e.RowIndex > 0)
                 {
-                    var lineItemId = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
-
-                    if (string.IsNullOrEmpty(lineItemId))
-                    {
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            this.CopyOverNewRow(dataGridView1);
-                        });
-                        return;
-                    }
+                    HandleNewRow(e.RowIndex);
+                    return;
                 }
 
                 this.HandleCellEventFlag = true;
 
                 if (e.ColumnIndex == 0 && isClick)
                 {
-                    string lineItemIdToDelete = dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString();
-                    if (lineItemIdToDelete != "")
-                    {
-                        if (MessageBox.Show("You are about to delete 1 record(s).\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                        {
-                            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
-                            {
-                                using (SqlCommand cmd = new SqlCommand("LineItem_Delete", con))
-                                {
-                                    cmd.CommandType = CommandType.StoredProcedure;
-                                    cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
-                                    con.Open();
-                                    cmd.ExecuteNonQuery();
-                                    con.Close();
-                                    // MessageBox.Show("Line item is deleted successfully.");
-                                    LoadData(DBManager.currentRecordId);
-                                }
-                            }
-                        }
-                    }
+                    HandleDelete(e.RowIndex);
                 }
 
                 if (isClick)
@@ -266,51 +276,11 @@
 
                 if (e.ColumnIndex > -1 && e.RowIndex > -1)
                 {
-                    // Bind grid cell with combobox and than bind combobox with datasource.  
-                    var l_objGridDropbox = new DataGridViewComboBoxCell
-                    {
-                        AutoComplete = true
-                    };
-
-                    //l_objGridDropbox.DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton;
-
                     // Check the column  cell, in which it click.  
                     if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Description"))
                     {
                         var quantityColumnIndex = 9;
                         var quantityCell = dataGridView1.Rows[e.RowIndex].Cells[quantityColumnIndex];
-                    }
-                    else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
-                    {
-                        if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                        {
-                            // On click of datagridview cell, attched combobox with this click cell of datagridview  
-                            dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-
-                            l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
-                            l_objGridDropbox.DisplayMember = "Name";
-                            l_objGridDropbox.ValueMember = "Name";
-                        }
-                    }
-                    else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("Shipper"))
-                    {
-                        if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                        {
-                            dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                            l_objGridDropbox.DataSource = dtShippers;
-                            l_objGridDropbox.ValueMember = "Shipper";
-                            l_objGridDropbox.DisplayMember = "Shipper";
-                        }
-                    }
-                    else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("SalesCode"))
-                    {
-                        if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
-                        {
-                            dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                            l_objGridDropbox.DataSource = dtSalesCode;
-                            l_objGridDropbox.ValueMember = "Sales Code";
-                            l_objGridDropbox.DisplayMember = "Sales Code";
-                        }
                     }
                 }
             }
@@ -330,36 +300,36 @@
             DataSet ds = DBManager.GetDataSet_New(storedProcedureName, receivingId);
             var dtTruckers = ds.Tables[0];
             var dtLineItems = ds.Tables[2];
-            dtCustomers = ds.Tables[3];
-            dtShippers = ds.Tables[4];
-            dtSalesCode = ds.Tables[5];
+            Customers = ds.Tables[3];
+            Shippers = ds.Tables[4];
+            SalesCode = ds.Tables[5];
             currentTruckerId = "0";
 
             if (ds.Tables.Count > 0)
             {
-                if (items.Count == 0)
+                if (ItemsDictionary.Count == 0)
                 {
                     this.LoadTruckers(ddlTruckerName, dtTruckers);
                 }
-                if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
+                if (Customers.Rows.Count > 0 && CustomersDictionary.Count == 0)
                 {
-                    for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                    for (int i = 0; i < Customers.Rows.Count; i++)
                     {
-                        ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
+                        CustomersDictionary.Add(Customers.Rows[i]["customerID"].ToString(), Customers.Rows[i]["Name"].ToString());
                     }
                 }
-                if (dtShippers.Rows.Count > 0 && ddlShippers.Count == 0)
+                if (Shippers.Rows.Count > 0 && ShippersDictionary.Count == 0)
                 {
-                    for (int i = 0; i < dtShippers.Rows.Count; i++)
+                    for (int i = 0; i < Shippers.Rows.Count; i++)
                     {
-                        ddlShippers.Add(dtShippers.Rows[i]["ShipperID"].ToString(), dtShippers.Rows[i]["Shipper"].ToString());
+                        ShippersDictionary.Add(Shippers.Rows[i]["ShipperID"].ToString(), Shippers.Rows[i]["Shipper"].ToString());
                     }
                 }
-                if (dtSalesCode.Rows.Count > 0 && ddlSalesCode.Count == 0)
+                if (SalesCode.Rows.Count > 0 && SalesCodeDictionary.Count == 0)
                 {
-                    for (int i = 0; i < dtSalesCode.Rows.Count; i++)
+                    for (int i = 0; i < SalesCode.Rows.Count; i++)
                     {
-                        ddlSalesCode.Add(dtSalesCode.Rows[i]["SalesCodeId"].ToString(), dtSalesCode.Rows[i]["Sales Code"].ToString());
+                        SalesCodeDictionary.Add(SalesCode.Rows[i]["SalesCodeId"].ToString(), SalesCode.Rows[i]["Sales Code"].ToString());
                     }
                 }
                 if (ds.Tables[1].Rows.Count > 0)
@@ -790,7 +760,7 @@
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            OndataGridView1_EditingControlShowing(e);
+            OndataGridView1_EditingControlShowing(dataGridView1, e);
         }
 
         private void btnReport_Click(object sender, EventArgs e)

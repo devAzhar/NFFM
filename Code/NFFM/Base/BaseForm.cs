@@ -6,25 +6,24 @@
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
-    public class BaseForm : Form
+    public abstract class BaseForm : Form
     {
         #region "Protected Members"
         protected bool FormInitialized = false;
         protected bool HandleCellEventFlag = false;
         protected int InitialDataLoaded = 0;
         protected int IsNewRecord = 0;
-        protected Dictionary<string, string> ddlCustomers = new Dictionary<string, string>();
-        protected Dictionary<string, string> ddlShippers = new Dictionary<string, string>();
-        protected Dictionary<string, string> ddlSalesCode = new Dictionary<string, string>();
-        protected Dictionary<string, string> items = new Dictionary<string, string>();
-        protected DataTable dtCustomers;
-        protected DataTable dtShippers;
-        protected DataTable dtSalesCode;
+        protected Dictionary<string, string> CustomersDictionary { get; private set; } = new Dictionary<string, string>();
+        protected Dictionary<string, string> ShippersDictionary { get; private set; } = new Dictionary<string, string>();
+        protected Dictionary<string, string> SalesCodeDictionary { get; private set; } = new Dictionary<string, string>();
+
+        protected Dictionary<string, string> ItemsDictionary = new Dictionary<string, string>();
+        protected DataTable Customers { get; set; }
+        protected DataTable Shippers { get; set; }
+        protected DataTable SalesCode { get; set; }
         #endregion
 
-        protected virtual void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false)
-        {
-        }
+        protected abstract void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false);
 
         protected static bool IsAlreadyOpen(Type formType)
         {
@@ -58,16 +57,16 @@
             FormInitialized = false;
             if (dtTruckers.Rows.Count > 0)
             {
-                items.Clear();
-                items.Add("-1", "<<Add New Trucker>>");
+                ItemsDictionary.Clear();
+                ItemsDictionary.Add("-1", "<<Add New Trucker>>");
                 AutoCompleteStringCollection autoCompleteStringCollection = new AutoCompleteStringCollection();
                 for (int i = 0; i < dtTruckers.Rows.Count; i++)
                 {
                     string value = dtTruckers.Rows[i]["Trucker"].ToString();
-                    items.Add(dtTruckers.Rows[i]["truckerID"].ToString(), value);
+                    ItemsDictionary.Add(dtTruckers.Rows[i]["truckerID"].ToString(), value);
                     autoCompleteStringCollection.Add(value);
                 }
-                ddlTruckerName.DataSource = new BindingSource(items, null);
+                ddlTruckerName.DataSource = new BindingSource(ItemsDictionary, null);
                 ddlTruckerName.DisplayMember = "Value";
                 ddlTruckerName.ValueMember = "Key";
                 if (ddlTruckerName.AutoCompleteMode != 0)
@@ -93,14 +92,65 @@
         #endregion
 
         #region "Protected Methods"
-        protected void OndataGridView1_EditingControlShowing(DataGridViewEditingControlShowingEventArgs e)
+        private AutoCompleteStringCollection GetAutoCompleteValues(int columnIndex)
         {
-            var control = (e.Control as ComboBox);
+            var dataCollection = new AutoCompleteStringCollection();
+            DataTable dataTable = null;
+            var fieldName = string.Empty;
 
-            if (control != null)
+            switch (columnIndex)
             {
-                control.AutoCompleteMode = AutoCompleteMode.Suggest;
-                control.AutoCompleteSource = AutoCompleteSource.ListItems;
+                case 4: //Customer
+                    dataTable = Customers;
+                    fieldName = "Name";
+                    break;
+                case 5: //Shipper
+                    dataTable = Shippers;
+                    fieldName = "Shipper";
+                    break;
+                case 6: //Sales Code
+                    dataTable = SalesCode;
+                    fieldName = "Sales Code";
+                    break;
+            }
+
+            if (dataTable != null)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    dataCollection.Add(Convert.ToString(row[fieldName]));
+                }
+            }
+
+            return dataCollection;
+        }
+
+        protected void OndataGridView1_EditingControlShowing(DataGridView dataGridView, DataGridViewEditingControlShowingEventArgs e)
+        {
+            var comboBox = (e.Control as ComboBox);
+            var textBox = (e.Control as TextBox);
+            var currentCell = dataGridView.CurrentCell;
+
+            if (textBox != null)
+            {
+                var list = GetAutoCompleteValues(currentCell.ColumnIndex);
+
+                if (list?.Count > 0)
+                {
+                    textBox.AutoCompleteMode = AutoCompleteMode.Append;
+                    textBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    textBox.AutoCompleteCustomSource = list;
+                }
+                else
+                {
+                    textBox.AutoCompleteMode = AutoCompleteMode.None;
+                }
+            }
+
+            if (comboBox != null)
+            {
+                comboBox.AutoCompleteMode = AutoCompleteMode.Append;
+                comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
             }
         }
         protected void OnDataGridFocus(DataGridView dataGridView, bool focusFirstField = false)
@@ -154,7 +204,7 @@
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Display);
 
             DBManager.CopyInProgress = false;
-            OnCellValueChanged(lastValidRowIndex+1);
+            OnCellValueChanged(lastValidRowIndex + 1);
             //SAVE Copied Row in one go >>
 
             Task.Delay(10).ContinueWith(t => RefreshGrid(dataGridView1, billOfLandingCell));
