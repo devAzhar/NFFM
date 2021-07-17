@@ -20,8 +20,8 @@ namespace NFFM
             DBManager.isDataLoaded = false;
         }
         int selectedRow;
-        
-       
+
+
         public void LoadData()
         {
             String SPName = "Customers_GetAll";
@@ -68,7 +68,7 @@ namespace NFFM
             //cmd.ExecuteNonQuery();
             //con.Close();
         }
-       
+
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -205,14 +205,15 @@ namespace NFFM
         {
             ShowUpdateInfoDialog();
         }
-        private void ShowUpdateInfoDialog() {
+        private void ShowUpdateInfoDialog()
+        {
             Customers_AddUpdate add = new Customers_AddUpdate();
             add.customerId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
             add.txtCustNo.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
             add.txtName.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
-           // add.txtFFtier.Text = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
-           // add.chkCoop.Checked = Convert.ToBoolean(dataGridView1.SelectedRows[0].Cells[3].Value);
-           // add.txtPrice.Text = dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
+            // add.txtFFtier.Text = dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
+            // add.chkCoop.Checked = Convert.ToBoolean(dataGridView1.SelectedRows[0].Cells[3].Value);
+            // add.txtPrice.Text = dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
             add.btnAdd.Text = "Update";
             add.lblAddUpdate.Text = "Update Customer Information";
             add.ShowDialog();
@@ -222,17 +223,22 @@ namespace NFFM
         {
             if (MessageBox.Show("Do you want to delete this row?", dataGridView1.SelectedRows[0].Cells[2].Value.ToString(), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                int customerId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-                String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-                SqlConnection con = new SqlConnection(str);
-                SqlCommand cmd = new SqlCommand("Customers_Delete", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("CustomerId", customerId);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-                DBManager.isDataLoaded = false;
-                MessageBox.Show("Row is deleted successfully.");
+                var customerId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+
+                using (var con = new SqlConnection(Constants.Constants.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("Customers_Delete", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("CustomerId", customerId);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        DBManager.isDataLoaded = false;
+                        MessageBox.Show("Row is deleted successfully.");
+                    }
+                }
             }
         }
     }

@@ -18,7 +18,7 @@ namespace NFFM
             InitializeComponent();
             this.Text = "NFFM";
         }
-        public int customerId = 0; 
+        public int customerId = 0;
         private void btnCancel_Click(object sender, EventArgs e)
         {
             //Form1 main = new Form1();
@@ -29,25 +29,27 @@ namespace NFFM
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //DBManager.ExecuteNonQuery("insertA");
-            String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-            SqlConnection con = new SqlConnection(str);
-            SqlCommand cmd = new SqlCommand("Customers_AddUpdate", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("CustomerId", customerId);
-            cmd.Parameters.Add("CustomerNo", txtCustNo.Text);
-            cmd.Parameters.Add("Name", txtName.Text);
-            cmd.Parameters.Add("FFTier", "0");
-            cmd.Parameters.Add("IsCoop", true);
-            cmd.Parameters.Add("Price", "0");
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
-            DBManager.isDataLoaded = false;
-            this.Hide();
-            //Form1 main = new Form1();
-            //ResetFields();
-            //main.LoadData();
+            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+            {
+                using (var cmd = new SqlCommand("Customers_AddUpdate", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("CustomerId", customerId);
+                    cmd.Parameters.Add("CustomerNo", txtCustNo.Text);
+                    cmd.Parameters.Add("Name", txtName.Text);
+                    cmd.Parameters.Add("FFTier", "0");
+                    cmd.Parameters.Add("IsCoop", true);
+                    cmd.Parameters.Add("Price", "0");
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    DBManager.isDataLoaded = false;
+                    this.Hide();
+                    //Form1 main = new Form1();
+                    //ResetFields();
+                    //main.LoadData();
+                }
+            }
         }
 
         private void txtFFtier_KeyPress(object sender, KeyPressEventArgs e)

@@ -34,8 +34,13 @@
         #endregion
 
         #region "Private Methods"
-        private void OnCellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
+        protected override void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false)
+        {   
+            if (DBManager.CopyInProgress)
+            {
+                return;
+            }
+
             string lineItemID = "";
             string receivingID = "";
             string billOfLading = "";
@@ -45,14 +50,17 @@
             string quantity = "";
             int rowIndex = 0;
             int columnIndex = 0;
-            if (e.RowIndex > 0)
+
+            if (eventRowIndex > 0)
             {
-                rowIndex = e.RowIndex;
+                rowIndex = eventRowIndex;
             }
-            if (e.ColumnIndex > 0)
+            
+            if (eventColumnIndex > 0)
             {
-                columnIndex = e.ColumnIndex;
+                columnIndex = eventColumnIndex;
             }
+            
             if (dataGridView1.Rows.Count > 0 && InitialDataLoaded == 1)
             {
                 if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
@@ -165,17 +173,19 @@
                         this.RecalculateTotals();
                     }
 
-                    var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
-
-
-                    if (string.IsNullOrEmpty(lineItemID))
+                        if (!ignoreDBSave)
                     {
-                        dataGridView1.Rows[rowIndex].Cells[2].Value = newLineItemId;
-                    }
+                        var newLineItemId = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", receivingID, lineItemID, billOfLading, customerName, shipper, salesCode, quantity, "", "", "0", "");
 
-                    if (newLineItemId < 1)
-                    {
-                        MessageBox.Show("Error Occurred.");
+                        if (string.IsNullOrEmpty(lineItemID))
+                        {
+                            dataGridView1.Rows[rowIndex].Cells[2].Value = newLineItemId;
+                        }
+
+                        if (newLineItemId < 1)
+                        {
+                            MessageBox.Show("Error Occurred.");
+                        }
                     }
                 }
             }
@@ -231,16 +241,19 @@
                     {
                         if (MessageBox.Show("You are about to delete 1 record(s).\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
-                            String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-                            SqlConnection con = new SqlConnection(str);
-                            SqlCommand cmd = new SqlCommand("LineItem_Delete", con);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            // MessageBox.Show("Line item is deleted successfully.");
-                            LoadData(DBManager.currentRecordId);
+                            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+                            {
+                                using (SqlCommand cmd = new SqlCommand("LineItem_Delete", con))
+                                {
+                                    cmd.CommandType = CommandType.StoredProcedure;
+                                    cmd.Parameters.AddWithValue("lineitemid", dataGridView1.Rows[e.RowIndex].Cells["lineitemid"].Value.ToString());
+                                    con.Open();
+                                    cmd.ExecuteNonQuery();
+                                    con.Close();
+                                    // MessageBox.Show("Line item is deleted successfully.");
+                                    LoadData(DBManager.currentRecordId);
+                                }
+                            }
                         }
                     }
                 }
@@ -254,8 +267,10 @@
                 if (e.ColumnIndex > -1 && e.RowIndex > -1)
                 {
                     // Bind grid cell with combobox and than bind combobox with datasource.  
-                    var l_objGridDropbox = new DataGridViewComboBoxCell();
-                    l_objGridDropbox.AutoComplete = true;
+                    var l_objGridDropbox = new DataGridViewComboBoxCell
+                    {
+                        AutoComplete = true
+                    };
 
                     //l_objGridDropbox.DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton;
 
@@ -264,15 +279,6 @@
                     {
                         var quantityColumnIndex = 9;
                         var quantityCell = dataGridView1.Rows[e.RowIndex].Cells[quantityColumnIndex];
-                        //dataGridView1.CurrentCell = quantityCell;
-
-                        //Task.Delay(200).ContinueWith(t => { SendKeys.SendWait("{TAB}"); SendKeys.SendWait("{TAB}"); });
-
-                        //this.Invoke((MethodInvoker)delegate
-                        //{
-                        //    SendKeys.SendWait("{TAB}");
-                        //    SendKeys.SendWait("{TAB}");
-                        //});
                     }
                     else if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("CustomerName"))
                     {
@@ -318,24 +324,16 @@
         protected override void LoadData(int receivingId)
         {
             DBManager.currentRecordId = receivingId;
-            String SPName = "BillOfLading_GetAll";
-            //ddlCustomers.Clear();
-            //ddlShippers.Clear();
-            //ddlSalesCode.Clear();
+            var storedProcedureName = "BillOfLading_GetAll";
             SqlCommand cmd = new SqlCommand();
-            //cmd.CommandText = SPName;
             cmd.Parameters.AddWithValue("receivingId", receivingId);
-            //cmd.CommandType = CommandType.StoredProcedure;
-            DataSet ds = DBManager.GetDataSet_New(SPName, receivingId);
-            // DataSet ds = DBManager.GetDataSet(SPName, cmd);
-            DataTable dtTruckers = ds.Tables[0];
-            DataTable dtLineItems = ds.Tables[2];
+            DataSet ds = DBManager.GetDataSet_New(storedProcedureName, receivingId);
+            var dtTruckers = ds.Tables[0];
+            var dtLineItems = ds.Tables[2];
             dtCustomers = ds.Tables[3];
             dtShippers = ds.Tables[4];
             dtSalesCode = ds.Tables[5];
             currentTruckerId = "0";
-            //datePickerReceived.Value = new DateTime(1900, 01, 01);
-            //datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
 
             if (ds.Tables.Count > 0)
             {
@@ -617,9 +615,14 @@
             LoadData(-1);
         }
 
+        private void dataGridView1_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            Task.Delay(100).ContinueWith(t => OnCellValueChanged(e.RowIndex));
+        }
+
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            OnCellValueChanged(sender, e);
+            OnCellValueChanged(e.RowIndex, e.ColumnIndex, true);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -702,19 +705,22 @@
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("You are about to delete 1 record(s).\r\n\r\n If you click Yes, you won't be able to undo this Delete operation.\r\n Are you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("You are about to delete 1 record.\r\n\r\nIf you click Yes, you won't be able to undo this Delete operation.\r\nAre you sure you want to delete these records?", "NFFM Bill of Lading", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-                SqlConnection con = new SqlConnection(str);
-                SqlCommand cmd = new SqlCommand("BillOfLading_Delete", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("ReceivingId", currentReceivingId);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-                //DBManager.isDataLoaded = false;
-                MessageBox.Show("Bill of Lading is deleted successfully.");
-                LoadData(nextReceivingId);
+                using (var connection = new SqlConnection(Constants.Constants.ConnectionString))
+                {
+                    using (var command = new SqlCommand("BillOfLading_Delete", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("ReceivingId", currentReceivingId);
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+
+                        MessageBox.Show("Bill of Lading is deleted successfully.");
+                        LoadData(nextReceivingId);
+                    }
+                }
             }
         }
 

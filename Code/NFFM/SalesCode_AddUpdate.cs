@@ -29,23 +29,25 @@ namespace NFFM
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //DBManager.ExecuteNonQuery("insertA");
-            String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-            SqlConnection con = new SqlConnection(str);
-            SqlCommand cmd = new SqlCommand("SalesCode_AddUpdate", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("SalesCodeID", SalesCodeID);
-            cmd.Parameters.Add("SalesCode", txtSalesCode.Text);
-            cmd.Parameters.Add("Description", txtDescription.Text);
-            cmd.Parameters.Add("UnityOfMeasure", txtUOM.Text);
-            cmd.Parameters.Add("Price", txtPrice.Text);
-            cmd.Parameters.Add("FFTier1", "0");
-            cmd.Parameters.Add("FFTier2", "0");
-            cmd.Parameters.Add("FFTier3", "0");
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
-            DBManager.isDataLoaded = false;
+            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("SalesCode_AddUpdate", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("SalesCodeID", SalesCodeID);
+                    cmd.Parameters.Add("SalesCode", txtSalesCode.Text);
+                    cmd.Parameters.Add("Description", txtDescription.Text);
+                    cmd.Parameters.Add("UnityOfMeasure", txtUOM.Text);
+                    cmd.Parameters.Add("Price", txtPrice.Text);
+                    cmd.Parameters.Add("FFTier1", "0");
+                    cmd.Parameters.Add("FFTier2", "0");
+                    cmd.Parameters.Add("FFTier3", "0");
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    DBManager.isDataLoaded = false;
+                }
+            }
             this.Hide();
         }
 

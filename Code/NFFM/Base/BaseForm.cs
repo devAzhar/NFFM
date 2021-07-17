@@ -22,6 +22,10 @@
         protected DataTable dtSalesCode;
         #endregion
 
+        protected virtual void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false)
+        {
+        }
+
         protected static bool IsAlreadyOpen(Type formType)
         {
             bool isOpen = false;
@@ -136,7 +140,7 @@
             }
 
             var lastId = dataGridView1[idColumnIndex, lastValidRowIndex].Value.ToString();
-
+            DBManager.CopyInProgress = true;
             for (var index = 0; index < dataGridView1.ColumnCount; index++)
             {
                 if (index != idColumnIndex && index != billOfLandingColumnIndex)
@@ -148,6 +152,10 @@
             var billOfLandingCell = dataGridView1.Rows[lastRowIndex].Cells[billOfLandingColumnIndex];
             quantityCell.Value = 0;
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Display);
+
+            DBManager.CopyInProgress = false;
+            OnCellValueChanged(lastValidRowIndex+1);
+            //SAVE Copied Row in one go >>
 
             Task.Delay(10).ContinueWith(t => RefreshGrid(dataGridView1, billOfLandingCell));
         }

@@ -30,15 +30,6 @@ namespace NFFM
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-            //SqlConnection con = new SqlConnection(str);
-            //SqlCommand cmd = new SqlCommand("Truckers_AddUpdate", con);
-            //cmd.CommandType = CommandType.StoredProcedure;
-            //cmd.Parameters.Add("TruckerID", TruckerID);
-            //cmd.Parameters.Add("Trucker", txtTrucker.Text);
-            //con.Open();
-            //cmd.ExecuteNonQuery();
-            //con.Close();
             var sql = string.Format("exec Truckers_AddUpdate @TruckerID={0}, @Trucker='{1}'", TruckerID, txtTrucker.Text.Replace("'", "''"));
 
             using (DataTable dt = DBManager.GetDataTable(sql))
@@ -48,7 +39,7 @@ namespace NFFM
                     DBManager.NewTruckerId = dt.Rows[0]["TruckerID"].ToString();
                     if (DBManager.currentRecordId == -1)
                     {
-                        int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", "0", "", "", "", "", "", "", "", "", DBManager.NewTruckerId, "");
+                        DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", "0", "", "", "", "", "", "", "", "", DBManager.NewTruckerId, "");
                     }
                 }
             }

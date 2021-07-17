@@ -156,16 +156,20 @@ namespace NFFM
             if (MessageBox.Show("Do you want to delete this row?", dataGridView1.SelectedRows[0].Cells[2].Value.ToString(), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int SalesCodeID = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-                String str = System.Configuration.ConfigurationManager.ConnectionStrings["NFFM"].ConnectionString;
-                SqlConnection con = new SqlConnection(str);
-                SqlCommand cmd = new SqlCommand("SalesCode_Delete", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("SalesCodeID", SalesCodeID);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-                DBManager.isDataLoaded = false;
-                MessageBox.Show("Row is deleted successfully.");
+
+                using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SalesCode_Delete", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("SalesCodeID", SalesCodeID);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        DBManager.isDataLoaded = false;
+                        MessageBox.Show("Row is deleted successfully.");
+                    }
+                }
             }
         }
     }
