@@ -68,7 +68,7 @@
 
                     if (columnIndex == 6)
                     {
-                        var rows = dtSalesCode.Select("[Sales Code]='" + salesCode + "'");
+                        var rows = SalesCode.Select("[Sales Code]='" + salesCode + "'");
 
                         if (rows.Length > 0)
                         {
@@ -193,7 +193,7 @@
                             // On click of datagridview cell, attched combobox with this click cell of datagridview  
                             dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
 
-                            l_objGridDropbox.DataSource = new BindingSource(dtCustomers, null);
+                            l_objGridDropbox.DataSource = new BindingSource(Customers, null);
                             l_objGridDropbox.DisplayMember = "Name";
                             l_objGridDropbox.ValueMember = "Name";
                         }
@@ -203,7 +203,7 @@
                         if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
                         {
                             dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                            l_objGridDropbox.DataSource = dtShippers;
+                            l_objGridDropbox.DataSource = Shippers;
                             l_objGridDropbox.ValueMember = "Shipper";
                             l_objGridDropbox.DisplayMember = "Shipper";
                         }
@@ -213,7 +213,7 @@
                         if (!(dataGridView1[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell))
                         {
                             dataGridView1[e.ColumnIndex, e.RowIndex] = l_objGridDropbox;
-                            l_objGridDropbox.DataSource = dtSalesCode;
+                            l_objGridDropbox.DataSource = SalesCode;
                             l_objGridDropbox.ValueMember = "Sales Code";
                             l_objGridDropbox.DisplayMember = "Sales Code";
                         }
@@ -236,36 +236,36 @@
             DataSet ds = DBManager.GetDataSet_FreightForwarding(SPName, shippingId);
             DataTable dtTruckers = ds.Tables[0];
             DataTable dtLineItems = ds.Tables[2];
-            dtCustomers = ds.Tables[3];
-            dtShippers = ds.Tables[4];
-            dtSalesCode = ds.Tables[5];
+            Customers = ds.Tables[3];
+            Shippers = ds.Tables[4];
+            SalesCode = ds.Tables[5];
             currentTruckerId = "0";
 
             if (ds.Tables.Count > 0)
             {
-                if (items.Count == 0)
+                if (ItemsDictionary.Count == 0)
                 {
                     this.LoadTruckers(ddlTruckerName, dtTruckers);
                 }
-                if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
+                if (Customers.Rows.Count > 0 && CustomersDictionary.Count == 0)
                 {
-                    for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                    for (int i = 0; i < Customers.Rows.Count; i++)
                     {
-                        ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
+                        CustomersDictionary.Add(Customers.Rows[i]["customerID"].ToString(), Customers.Rows[i]["Name"].ToString());
                     }
                 }
-                if (dtShippers.Rows.Count > 0 && ddlShippers.Count == 0)
+                if (Shippers.Rows.Count > 0 && ShippersDictionary.Count == 0)
                 {
-                    for (int i = 0; i < dtShippers.Rows.Count; i++)
+                    for (int i = 0; i < Shippers.Rows.Count; i++)
                     {
-                        ddlShippers.Add(dtShippers.Rows[i]["ShipperID"].ToString(), dtShippers.Rows[i]["Shipper"].ToString());
+                        ShippersDictionary.Add(Shippers.Rows[i]["ShipperID"].ToString(), Shippers.Rows[i]["Shipper"].ToString());
                     }
                 }
-                if (dtSalesCode.Rows.Count > 0 && ddlSalesCode.Count == 0)
+                if (SalesCode.Rows.Count > 0 && SalesCodeDictionary.Count == 0)
                 {
-                    for (int i = 0; i < dtSalesCode.Rows.Count; i++)
+                    for (int i = 0; i < SalesCode.Rows.Count; i++)
                     {
-                        ddlSalesCode.Add(dtSalesCode.Rows[i]["SalesCodeId"].ToString(), dtSalesCode.Rows[i]["Sales Code"].ToString());
+                        SalesCodeDictionary.Add(SalesCode.Rows[i]["SalesCodeId"].ToString(), SalesCode.Rows[i]["Sales Code"].ToString());
                     }
                 }
                 if (ds.Tables[1].Rows.Count > 0)
@@ -637,7 +637,12 @@
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            OndataGridView1_EditingControlShowing(e);
+            OndataGridView1_EditingControlShowing(dataGridView1, e);
+        }
+
+        protected override void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false)
+        {
+            throw new NotImplementedException();
         }
     }
 }
