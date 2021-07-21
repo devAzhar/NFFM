@@ -71,7 +71,7 @@
 
                     if (columnIndex == 4)
                     {
-                       var rows = Customers.Select("[Name]='" + DBManager.SqlSafe(customerName) + "'");
+                        var rows = Customers.Select("[Name]='" + DBManager.SqlSafe(customerName) + "'");
 
                         if (rows.Length > 0)
                         {
@@ -609,6 +609,16 @@
         #endregion
 
         #region "Event Handlers"
+        protected void dataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            var colIndex = e.ColumnIndex;
+
+            if (dataGridView1.CurrentRow.Cells.Count - 1 == colIndex && Control.ModifierKeys != Keys.Shift)
+            {
+                SendKeys.Send("{tab}");
+            }
+        }
+
         protected void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             //Handle cell skip...
