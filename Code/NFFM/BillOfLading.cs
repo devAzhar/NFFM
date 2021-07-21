@@ -65,12 +65,17 @@
                         receivingID = currentReceivingId;
                     }
 
-                    var salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value?.ToString().Trim();
                     var customerName = dataGridView1.Rows[rowIndex].Cells[4].Value?.ToString().Trim();
                     var shipper = dataGridView1.Rows[rowIndex].Cells[5].Value?.ToString().Trim();
+                    var salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value?.ToString().Trim();
 
                     if (columnIndex == 4)
                     {
+                        if(customerName == "0" && rowIndex > 0)
+                        {
+                            // dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = dataGridView1.Rows[rowIndex - 1].Cells[4].Value?.ToString();
+                            // return;
+                        }
                         var rows = Customers.Select("[Name]='" + DBManager.SqlSafe(customerName) + "'");
 
                         if (rows.Length > 0)
@@ -79,12 +84,12 @@
                         }
                         else
                         {
-                            customerName = string.Empty;
+                          customerName = string.Empty;
                         }
 
-                        if (customerName != dataGridView1.Rows[rowIndex].Cells[4].Value?.ToString().Trim())
+                        if (customerName != dataGridView1.Rows[rowIndex].Cells[columnIndex].Value?.ToString().Trim())
                         {
-                            dataGridView1.Rows[rowIndex].Cells[4].Value = customerName;
+                            dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = customerName;
                             return;
                         }
                     }
@@ -102,9 +107,9 @@
                             shipper = string.Empty;
                         }
 
-                        if (shipper != dataGridView1.Rows[rowIndex].Cells[5].Value?.ToString().Trim())
+                        if (shipper != dataGridView1.Rows[rowIndex].Cells[columnIndex].Value?.ToString().Trim())
                         {
-                            dataGridView1.Rows[rowIndex].Cells[5].Value = shipper;
+                            dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = shipper;
                             return;
                         }
                     }
@@ -221,7 +226,7 @@
                                 if (incompleteFlag)
                                 {
                                     this.IsAlertShown = true;
-                                    MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
+                                    // MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
                                 }
 
                                 return;
