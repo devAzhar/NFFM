@@ -58,20 +58,20 @@
             {
                 if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
                 {
-                    var receivingID = dataGridView1.Rows[rowIndex].Cells[1].Value.ToString();
+                    var receivingID = dataGridView1.Rows[rowIndex].Cells[1].Value?.ToString();
 
                     if (receivingID == "")
                     {
                         receivingID = currentReceivingId;
                     }
 
-                    var salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString().Trim();
-                    var customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
-                    var shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
+                    var salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value?.ToString().Trim();
+                    var customerName = dataGridView1.Rows[rowIndex].Cells[4].Value?.ToString().Trim();
+                    var shipper = dataGridView1.Rows[rowIndex].Cells[5].Value?.ToString().Trim();
 
                     if (columnIndex == 4)
                     {
-                        var rows = Customers.Select("[Name]='" + DBManager.SqlSafe(customerName) + "'");
+                       var rows = Customers.Select("[Name]='" + DBManager.SqlSafe(customerName) + "'");
 
                         if (rows.Length > 0)
                         {
@@ -82,7 +82,7 @@
                             customerName = string.Empty;
                         }
 
-                        if (customerName != dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim())
+                        if (customerName != dataGridView1.Rows[rowIndex].Cells[4].Value?.ToString().Trim())
                         {
                             dataGridView1.Rows[rowIndex].Cells[4].Value = customerName;
                             return;
@@ -102,7 +102,7 @@
                             shipper = string.Empty;
                         }
 
-                        if (shipper != dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim())
+                        if (shipper != dataGridView1.Rows[rowIndex].Cells[5].Value?.ToString().Trim())
                         {
                             dataGridView1.Rows[rowIndex].Cells[5].Value = shipper;
                             return;
@@ -131,16 +131,16 @@
                             dataGridView1.Rows[rowIndex].Cells[10].Value = "0";
                         }
 
-                        if (dataGridView1.Rows[rowIndex].Cells[columnIndex].Value.ToString() != salesCode)
+                        if (dataGridView1.Rows[rowIndex].Cells[columnIndex].Value?.ToString() != salesCode)
                         {
                             dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = salesCode;
                             return;
                         }
                     }
 
-                    var lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
-                    var billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
-                    var quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
+                    var lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value?.ToString();
+                    var billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value?.ToString();
+                    var quantity = dataGridView1.Rows[rowIndex].Cells[9].Value?.ToString();
 
                     dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.White;
                     dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.White;
@@ -157,58 +157,58 @@
 
                         if (previousRowIndex >= 0)
                         {
-                            if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[3].Value.ToString()))
+                            if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[3].Value?.ToString()))
                             {
                                 dataGridView1.Rows[previousRowIndex].Cells[3].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
-                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[4].Value.ToString()))
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[4].Value?.ToString()))
                             {
                                 dataGridView1.Rows[previousRowIndex].Cells[4].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
-                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[5].Value.ToString()))
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[5].Value?.ToString()))
                             {
                                 dataGridView1.Rows[previousRowIndex].Cells[5].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
-                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[6].Value.ToString()))
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[6].Value?.ToString()))
                             {
                                 dataGridView1.Rows[previousRowIndex].Cells[6].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
-                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[9].Value.ToString()) || dataGridView1.Rows[previousRowIndex].Cells[9].Value.ToString() == "0")
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[9].Value?.ToString()) || dataGridView1.Rows[previousRowIndex].Cells[9].Value?.ToString() == "0")
                             {
                                 dataGridView1.Rows[previousRowIndex].Cells[9].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
                         }
 
-                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[3].Value.ToString()))
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[3].Value?.ToString()))
                         {
                             dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
-                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[4].Value.ToString()))
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[4].Value?.ToString()))
                         {
                             dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
-                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[5].Value.ToString()))
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[5].Value?.ToString()))
                         {
                             dataGridView1.Rows[rowIndex].Cells[5].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
-                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[6].Value.ToString()))
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[6].Value?.ToString()))
                         {
                             dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
-                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[9].Value.ToString()) || dataGridView1.Rows[rowIndex].Cells[9].Value.ToString() == "0")
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[9].Value?.ToString()) || dataGridView1.Rows[rowIndex].Cells[9].Value?.ToString() == "0")
                         {
                             dataGridView1.Rows[rowIndex].Cells[9].Style.BackColor = Color.Red;
                             currentRowFlag = true;
@@ -252,13 +252,13 @@
 
                     //dataGridView1.Columns["BillOfLadingNumber"].DefaultCellStyle.BackColor = Color.Red;
 
-                    string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
+                    string price = dataGridView1.Rows[rowIndex].Cells[10].Value?.ToString();
                     float fPrice = 0f;
                     float.TryParse(price, out fPrice);
                     var iQuantity = 0;
                     int.TryParse(quantity, out iQuantity);
 
-                    if (dataGridView1.Rows[rowIndex].Cells[11].Value.ToString() != (iQuantity * fPrice).ToString())
+                    if (dataGridView1.Rows[rowIndex].Cells[11].Value?.ToString() != (iQuantity * fPrice).ToString())
                     {
                         dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
                         this.RecalculateTotals();
@@ -275,7 +275,7 @@
 
                         if (newLineItemId < 1)
                         {
-                            MessageBox.Show("Error Occurred.");
+                            // MessageBox.Show("Error Occurred.");
                         }
                     }
                 }
@@ -299,7 +299,7 @@
             }
         }
 
-        private void HandleNewRow(int rowIndex)
+        private bool HandleNewRow(int rowIndex)
         {
             var lineItemId = dataGridView1.Rows[rowIndex].Cells["lineitemid"].Value.ToString();
 
@@ -309,8 +309,10 @@
                 {
                     this.CopyOverNewRow(dataGridView1);
                 });
-                return;
+                return true;
             }
+
+            return false;
         }
         private void HandleDelete(int rowIndex)
         {
@@ -346,10 +348,14 @@
 
             try
             {
-                if (e.ColumnIndex <= 3 && e.RowIndex > 0)
+                if (e.ColumnIndex >= 0 && e.ColumnIndex <= 3 && e.RowIndex > 0)
                 {
-                    HandleNewRow(e.RowIndex);
-                    return;
+                    var newRowHandled = HandleNewRow(e.RowIndex);
+
+                    if (newRowHandled)
+                    {
+                        return;
+                    }
                 }
 
                 this.HandleCellEventFlag = true;
