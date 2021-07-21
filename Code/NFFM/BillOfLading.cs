@@ -41,15 +41,8 @@
                 return;
             }
 
-            string lineItemID = "";
-            string receivingID = "";
-            string billOfLading = "";
-            string customerName = "";
-            string shipper = "";
-            string salesCode = "";
-            string quantity = "";
-            int rowIndex = 0;
-            int columnIndex = 0;
+            var rowIndex = 0;
+            var columnIndex = 0;
 
             if (eventRowIndex > 0)
             {
@@ -65,18 +58,89 @@
             {
                 if (columnIndex == 3 || columnIndex == 4 || columnIndex == 5 || columnIndex == 6 || columnIndex == 9)
                 {
-                    receivingID = dataGridView1.Rows[rowIndex].Cells[1].Value.ToString();
+                    var receivingID = dataGridView1.Rows[rowIndex].Cells[1].Value.ToString();
+
                     if (receivingID == "")
                     {
                         receivingID = currentReceivingId;
                     }
-                    lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
-                    billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
-                    customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
-                    shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
-                    salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString();
-                    quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
 
+                    var salesCode = dataGridView1.Rows[rowIndex].Cells[6].Value.ToString().Trim();
+                    var customerName = dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim();
+                    var shipper = dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim();
+
+                    if (columnIndex == 4)
+                    {
+                        var rows = Customers.Select("[Name]='" + DBManager.SqlSafe(customerName) + "'");
+
+                        if (rows.Length > 0)
+                        {
+                            customerName = rows[0]["Name"].ToString().Trim();
+                        }
+                        else
+                        {
+                            customerName = string.Empty;
+                        }
+
+                        if (customerName != dataGridView1.Rows[rowIndex].Cells[4].Value.ToString().Trim())
+                        {
+                            dataGridView1.Rows[rowIndex].Cells[4].Value = customerName;
+                            return;
+                        }
+                    }
+
+                    if (columnIndex == 5)
+                    {
+                        var rows = Shippers.Select("[Shipper]='" + DBManager.SqlSafe(shipper) + "'");
+
+                        if (rows.Length > 0)
+                        {
+                            shipper = rows[0]["Shipper"].ToString().Trim();
+                        }
+                        else
+                        {
+                            shipper = string.Empty;
+                        }
+
+                        if (shipper != dataGridView1.Rows[rowIndex].Cells[5].Value.ToString().Trim())
+                        {
+                            dataGridView1.Rows[rowIndex].Cells[5].Value = shipper;
+                            return;
+                        }
+                    }
+
+                    if (columnIndex == 6)
+                    {
+                        salesCode = salesCode.ToUpperInvariant();
+                        var rows = SalesCode.Select("[Sales Code]='" + salesCode + "'");
+
+                        if (rows.Length > 0)
+                        {
+                            var row = rows[0];
+                            var priceValue = 0d;
+                            double.TryParse(row["Price"].ToString(), out priceValue);
+                            dataGridView1.Rows[rowIndex].Cells[7].Value = row["Description"].ToString();
+                            dataGridView1.Rows[rowIndex].Cells[8].Value = row["Unit of Measure"].ToString();
+                            dataGridView1.Rows[rowIndex].Cells[10].Value = priceValue;
+                        }
+                        else
+                        {
+                            salesCode = "";
+                            dataGridView1.Rows[rowIndex].Cells[7].Value = string.Empty;
+                            dataGridView1.Rows[rowIndex].Cells[8].Value = string.Empty;
+                            dataGridView1.Rows[rowIndex].Cells[10].Value = "0";
+                        }
+
+                        if (dataGridView1.Rows[rowIndex].Cells[columnIndex].Value.ToString() != salesCode)
+                        {
+                            dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = salesCode;
+                            return;
+                        }
+                    }
+
+                    var lineItemID = dataGridView1.Rows[rowIndex].Cells[2].Value.ToString();
+                    var billOfLading = dataGridView1.Rows[rowIndex].Cells[3].Value.ToString();
+                    var quantity = dataGridView1.Rows[rowIndex].Cells[9].Value.ToString();
 
                     dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.White;
                     dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.White;
@@ -84,42 +148,82 @@
                     dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.White;
                     dataGridView1.Rows[rowIndex].Cells[9].Style.BackColor = Color.White;
 
-                    int previousRowIndex = 0;
-                    bool incompleteFlag = false;
-                    if (rowIndex > 0)
+                    var incompleteFlag = false;
+                    var currentRowFlag = false;
+
+                    if (rowIndex >= 0)
                     {
-                        previousRowIndex = rowIndex - 1;
-                        if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[3].Value.ToString()))
+                        var previousRowIndex = rowIndex - 1;
+
+                        if (previousRowIndex >= 0)
                         {
-                            dataGridView1.Rows[previousRowIndex].Cells[3].Style.BackColor = Color.Red;
-                            incompleteFlag = true;
+                            if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[3].Value.ToString()))
+                            {
+                                dataGridView1.Rows[previousRowIndex].Cells[3].Style.BackColor = Color.Red;
+                                incompleteFlag = true;
+                            }
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[4].Value.ToString()))
+                            {
+                                dataGridView1.Rows[previousRowIndex].Cells[4].Style.BackColor = Color.Red;
+                                incompleteFlag = true;
+                            }
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[5].Value.ToString()))
+                            {
+                                dataGridView1.Rows[previousRowIndex].Cells[5].Style.BackColor = Color.Red;
+                                incompleteFlag = true;
+                            }
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[6].Value.ToString()))
+                            {
+                                dataGridView1.Rows[previousRowIndex].Cells[6].Style.BackColor = Color.Red;
+                                incompleteFlag = true;
+                            }
+                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[9].Value.ToString()) || dataGridView1.Rows[previousRowIndex].Cells[9].Value.ToString() == "0")
+                            {
+                                dataGridView1.Rows[previousRowIndex].Cells[9].Style.BackColor = Color.Red;
+                                incompleteFlag = true;
+                            }
                         }
-                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[4].Value.ToString()))
+
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[3].Value.ToString()))
                         {
-                            dataGridView1.Rows[previousRowIndex].Cells[4].Style.BackColor = Color.Red;
-                            incompleteFlag = true;
+                            dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.Red;
+                            currentRowFlag = true;
                         }
-                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[5].Value.ToString()))
+
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[4].Value.ToString()))
                         {
-                            dataGridView1.Rows[previousRowIndex].Cells[5].Style.BackColor = Color.Red;
-                            incompleteFlag = true;
+                            dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.Red;
+                            currentRowFlag = true;
                         }
-                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[6].Value.ToString()))
+
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[5].Value.ToString()))
                         {
-                            dataGridView1.Rows[previousRowIndex].Cells[6].Style.BackColor = Color.Red;
-                            incompleteFlag = true;
+                            dataGridView1.Rows[rowIndex].Cells[5].Style.BackColor = Color.Red;
+                            currentRowFlag = true;
                         }
-                        else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[9].Value.ToString()))
+
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[6].Value.ToString()))
                         {
-                            dataGridView1.Rows[previousRowIndex].Cells[9].Style.BackColor = Color.Red;
-                            incompleteFlag = true;
+                            dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.Red;
+                            currentRowFlag = true;
                         }
-                        if (incompleteFlag)
+
+                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[9].Value.ToString()) || dataGridView1.Rows[rowIndex].Cells[9].Value.ToString() == "0")
+                        {
+                            dataGridView1.Rows[rowIndex].Cells[9].Style.BackColor = Color.Red;
+                            currentRowFlag = true;
+                        }
+
+                        if (incompleteFlag || currentRowFlag)
                         {
                             if (!this.IsAlertShown)
                             {
-                                this.IsAlertShown = true;
-                                var res = MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
+                                if (incompleteFlag)
+                                {
+                                    this.IsAlertShown = true;
+                                    MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
+                                }
+
                                 return;
                             }
                         }
@@ -147,19 +251,6 @@
                     //}
 
                     //dataGridView1.Columns["BillOfLadingNumber"].DefaultCellStyle.BackColor = Color.Red;
-                    if (columnIndex == 6)
-                    {
-                        var rows = SalesCode.Select("[Sales Code]='" + salesCode + "'");
-
-                        if (rows.Length > 0)
-                        {
-                            var priceValue = 0d;
-                            double.TryParse(rows[0]["Price"].ToString(), out priceValue);
-                            dataGridView1.Rows[rowIndex].Cells[10].Value = priceValue;
-                            dataGridView1.Rows[rowIndex].Cells[7].Value = rows[0]["Description"].ToString();
-                            dataGridView1.Rows[rowIndex].Cells[8].Value = rows[0]["Unit of Measure"].ToString();
-                        }
-                    }
 
                     string price = dataGridView1.Rows[rowIndex].Cells[10].Value.ToString();
                     float fPrice = 0f;
@@ -454,7 +545,6 @@
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             DBManager.isDataLoaded = true;
-            //dataGridView1.AllowUserToAddRows = true;
 
             dataGridView1.Columns["BillOfLadingNumber"].ReadOnly = false;
             dataGridView1.Columns["CustomerName"].ReadOnly = false;
@@ -466,11 +556,6 @@
             dataGridView1.Columns["UnitOfMeasure"].ReadOnly = true;
             dataGridView1.Columns["Price"].ReadOnly = true;
             dataGridView1.Columns["Ext"].ReadOnly = true;
-
-            //dataGridView1.Columns["BillOfLadingNumber"].Width = 155;
-            //dataGridView1.Columns["Shipper"].Width = 123;
-            //dataGridView1.Columns["SalesCode"].Width = 115;
-            //dataGridView1.Columns["UnitOfMeasure"].Width = 150;
 
             label1.Text = "";
             label1.Font = new Font(label1.Font, FontStyle.Regular);

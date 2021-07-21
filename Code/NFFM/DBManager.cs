@@ -15,6 +15,9 @@ namespace NFFM
         public static bool isDataLoaded = false;
         public static string NewTruckerId = string.Empty;
         public static int currentRecordId = 0;
+
+        public static string SqlSafe(string fieldValue, string replacer = "''") => fieldValue.Replace("'", replacer);
+
         public static DataTable GetDataTable(string SPName)
         {
             using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
