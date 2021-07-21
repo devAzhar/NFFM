@@ -215,6 +215,8 @@ namespace NFFM
             this.ddlTruckerName.Size = new System.Drawing.Size(199, 32);
             this.ddlTruckerName.TabIndex = 28;
             this.ddlTruckerName.SelectedIndexChanged += new System.EventHandler(this.ddlTruckerName_SelectedIndexChanged);
+            this.ddlTruckerName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+
             // this.ddlTruckerName.Enter += new System.EventHandler(this.comboBoxGeneral_Enter);
 
             // 
