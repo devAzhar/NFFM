@@ -215,11 +215,11 @@
             try
             {
                 dataGridView1.CurrentCell = currentCell;
-                dataGridView1.BeginEdit(false);
+                //dataGridView1.BeginEdit(false);
                 SendKeys.SendWait("{TAB}");
                 SendKeys.SendWait("+{TAB}");
-                SendKeys.SendWait("0");
-                SendKeys.SendWait("{BACKSPACE}");
+                //SendKeys.SendWait("0");
+                //SendKeys.SendWait("{BACKSPACE}");
                 // Scroll towards the end >>
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
             }

@@ -11,6 +11,7 @@ namespace NFFM
     public static class DBManager
     {
         public static bool RowChanged { get; set; } = false;
+        public static int LastRowIndex { get; set; } = -1;
         public static bool CopyInProgress { get; set; } = false;
         public static bool isDataLoaded = false;
         public static string NewTruckerId = string.Empty;
@@ -57,7 +58,7 @@ namespace NFFM
             }
         }
 
-        public static DataSet GetDataSet_New(string SPName, int receivingId)
+        public static DataSet GetDataSet_New(string storedProcedureName, int receivingId)
         {
             using (SqlConnection conn = new SqlConnection(Constants.Constants.ConnectionString))
             {
@@ -66,7 +67,7 @@ namespace NFFM
                     using (SqlCommand cmd = conn.CreateCommand())
                     {
                         cmd.Parameters.AddWithValue("receivingId", receivingId);
-                        cmd.CommandText = SPName;
+                        cmd.CommandText = storedProcedureName;
                         cmd.CommandType = CommandType.StoredProcedure;
                         da.SelectCommand = cmd;
                         var ds = new DataSet();

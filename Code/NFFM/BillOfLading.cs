@@ -331,13 +331,16 @@
                     {
                         using (SqlCommand cmd = new SqlCommand("LineItem_Delete", con))
                         {
+                            dataGridView1.Rows.RemoveAt(rowIndex);
+                            RecalculateTotals();
+
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("lineitemid", lineItemIdToDelete);
                             con.Open();
                             cmd.ExecuteNonQuery();
                             con.Close();
                             // MessageBox.Show("Line item is deleted successfully.");
-                            LoadData(DBManager.currentRecordId);
+                            // LoadData(DBManager.currentRecordId);
                         }
                     }
                 }
@@ -353,8 +356,9 @@
 
             try
             {
-                if (e.ColumnIndex >= 0 && e.ColumnIndex <= 3 && e.RowIndex > 0)
+                if (e.ColumnIndex >= 0 && e.ColumnIndex <= 3 && e.RowIndex > 0 && DBManager.LastRowIndex != e.RowIndex)
                 {
+                    DBManager.LastRowIndex = e.RowIndex;
                     var newRowHandled = HandleNewRow(e.RowIndex);
 
                     if (newRowHandled)
@@ -396,18 +400,16 @@
         protected override void LoadData(int receivingId)
         {
             DBManager.currentRecordId = receivingId;
-            var storedProcedureName = "BillOfLading_GetAll";
-            SqlCommand cmd = new SqlCommand();
-            cmd.Parameters.AddWithValue("receivingId", receivingId);
-            DataSet ds = DBManager.GetDataSet_New(storedProcedureName, receivingId);
-            var dtTruckers = ds.Tables[0];
-            var dtLineItems = ds.Tables[2];
-            Customers = ds.Tables[3];
-            Shippers = ds.Tables[4];
-            SalesCode = ds.Tables[5];
+            var dataSet = DBManager.GetDataSet_New("BillOfLading_GetAll", receivingId);
+            var dtTruckers = dataSet.Tables[0];
+            var dtLineItems = dataSet.Tables[2];
+
+            Customers = dataSet.Tables[3];
+            Shippers = dataSet.Tables[4];
+            SalesCode = dataSet.Tables[5];
             currentTruckerId = "0";
 
-            if (ds.Tables.Count > 0)
+            if (dataSet.Tables.Count > 0)
             {
                 if (ItemsDictionary.Count == 0)
                 {
@@ -434,9 +436,9 @@
                         SalesCodeDictionary.Add(SalesCode.Rows[i]["SalesCodeId"].ToString(), SalesCode.Rows[i]["Sales Code"].ToString());
                     }
                 }
-                if (ds.Tables[1].Rows.Count > 0)
+                if (dataSet.Tables[1].Rows.Count > 0)
                 {
-                    if (ds.Tables[1].Rows[0]["ReceivedDate"].ToString() == "1/1/1900 12:00:00 AM")
+                    if (dataSet.Tables[1].Rows[0]["ReceivedDate"].ToString() == "1/1/1900 12:00:00 AM")
                     {
                         DayOfWeek weekStart = DayOfWeek.Monday; // or Sunday, or whenever
                         DateTime startingDate = DateTime.Today;
@@ -452,19 +454,19 @@
                     }
                     else
                     {
-                        datePickerReceived.Text = ds.Tables[1].Rows[0]["ReceivedDate"].ToString();
-                        datePickerWeekEnding.Text = ds.Tables[1].Rows[0]["WeekEndingDate"].ToString();
+                        datePickerReceived.Text = dataSet.Tables[1].Rows[0]["ReceivedDate"].ToString();
+                        datePickerWeekEnding.Text = dataSet.Tables[1].Rows[0]["WeekEndingDate"].ToString();
                     }
-                    txtBatchId.Text = ds.Tables[1].Rows[0]["BatchID"].ToString();
-                    ddlTruckerName.Text = ds.Tables[1].Rows[0]["Trucker"].ToString();
-                    currentTruckerId = ds.Tables[1].Rows[0]["TruckerID"].ToString();
+                    txtBatchId.Text = dataSet.Tables[1].Rows[0]["BatchID"].ToString();
+                    ddlTruckerName.Text = dataSet.Tables[1].Rows[0]["Trucker"].ToString();
+                    currentTruckerId = dataSet.Tables[1].Rows[0]["TruckerID"].ToString();
                     txtRecords.ReadOnly = true;
-                    txtRecords.Text = ds.Tables[1].Rows[0]["CurrentRecord"].ToString() + " of " + ds.Tables[1].Rows[0]["TotalRecords"].ToString();
-                    currentReceivingId = ds.Tables[1].Rows[0]["receivingId"].ToString();
-                    previousReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["previousReceivingId"]);
-                    firstReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["firstReceivingId"]);
-                    nextReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["nextReceivingId"]);
-                    lastReceivingId = Convert.ToInt32(ds.Tables[1].Rows[0]["lastReceivingId"]);
+                    txtRecords.Text = dataSet.Tables[1].Rows[0]["CurrentRecord"].ToString() + " of " + dataSet.Tables[1].Rows[0]["TotalRecords"].ToString();
+                    currentReceivingId = dataSet.Tables[1].Rows[0]["receivingId"].ToString();
+                    previousReceivingId = Convert.ToInt32(dataSet.Tables[1].Rows[0]["previousReceivingId"]);
+                    firstReceivingId = Convert.ToInt32(dataSet.Tables[1].Rows[0]["firstReceivingId"]);
+                    nextReceivingId = Convert.ToInt32(dataSet.Tables[1].Rows[0]["nextReceivingId"]);
+                    lastReceivingId = Convert.ToInt32(dataSet.Tables[1].Rows[0]["lastReceivingId"]);
                     if (nextReceivingId.ToString() == "0")
                     {
                         btnNext.Enabled = false;
@@ -494,7 +496,7 @@
                 }
                 else
                 {
-                    BindLineItems(ds.Tables[6]);
+                    BindLineItems(dataSet.Tables[6]);
                 }
             }
         }
