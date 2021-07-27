@@ -71,7 +71,7 @@
 
                     if (columnIndex == 4)
                     {
-                        if(customerName == "0" && rowIndex > 0)
+                        if (customerName == "0" && rowIndex > 0)
                         {
                             // dataGridView1.Rows[rowIndex].Cells[columnIndex].Value = dataGridView1.Rows[rowIndex - 1].Cells[4].Value?.ToString();
                             // return;
@@ -84,7 +84,7 @@
                         }
                         else
                         {
-                          customerName = string.Empty;
+                            customerName = string.Empty;
                         }
 
                         if (customerName != dataGridView1.Rows[rowIndex].Cells[columnIndex].Value?.ToString().Trim())
@@ -159,9 +159,12 @@
                     if (rowIndex >= 0)
                     {
                         var previousRowIndex = rowIndex - 1;
+                        var quantityText = string.Empty;
 
                         if (previousRowIndex >= 0)
                         {
+                            quantityText = dataGridView1.Rows[previousRowIndex].Cells[9].Value?.ToString();
+
                             if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[3].Value?.ToString()))
                             {
                                 dataGridView1.Rows[previousRowIndex].Cells[3].Style.BackColor = Color.Red;
@@ -182,7 +185,7 @@
                                 dataGridView1.Rows[previousRowIndex].Cells[6].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
-                            else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[9].Value?.ToString()) || dataGridView1.Rows[previousRowIndex].Cells[9].Value?.ToString() == "0")
+                            else if (string.IsNullOrEmpty(quantityText) || quantityText == "0")
                             {
                                 dataGridView1.Rows[previousRowIndex].Cells[9].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
@@ -213,10 +216,15 @@
                             currentRowFlag = true;
                         }
 
-                        if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[9].Value?.ToString()) || dataGridView1.Rows[rowIndex].Cells[9].Value?.ToString() == "0")
+                        var quantityCell = dataGridView1.Rows[rowIndex].Cells[9];
+                        quantityText = quantityCell.Value?.ToString();
+                        quantityCell.Style.ForeColor = Color.Black;
+
+                        if (string.IsNullOrEmpty(quantityText) || quantityText == "0")
                         {
-                            dataGridView1.Rows[rowIndex].Cells[9].Style.BackColor = Color.Red;
+                            quantityCell.Style.BackColor = Color.Red;
                             currentRowFlag = true;
+                            quantityCell.Style.ForeColor = quantityText == "0" ? Color.Red : Color.Black;
                         }
 
                         if (incompleteFlag || currentRowFlag)
@@ -228,8 +236,6 @@
                                     this.IsAlertShown = true;
                                     // MessageBox.Show("Bill of lading #, Customer name, Shipper, Sales Code & quantity columns are mandatory, kindly fill these columns of above row.");
                                 }
-
-                                return;
                             }
                         }
                     }
@@ -257,16 +263,25 @@
 
                     //dataGridView1.Columns["BillOfLadingNumber"].DefaultCellStyle.BackColor = Color.Red;
 
-                    string price = dataGridView1.Rows[rowIndex].Cells[10].Value?.ToString();
+                    string stringPrice = dataGridView1.Rows[rowIndex].Cells[10].Value?.ToString();
                     float fPrice = 0f;
-                    float.TryParse(price, out fPrice);
                     var iQuantity = 0;
+                    
+                    float.TryParse(stringPrice, out fPrice);
                     int.TryParse(quantity, out iQuantity);
 
-                    if (dataGridView1.Rows[rowIndex].Cells[11].Value?.ToString() != (iQuantity * fPrice).ToString())
+                    var lineItemPriceCell = dataGridView1.Rows[rowIndex].Cells[11];
+                    var lineItemPrice = lineItemPriceCell.Value?.ToString();
+
+                    if (lineItemPrice != (iQuantity * fPrice).ToString())
                     {
-                        dataGridView1.Rows[rowIndex].Cells[11].Value = iQuantity * fPrice;
+                        lineItemPriceCell.Value = iQuantity * fPrice;
                         this.RecalculateTotals();
+                    }
+
+                    if (incompleteFlag || currentRowFlag)
+                    {
+                        return;
                     }
 
                     if (!ignoreDBSave)
@@ -553,8 +568,8 @@
             dataGridView1.Columns["Ext"].DefaultCellStyle.BackColor = Color.Yellow;
             dataGridView1.Columns["Description"].DefaultCellStyle.BackColor = Color.Yellow;
             dataGridView1.Columns["Price"].DefaultCellStyle.BackColor = Color.Yellow;
-            dataGridView1.Columns["Price"].DefaultCellStyle.Format = "c";
-            dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
+            dataGridView1.Columns["Price"].DefaultCellStyle.Format = "N3";
+            dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "N3";
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             DBManager.isDataLoaded = true;
@@ -611,7 +626,7 @@
                 }
             }
 
-            txtTruckingTotal.Text = "$" + Math.Round(total, 2);
+            txtTruckingTotal.Text = "$" + total.ToString("N3");
         }
         #endregion
 

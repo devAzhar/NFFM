@@ -198,9 +198,10 @@
                     dataGridView1[index, lastRowIndex].Value = dataGridView1[index, lastValidRowIndex].Value;
                 }
             }
-                var quantityCell = dataGridView1.Rows[lastRowIndex].Cells[quantityColumnIndex];
+            
+            var quantityCell = dataGridView1.Rows[lastRowIndex].Cells[quantityColumnIndex];
             var billOfLandingCell = dataGridView1.Rows[lastRowIndex].Cells[billOfLandingColumnIndex];
-            quantityCell.Value = 0;
+            quantityCell.Value = "0";
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Display);
 
             DBManager.CopyInProgress = false;
