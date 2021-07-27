@@ -551,6 +551,11 @@
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCreateReport_Click_1(object sender, EventArgs e)
         {
             label1.Text = "Data is Exporting in Excel, Please wait...";
@@ -567,65 +572,50 @@
             {
                 recDate = "";
             }
+
             if (rbtBatchAll.Checked)
             {
                 batchId = "";
             }
+
             if (rbtBillOfLadingAll.Checked)
             {
                 bol = "";
             }
+
             if (rbtCustomerAll.Checked)
             {
                 custName = "";
             }
+            
             using (var ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName, true))
             {
                 var dtBOLReport = ds.Tables[0];
-
-                //Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
-                //Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
-                //Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
-
-                //worksheet = workbook.Sheets["Sheet1"];
-                //worksheet = workbook.ActiveSheet;
-                //worksheet.Name = "BillOfLading";
-                //for (int i = 1; i < dtBOLReport.Columns.Count + 1; i++)
-                //{
-                //    worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
-                //}
-                //for (int i = 0; i < dtBOLReport.Rows.Count - 1; i++) // tmep - 1
-                //{
-                //    for (int j = 0; j < dtBOLReport.Columns.Count; j++)
-                //    {
-                //        worksheet.Cells[i + 2, j + 1] = dtBOLReport.Rows[i][j];
-                //    }
-                //}
-                var saveFileDialogue = new SaveFileDialog();
-                saveFileDialogue.FileName = "BillOfLadingReport" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("yy");
-                saveFileDialogue.DefaultExt = ".csv";
+                var fileName = "BillOfLadingReport" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("yy");
+                
+                var saveFileDialogue = new SaveFileDialog
+                {
+                    FileName = fileName,
+                    DefaultExt = ".csv"
+                };
 
                 if (saveFileDialogue.ShowDialog() == DialogResult.OK)
                 {
                     dtBOLReport.WriteToCsvFile(saveFileDialogue.FileName);
-                    // workbook.SaveAs(saveFileDialogue.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
                 }
             }
 
             label1.Text = "Click a heading to sort the data.";
             label1.ForeColor = Color.Black;
             label1.Font = new Font(label1.Font, label1.Font.Style & ~FontStyle.Bold);
-            //app.Quit();
         }
 
         private void rbtReceived_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void rbtReceivedAll_CheckedChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

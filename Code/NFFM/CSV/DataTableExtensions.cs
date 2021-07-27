@@ -1,13 +1,15 @@
 ﻿namespace NFFM
 {
+    using System;
     using System.Data;
+    using System.IO;
     using System.Text;
 
     public static class DataTableExtensions
     {
         public static void WriteToCsvFile(this DataTable dataTable, string filePath)
         {
-            StringBuilder fileContent = new StringBuilder();
+            var fileContent = new StringBuilder();
 
             foreach (var col in dataTable.Columns)
             {
@@ -20,13 +22,22 @@
             {
                 foreach (var column in dr.ItemArray)
                 {
-                    fileContent.Append("\"" + column.ToString() + "\",");
+                    var columnType = column.GetType().Name;
+
+                    if (columnType == "DateTime" || columnType == "Date")
+                    {
+                        fileContent.Append("\"" + DateTime.Parse(column.ToString()).ToString("d") + "\",");
+                    }
+                    else
+                    {
+                        fileContent.Append("\"" + column.ToString() + "\",");
+                    }
                 }
 
                 fileContent.Replace(",", System.Environment.NewLine, fileContent.Length - 1, 1);
             }
 
-            System.IO.File.WriteAllText(filePath, fileContent.ToString());
+            File.WriteAllText(filePath, fileContent.ToString());
         }
     }
 }

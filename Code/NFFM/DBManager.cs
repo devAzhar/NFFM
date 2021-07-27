@@ -21,13 +21,13 @@ namespace NFFM
 
         public static DataTable GetDataTable(string SPName)
         {
-            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var con = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(SPName, con))
+                using (var cmd = new SqlCommand(SPName, con))
                 {
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        DataTable dt = new DataTable();
+                        var dt = new DataTable();
                         con.Open();
                         da.Fill(dt);
                         con.Close();
@@ -40,14 +40,14 @@ namespace NFFM
         {
             using (var conn = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter())
+                using (var da = new SqlDataAdapter())
                 {
-                    using (SqlCommand cmd = conn.CreateCommand())
+                    using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = storedProcedureName;
                         cmd.CommandType = CommandType.StoredProcedure;
                         da.SelectCommand = cmd;
-                        DataSet ds = new DataSet();
+                        var ds = new DataSet();
                         conn.Open();
                         da.Fill(ds);
                         conn.Close();
@@ -60,11 +60,11 @@ namespace NFFM
 
         public static DataSet GetDataSet_New(string storedProcedureName, int receivingId)
         {
-            using (SqlConnection conn = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var conn = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter())
+                using (var da = new SqlDataAdapter())
                 {
-                    using (SqlCommand cmd = conn.CreateCommand())
+                    using (var cmd = conn.CreateCommand())
                     {
                         cmd.Parameters.AddWithValue("receivingId", receivingId);
                         cmd.CommandText = storedProcedureName;
@@ -82,11 +82,11 @@ namespace NFFM
         }
         public static DataSet GetDataSet_Report(string SPName, string receivedDate, string batchId, string invoiceNumber, string billOfLadingNumber, string customerName, bool ExportToExcel)
         {
-            using (SqlConnection conn = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var conn = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter())
+                using (var da = new SqlDataAdapter())
                 {
-                    using (SqlCommand cmd = conn.CreateCommand())
+                    using (var cmd = conn.CreateCommand())
                     {
                         cmd.Parameters.AddWithValue("receivedDate", receivedDate);
                         cmd.Parameters.AddWithValue("batchId", batchId);
@@ -96,7 +96,7 @@ namespace NFFM
                         cmd.CommandText = SPName;
                         cmd.CommandType = CommandType.StoredProcedure;
                         da.SelectCommand = cmd;
-                        DataSet ds = new DataSet();
+                        var ds = new DataSet();
                         conn.Open();
                         da.Fill(ds);
                         conn.Close();
@@ -108,17 +108,17 @@ namespace NFFM
         }
         public static DataSet GetDataSet_FreightForwarding(string SPName, int shippingId)
         {
-            using (SqlConnection conn = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var conn = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter())
+                using (var da = new SqlDataAdapter())
                 {
-                    using (SqlCommand cmd = conn.CreateCommand())
+                    using (var cmd = conn.CreateCommand())
                     {
                         cmd.Parameters.AddWithValue("shippingId", shippingId);
                         cmd.CommandText = SPName;
                         cmd.CommandType = CommandType.StoredProcedure;
                         da.SelectCommand = cmd;
-                        DataSet ds = new DataSet();
+                        var ds = new DataSet();
                         conn.Open();
                         da.Fill(ds);
                         conn.Close();
@@ -130,11 +130,11 @@ namespace NFFM
         }
         public static DataSet GetDataSet_FreightForwardingReport(string SPName, string shippedDate, string batchId, string invoiceNumber, string billOfLadingNumber, string customerName)
         {
-            using (SqlConnection conn = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var conn = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlDataAdapter da = new SqlDataAdapter())
+                using (var da = new SqlDataAdapter())
                 {
-                    using (SqlCommand cmd = conn.CreateCommand())
+                    using (var cmd = conn.CreateCommand())
                     {
                         cmd.Parameters.AddWithValue("shippedDate", shippedDate);
                         cmd.Parameters.AddWithValue("batchId", batchId);
@@ -143,7 +143,7 @@ namespace NFFM
                         cmd.CommandText = SPName;
                         cmd.CommandType = CommandType.StoredProcedure;
                         da.SelectCommand = cmd;
-                        DataSet ds = new DataSet();
+                        var ds = new DataSet();
                         conn.Open();
                         da.Fill(ds);
                         conn.Close();
@@ -153,28 +153,29 @@ namespace NFFM
                 }
             }
         }
+
         public static int ExecuteNonQuery(string SPName)
         {
-            var retValue = 0;
-            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var con = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(SPName, con))
+                using (var cmd = new SqlCommand(SPName, con))
                 {
                     con.Open();
-                    retValue = cmd.ExecuteNonQuery();
+                    var retValue = cmd.ExecuteNonQuery();
                     con.Close();
                     return retValue;
                 }
             }
         }
+
         public static int ExecuteNonQuery_New(string SPName, string receivingID, string lineItemID, string billOfLading, string customerName, string shipper, string salesCode, string quantity, string receivedDate, string weekEndingDate, string truckerId, string batchId)
         {
-            int retValue = 0;
-
-            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var con = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(SPName, con))
+                using (var cmd = new SqlCommand(SPName, con))
                 {
+                    var retValue = 0;
+
                     try
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -190,20 +191,18 @@ namespace NFFM
                         cmd.Parameters.AddWithValue("truckerId", truckerId);
                         cmd.Parameters.AddWithValue("batchId", batchId);
                         con.Open();
-                        //retValue = cmd.ExecuteNonQuery();
+
                         retValue = 0;
 
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {
-                            DataTable dt = new DataTable();
+                            var dt = new DataTable();
                             da.Fill(dt);
 
                             if (dt.Rows.Count > 0)
                             {
                                 int.TryParse(dt.Rows[0][0].ToString(), out retValue);
                             }
-                            //con.Close();
-                            //return dt;
                         }
 
                         con.Close();
@@ -221,11 +220,11 @@ namespace NFFM
         }
         public static int ExecuteNonQuery_FreightForwarding(string SPName, string shippingId, string lineItemID, string billOfLading, string customerName, string shipper, string salesCode, string quantity, string shippedDate, string weekEndingDate, string truckerId, string batchId)
         {
-            int retValue = 0;
-         
-            using (SqlConnection con = new SqlConnection(Constants.Constants.ConnectionString))
+            using (var con = new SqlConnection(Constants.Constants.ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(SPName, con))
+                var retValue = 0;
+
+                using (var cmd = new SqlCommand(SPName, con))
                 {
                     try
                     {
@@ -242,20 +241,17 @@ namespace NFFM
                         cmd.Parameters.AddWithValue("truckerId", truckerId);
                         cmd.Parameters.AddWithValue("batchId", batchId);
                         con.Open();
-                        //retValue = cmd.ExecuteNonQuery();
                         retValue = 0;
 
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {
-                            DataTable dt = new DataTable();
+                            var dt = new DataTable();
                             da.Fill(dt);
 
                             if (dt.Rows.Count > 0)
                             {
                                 int.TryParse(dt.Rows[0][0].ToString(), out retValue);
                             }
-                            //con.Close();
-                            //return dt;
                         }
 
                         con.Close();
