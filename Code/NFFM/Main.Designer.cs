@@ -183,7 +183,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnCustomer);
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Activated += new System.EventHandler(this.Form1_Activated);

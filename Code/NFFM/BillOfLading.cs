@@ -167,52 +167,52 @@
 
                             if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[3].Value?.ToString()))
                             {
-                                dataGridView1.Rows[previousRowIndex].Cells[3].Style.BackColor = Color.Red;
+                                //dataGridView1.Rows[previousRowIndex].Cells[3].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
                             else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[4].Value?.ToString()))
                             {
-                                dataGridView1.Rows[previousRowIndex].Cells[4].Style.BackColor = Color.Red;
+                                //dataGridView1.Rows[previousRowIndex].Cells[4].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
                             else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[5].Value?.ToString()))
                             {
-                                dataGridView1.Rows[previousRowIndex].Cells[5].Style.BackColor = Color.Red;
+                                //dataGridView1.Rows[previousRowIndex].Cells[5].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
                             else if (string.IsNullOrEmpty(dataGridView1.Rows[previousRowIndex].Cells[6].Value?.ToString()))
                             {
-                                dataGridView1.Rows[previousRowIndex].Cells[6].Style.BackColor = Color.Red;
+                                //dataGridView1.Rows[previousRowIndex].Cells[6].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
                             else if (string.IsNullOrEmpty(quantityText) || quantityText == "0")
                             {
-                                dataGridView1.Rows[previousRowIndex].Cells[9].Style.BackColor = Color.Red;
+                                //dataGridView1.Rows[previousRowIndex].Cells[9].Style.BackColor = Color.Red;
                                 incompleteFlag = true;
                             }
                         }
 
                         if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[3].Value?.ToString()))
                         {
-                            dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.Red;
+                            //dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
                         if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[4].Value?.ToString()))
                         {
-                            dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.Red;
+                            //dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
                         if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[5].Value?.ToString()))
                         {
-                            dataGridView1.Rows[rowIndex].Cells[5].Style.BackColor = Color.Red;
+                            //dataGridView1.Rows[rowIndex].Cells[5].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
                         if (string.IsNullOrEmpty(dataGridView1.Rows[rowIndex].Cells[6].Value?.ToString()))
                         {
-                            dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.Red;
+                            //dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.Red;
                             currentRowFlag = true;
                         }
 
@@ -222,9 +222,10 @@
 
                         if (string.IsNullOrEmpty(quantityText) || quantityText == "0")
                         {
-                            quantityCell.Style.BackColor = Color.Red;
+                            //quantityCell.Style.BackColor = Color.Red;
                             currentRowFlag = true;
-                            quantityCell.Style.ForeColor = quantityText == "0" ? Color.Red : Color.Black;
+                            //quantityCell.Style.ForeColor = quantityText == "0" ? Color.Red : Color.Black;
+                            quantityCell.Style.ForeColor = quantityText == "0" ? Color.White : Color.Black;
                         }
 
                         if (incompleteFlag || currentRowFlag)
@@ -239,29 +240,6 @@
                             }
                         }
                     }
-
-                    //if (string.IsNullOrEmpty(billOfLading))
-                    //{
-                    //    dataGridView1.Rows[rowIndex].Cells[3].Style.BackColor = Color.Red;
-                    //}
-                    //else if (string.IsNullOrEmpty(customerName))
-                    //{
-                    //    dataGridView1.Rows[rowIndex].Cells[4].Style.BackColor = Color.Red;
-                    //    //dataGridView1.Rows[rowIndex].Cells[4].Style.ForeColor = Color.Yellow;
-                    //}
-                    //else if (string.IsNullOrEmpty(shipper))
-                    //{
-                    //    dataGridView1.Rows[rowIndex].Cells[5].Style.BackColor = Color.Red;
-                    //}
-                    //else if (string.IsNullOrEmpty(salesCode)) {
-                    //    dataGridView1.Rows[rowIndex].Cells[6].Style.BackColor = Color.Red;
-                    //}
-                    //else if (string.IsNullOrEmpty(quantity))
-                    //{
-                    //    dataGridView1.Rows[rowIndex].Cells[9].Style.BackColor = Color.Red;
-                    //}
-
-                    //dataGridView1.Columns["BillOfLadingNumber"].DefaultCellStyle.BackColor = Color.Red;
 
                     string stringPrice = dataGridView1.Rows[rowIndex].Cells[10].Value?.ToString();
                     float fPrice = 0f;
@@ -695,11 +673,12 @@
             while (startingDate.DayOfWeek != weekStart)
                 startingDate = startingDate.AddDays(-1);
 
-            DateTime previousWeekStart = startingDate.AddDays(-7);
-            DateTime previousWeekEnd = startingDate.AddDays(-3);
-            txtBatchId.Text = "";
-            datePickerReceived.Text = previousWeekStart.ToShortDateString();
-            datePickerWeekEnding.Text = previousWeekEnd.ToShortDateString();
+            // DateTime previousWeekStart = startingDate.AddDays(-7);
+            // DateTime previousWeekEnd = startingDate.AddDays(-3);
+            // txtBatchId.Text = "";
+            // datePickerReceived.Text = previousWeekStart.ToShortDateString();
+            // datePickerWeekEnding.Text = previousWeekEnd.ToShortDateString();
+
             currentReceivingId = "0";
             currentTruckerId = "0";
             ddlTruckerName.Text = "";
