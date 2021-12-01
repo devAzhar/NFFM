@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
-    public abstract class BaseForm : Form
+    public class BaseForm : Form
     {
         #region "Protected Members"
         protected bool FormInitialized = false;
@@ -23,7 +23,7 @@
         protected DataTable SalesCode { get; set; }
         #endregion
 
-        protected abstract void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false);
+        protected virtual void OnCellValueChanged(int eventRowIndex, int eventColumnIndex = 3, bool ignoreDBSave = false) { }
 
         protected static bool IsAlreadyOpen(Type formType)
         {
@@ -164,6 +164,13 @@
             }
         }
 
+        protected void OntxtBatchId_KeyDown(DataGridView dataGridView, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Tab) && !e.Shift)
+            {
+                OnDataGridFocus(dataGridView);
+            }
+        }
         protected void OntxtBatchId_KeyUp(DataGridView dataGridView, KeyEventArgs e)
         {
             if ((e.KeyCode == Keys.Enter) && !e.Shift)

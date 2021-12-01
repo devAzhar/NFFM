@@ -83,7 +83,7 @@ namespace NFFM
             this.btnDelete.Location = new System.Drawing.Point(1445, 76);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(130, 54);
-            this.btnDelete.TabIndex = 8;
+            this.btnDelete.TabIndex = 106;
             this.btnDelete.Text = "&Delete Displayed Bill of Lading";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -97,7 +97,7 @@ namespace NFFM
             this.btnAdd.Location = new System.Drawing.Point(1332, 76);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(107, 54);
-            this.btnAdd.TabIndex = 7;
+            this.btnAdd.TabIndex = 104;
             this.btnAdd.Text = "&Add a New Bill of Lading";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -147,7 +147,7 @@ namespace NFFM
             this.btnReport.Location = new System.Drawing.Point(1219, 76);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(107, 54);
-            this.btnReport.TabIndex = 33;
+            this.btnReport.TabIndex = 103;
             this.btnReport.Text = "&Report";
             this.btnReport.UseVisualStyleBackColor = false;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
@@ -161,7 +161,7 @@ namespace NFFM
             this.btnSalesCode.Location = new System.Drawing.Point(1445, 15);
             this.btnSalesCode.Name = "btnSalesCode";
             this.btnSalesCode.Size = new System.Drawing.Size(130, 49);
-            this.btnSalesCode.TabIndex = 32;
+            this.btnSalesCode.TabIndex = 102;
             this.btnSalesCode.Text = "Add Sales C&ode";
             this.btnSalesCode.UseVisualStyleBackColor = false;
             this.btnSalesCode.Click += new System.EventHandler(this.btnSalesCode_click);
@@ -175,7 +175,7 @@ namespace NFFM
             this.btnCustomer.Location = new System.Drawing.Point(1219, 15);
             this.btnCustomer.Name = "btnCustomer";
             this.btnCustomer.Size = new System.Drawing.Size(107, 49);
-            this.btnCustomer.TabIndex = 31;
+            this.btnCustomer.TabIndex = 100;
             this.btnCustomer.Text = "Add &Customer";
             this.btnCustomer.UseVisualStyleBackColor = false;
             this.btnCustomer.Click += new System.EventHandler(this.btnCustomer_click);
@@ -189,7 +189,7 @@ namespace NFFM
             this.btnAddShipper.Location = new System.Drawing.Point(1332, 15);
             this.btnAddShipper.Name = "btnAddShipper";
             this.btnAddShipper.Size = new System.Drawing.Size(107, 49);
-            this.btnAddShipper.TabIndex = 30;
+            this.btnAddShipper.TabIndex = 101;
             this.btnAddShipper.Text = "Add &Shipper";
             this.btnAddShipper.UseVisualStyleBackColor = false;
             this.btnAddShipper.Click += new System.EventHandler(this.btnAddShipper_Click);
@@ -201,6 +201,7 @@ namespace NFFM
             this.txtBatchId.Name = "txtBatchId";
             this.txtBatchId.Size = new System.Drawing.Size(199, 29);
             this.txtBatchId.TabIndex = 29;
+            this.txtBatchId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBatchId_KeyDown);
             this.txtBatchId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtBatchId_KeyUp);
             this.txtBatchId.Leave += new System.EventHandler(this.txtBatchId_Leave);
             // 
@@ -208,6 +209,7 @@ namespace NFFM
             // 
             this.ddlTruckerName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.ddlTruckerName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.ddlTruckerName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.ddlTruckerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ddlTruckerName.FormattingEnabled = true;
             this.ddlTruckerName.Location = new System.Drawing.Point(968, 60);
@@ -215,10 +217,6 @@ namespace NFFM
             this.ddlTruckerName.Size = new System.Drawing.Size(199, 32);
             this.ddlTruckerName.TabIndex = 28;
             this.ddlTruckerName.SelectedIndexChanged += new System.EventHandler(this.ddlTruckerName_SelectedIndexChanged);
-            this.ddlTruckerName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
-
-            // this.ddlTruckerName.Enter += new System.EventHandler(this.comboBoxGeneral_Enter);
-
             // 
             // label5
             // 
@@ -313,16 +311,15 @@ namespace NFFM
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dataGridView1.RowTemplate.Height = 45;
             this.dataGridView1.Size = new System.Drawing.Size(1596, 634);
-            this.dataGridView1.TabIndex = 22;
+            this.dataGridView1.TabIndex = 30;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellLeave);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
-            this.dataGridView1.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowLeave);
-            
             this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
             this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            this.dataGridView1.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowLeave);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
             // Action

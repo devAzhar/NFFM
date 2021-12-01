@@ -685,6 +685,7 @@
             txtTruckingTotal.Text = "";
             IsNewRecord = 1;
             LoadData(-1);
+            ddlTruckerName.Focus();
         }
 
         private void dataGridView1_RowLeave(object sender, DataGridViewCellEventArgs e)
@@ -746,17 +747,21 @@
             }
         }
 
-        private void OntxtBatchId_Leave()
+        private void OntxtBatchId_Leave(EventArgs e)
         {
             if (InitialDataLoaded == 1 && IsNewRecord == 0)
             {
                 int retVal = DBManager.ExecuteNonQuery_New("BillOfLading_AddUpdate", currentReceivingId, "", "", "", "", "", "", "", "", "0", txtBatchId.Text);
             }
+
+            dataGridView1.Focus();
+            dataGridView1.CurrentCell = dataGridView1.Rows[0].Cells[3];
+            //Task.Delay(100).ContinueWith(t => SendKeys.SendWait("{TAB}"));
         }
 
         private void txtBatchId_Leave(object sender, EventArgs e)
         {
-            OntxtBatchId_Leave();
+            OntxtBatchId_Leave(e);
         }
 
         private void datePickerReceived_Leave(object sender, EventArgs e)
@@ -874,6 +879,11 @@
             {
                 BOLReport.Show();
             }
+        }
+
+        private void txtBatchId_KeyDown(object sender, KeyEventArgs e)
+        {
+            // OntxtBatchId_KeyDown(dataGridView1, e);
         }
     }
 }
