@@ -200,7 +200,7 @@
             DBManager.CopyInProgress = true;
             for (var index = 0; index < dataGridView1.ColumnCount; index++)
             {
-                if (index != idColumnIndex && index != billOfLandingColumnIndex)
+                if (index != idColumnIndex)
                 {
                     dataGridView1[index, lastRowIndex].Value = dataGridView1[index, lastValidRowIndex].Value;
                 }

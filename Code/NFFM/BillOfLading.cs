@@ -225,7 +225,7 @@
                             //quantityCell.Style.BackColor = Color.Red;
                             currentRowFlag = true;
                             //quantityCell.Style.ForeColor = quantityText == "0" ? Color.Red : Color.Black;
-                            quantityCell.Style.ForeColor = quantityText == "0" ? Color.White : Color.Black;
+                            // quantityCell.Style.ForeColor = quantityText == "0" ? Color.White : Color.Black;
                         }
 
                         if (incompleteFlag || currentRowFlag)
