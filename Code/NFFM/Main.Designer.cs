@@ -41,6 +41,7 @@
             this.btnBOL = new System.Windows.Forms.Button();
             this.btnBOLReport = new System.Windows.Forms.Button();
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnDataFileExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tblCustomersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nFFM_be_sqlDataSet1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -170,11 +171,26 @@
             // 
             this.form1BindingSource.DataSource = typeof(NFFM.Customers);
             // 
+            // btnDataFileExport
+            // 
+            this.btnDataFileExport.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnDataFileExport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDataFileExport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDataFileExport.ForeColor = System.Drawing.Color.White;
+            this.btnDataFileExport.Location = new System.Drawing.Point(140, 373);
+            this.btnDataFileExport.Name = "btnDataFileExport";
+            this.btnDataFileExport.Size = new System.Drawing.Size(248, 109);
+            this.btnDataFileExport.TabIndex = 26;
+            this.btnDataFileExport.Text = "Data File Export";
+            this.btnDataFileExport.UseVisualStyleBackColor = false;
+            this.btnDataFileExport.Click += new System.EventHandler(this.btnDataFileExport_Click);
+            // 
             // Main
             // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1069, 389);
+            this.ClientSize = new System.Drawing.Size(1069, 505);
+            this.Controls.Add(this.btnDataFileExport);
             this.Controls.Add(this.btnBOLReport);
             this.Controls.Add(this.btnBOL);
             this.Controls.Add(this.btnTrucker);
@@ -209,6 +225,7 @@
         private System.Windows.Forms.Button btnTrucker;
         private System.Windows.Forms.Button btnBOL;
         private System.Windows.Forms.Button btnBOLReport;
+        private System.Windows.Forms.Button btnDataFileExport;
     }
 }
 

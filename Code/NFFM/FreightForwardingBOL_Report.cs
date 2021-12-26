@@ -274,7 +274,7 @@ namespace NFFM
             }
             totalTrucking = Math.Round(totalTrucking, 2);
             txtTruckingTotal.Text = "$" + totalTrucking.ToString();
-            txtTruckingTotal.BackColor = Color.Yellow;
+            //txtTruckingTotal.BackColor = Color.Yellow;
 
             dataGridView1.DataSource = dtLineItems;
 
@@ -313,10 +313,10 @@ namespace NFFM
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
 
-            dataGridView1.Columns["UnitOfMeasure"].DefaultCellStyle.BackColor = Color.Yellow; //"#FFFC8B";
-            dataGridView1.Columns["Ext"].DefaultCellStyle.BackColor = Color.Yellow;
-            dataGridView1.Columns["Description"].DefaultCellStyle.BackColor = Color.Yellow;
-            dataGridView1.Columns["Price"].DefaultCellStyle.BackColor = Color.Yellow;
+            //dataGridView1.Columns["UnitOfMeasure"].DefaultCellStyle.BackColor = Color.Yellow; //"#FFFC8B";
+            //dataGridView1.Columns["Ext"].DefaultCellStyle.BackColor = Color.Yellow;
+            //dataGridView1.Columns["Description"].DefaultCellStyle.BackColor = Color.Yellow;
+            //dataGridView1.Columns["Price"].DefaultCellStyle.BackColor = Color.Yellow;
             dataGridView1.Columns["Price"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;

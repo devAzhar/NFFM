@@ -15,25 +15,25 @@
             this.Text = "NFFM";
             DBManager.isDataLoaded = false;
 
-            rbtReceivedAll.Checked = true;
-            ddlReceived.Text = "";
-            ddlReceived.Enabled = false;
+            //rbtReceivedAll.Checked = true;
+            //ddlReceived.Text = "";
+            //ddlReceived.Enabled = false;
 
-            rbtBatchAll.Checked = true;
-            ddlBatch.Text = "";
-            ddlBatch.Enabled = false;
+            //rbtBatchAll.Checked = true;
+            //ddlBatch.Text = "";
+            //ddlBatch.Enabled = false;
 
-            rbtInvoiceAll.Checked = true;
-            ddlInvoice.Text = "";
-            ddlInvoice.Enabled = false;
+            //rbtInvoiceAll.Checked = true;
+            //ddlInvoice.Text = "";
+            //ddlInvoice.Enabled = false;
 
-            rbtBillOfLadingAll.Checked = true;
-            ddlBillOfLading.Text = "";
-            ddlBillOfLading.Enabled = false;
+            //rbtBillOfLadingAll.Checked = true;
+            //ddlBillOfLading.Text = "";
+            //ddlBillOfLading.Enabled = false;
 
-            rbtCustomerAll.Checked = true;
-            ddlCustomer.Text = "";
-            ddlCustomer.Enabled = false;
+            //rbtCustomerAll.Checked = true;
+            //ddlCustomer.Text = "";
+            //ddlCustomer.Enabled = false;
         }
 
         int initialDataLoaded = 0;
@@ -116,9 +116,9 @@
                     {
                         ReceivedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString());
                     }
-                    ddlReceived.DataSource = new BindingSource(ReceivedDateItems, null);
-                    ddlReceived.DisplayMember = "Value";
-                    ddlReceived.ValueMember = "Key";
+                    //ddlReceived.DataSource = new BindingSource(ReceivedDateItems, null);
+                    //ddlReceived.DisplayMember = "Value";
+                    //ddlReceived.ValueMember = "Key";
                 }
 
                 if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
@@ -127,9 +127,9 @@
                     {
                         BatchItems.Add(dtBatch.Rows[i]["BatchID"].ToString(), dtBatch.Rows[i]["BatchID"].ToString());
                     }
-                    ddlBatch.DataSource = new BindingSource(BatchItems, null);
-                    ddlBatch.DisplayMember = "Value";
-                    ddlBatch.ValueMember = "Key";
+                    //ddlBatch.DataSource = new BindingSource(BatchItems, null);
+                    //ddlBatch.DisplayMember = "Value";
+                    //ddlBatch.ValueMember = "Key";
                 }
                 if (dtBillOfLading.Rows.Count > 0 && BillOfLadingItems.Count == 0)
                 {
@@ -137,9 +137,9 @@
                     {
                         BillOfLadingItems.Add(dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString(), dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString());
                     }
-                    ddlBillOfLading.DataSource = new BindingSource(BillOfLadingItems, null);
-                    ddlBillOfLading.DisplayMember = "Value";
-                    ddlBillOfLading.ValueMember = "Key";
+                    //ddlBillOfLading.DataSource = new BindingSource(BillOfLadingItems, null);
+                    //ddlBillOfLading.DisplayMember = "Value";
+                    //ddlBillOfLading.ValueMember = "Key";
                 }
                 if (dtCustomers.Rows.Count > 0 && CustomersItems.Count == 0)
                 {
@@ -147,9 +147,9 @@
                     {
                         CustomersItems.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
                     }
-                    ddlCustomer.DataSource = new BindingSource(CustomersItems, null);
-                    ddlCustomer.DisplayMember = "Value";
-                    ddlCustomer.ValueMember = "Key";
+                    //ddlCustomer.DataSource = new BindingSource(CustomersItems, null);
+                    //ddlCustomer.DisplayMember = "Value";
+                    //ddlCustomer.ValueMember = "Key";
                 }
 
 
@@ -173,36 +173,36 @@
         }
         private void ddlReceived_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string receivedDateId = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Key;
-            string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
+            //string receivedDateId = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Key;
+            //string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
 
-            string recDate = receivedDate;
-            string batchId = selectedBatch;
-            string bol = selectedBillOfLading;
-            string custName = selectedCustomerName;
-            selectedReceivedDate = receivedDate;
+            //string recDate = receivedDate;
+            //string batchId = selectedBatch;
+            //string bol = selectedBillOfLading;
+            //string custName = selectedCustomerName;
+            //selectedReceivedDate = receivedDate;
 
-            if (rbtReceivedAll.Checked)
-            {
-                recDate = "";
-            }
-            if (rbtBatchAll.Checked)
-            {
-                batchId = "";
-            }
-            if (rbtBillOfLadingAll.Checked)
-            {
-                bol = "";
-            }
-            if (rbtCustomerAll.Checked)
-            {
-                custName = "";
-            }
+            //if (rbtReceivedAll.Checked)
+            //{
+            //    recDate = "";
+            //}
+            //if (rbtBatchAll.Checked)
+            //{
+            //    batchId = "";
+            //}
+            //if (rbtBillOfLadingAll.Checked)
+            //{
+            //    bol = "";
+            //}
+            //if (rbtCustomerAll.Checked)
+            //{
+            //    custName = "";
+            //}
 
 
             //            DataSet ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName);
 
-            LoadData(recDate, batchId, "", bol, custName);
+            // LoadData(recDate, batchId, "", bol, custName);
             //if (selectedReceivedDate != receivedDate && selectedReceivedDate != "0" && initialDataLoaded == 1)
             //{
             //    string batchId = selectedBatch;
@@ -221,75 +221,78 @@
         }
         private void ddlBatch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string batchId = ((KeyValuePair<string, string>)ddlBatch.SelectedItem).Key;
-            string batch = ((KeyValuePair<string, string>)ddlBatch.SelectedItem).Value;
-            if (selectedBatch != batchId && selectedBatch != "0" && initialDataLoaded == 1)
-            {
-                string recDate = selectedReceivedDate;
-                if (rbtReceivedAll.Checked)
-                {
-                    recDate = "";
-                }
-                string BOL = selectedBillOfLading;
-                if (rbtBillOfLadingAll.Checked)
-                {
-                    BOL = "";
-                }
-                selectedBatch = batchId;
-                LoadData(recDate, selectedBatch, "", BOL, "");
+            //string batchId = ((KeyValuePair<string, string>)ddlBatch.SelectedItem).Key;
+            //string batch = ((KeyValuePair<string, string>)ddlBatch.SelectedItem).Value;
+            //if (selectedBatch != batchId && selectedBatch != "0" && initialDataLoaded == 1)
+            //{
+            //    string recDate = selectedReceivedDate;
+            //    if (rbtReceivedAll.Checked)
+            //    {
+            //        recDate = "";
+            //    }
+            //    string BOL = selectedBillOfLading;
+            //    if (rbtBillOfLadingAll.Checked)
+            //    {
+            //        BOL = "";
+            //    }
+            //    selectedBatch = batchId;
+            //    LoadData(recDate, selectedBatch, "", BOL, "");
 
-            }
+            //}
         }
         private void ddlBillOfLading_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string BillOfLadingId = ((KeyValuePair<string, string>)ddlBillOfLading.SelectedItem).Key;
-            string BillOfLading = ((KeyValuePair<string, string>)ddlBillOfLading.SelectedItem).Value;
+            //string BillOfLadingId = ((KeyValuePair<string, string>)ddlBillOfLading.SelectedItem).Key;
+            //string BillOfLading = ((KeyValuePair<string, string>)ddlBillOfLading.SelectedItem).Value;
 
-            if (selectedBillOfLading != BillOfLading && selectedBillOfLading != "0" && initialDataLoaded == 1)
-            {
-                string recDate = selectedReceivedDate;
-                if (rbtReceivedAll.Checked)
-                {
-                    recDate = "";
-                }
-                string batchId = selectedBatch;
-                if (rbtBatchAll.Checked)
-                {
-                    batchId = "";
-                }
-                selectedBillOfLading = BillOfLading;
-                LoadData(recDate, batchId, "", selectedBillOfLading, "");
+            //if (selectedBillOfLading != BillOfLading && selectedBillOfLading != "0" && initialDataLoaded == 1)
+            //{
+            //    string recDate = selectedReceivedDate;
+            //    if (rbtReceivedAll.Checked)
+            //    {
+            //        recDate = "";
+            //    }
+            //    string batchId = selectedBatch;
+            //    if (rbtBatchAll.Checked)
+            //    {
+            //        batchId = "";
+            //    }
+            //    selectedBillOfLading = BillOfLading;
+            //    LoadData(recDate, batchId, "", selectedBillOfLading, "");
 
-            }
+            //}
         }
         private void ddlCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string CustomerId = ((KeyValuePair<string, string>)ddlCustomer.SelectedItem).Key;
-            string Customer = ((KeyValuePair<string, string>)ddlCustomer.SelectedItem).Value;
+            //string CustomerId = ((KeyValuePair<string, string>)ddlCustomer.SelectedItem).Key;
+            //string Customer = ((KeyValuePair<string, string>)ddlCustomer.SelectedItem).Value;
 
-            if (selectedCustomerName.Trim() != Customer.Trim() && selectedCustomerName.Trim() != "0" && initialDataLoaded == 1)
-            {
-                string recDate = selectedReceivedDate;
-                if (rbtReceivedAll.Checked)
-                {
-                    recDate = "";
-                }
-                string batchId = selectedBatch;
-                if (rbtBatchAll.Checked)
-                {
-                    batchId = "";
-                }
-                string BOL = selectedBillOfLading;
-                if (rbtBillOfLadingAll.Checked)
-                {
-                    BOL = "";
-                }
-                selectedCustomerName = Customer;
-                LoadData(recDate, batchId, "", BOL, selectedCustomerName);
-            }
+            //if (selectedCustomerName.Trim() != Customer.Trim() && selectedCustomerName.Trim() != "0" && initialDataLoaded == 1)
+            //{
+            //    string recDate = selectedReceivedDate;
+            //    if (rbtReceivedAll.Checked)
+            //    {
+            //        recDate = "";
+            //    }
+            //    string batchId = selectedBatch;
+            //    if (rbtBatchAll.Checked)
+            //    {
+            //        batchId = "";
+            //    }
+            //    string BOL = selectedBillOfLading;
+            //    if (rbtBillOfLadingAll.Checked)
+            //    {
+            //        BOL = "";
+            //    }
+            //    selectedCustomerName = Customer;
+            //    LoadData(recDate, batchId, "", BOL, selectedCustomerName);
+            //}
         }
         public void BindLineItems(DataTable dtLineItems)
         {
+            //dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.RowHeadersVisible = false;
+
             Decimal totalTrucking = 0;
             if (dtLineItems.Rows.Count > 0)
             {
@@ -298,9 +301,9 @@
                     totalTrucking = totalTrucking + Convert.ToDecimal(dtLineItems.Rows[i]["Ext"]);
                 }
             }
-            totalTrucking = Math.Round(totalTrucking, 2);
-            txtTruckingTotal.Text = "$" + totalTrucking.ToString();
-            txtTruckingTotal.BackColor = Color.Yellow;
+            // totalTrucking = Math.Round(totalTrucking, 2);
+            // txtTruckingTotal.Text = "$" + totalTrucking.ToString();
+            // txtTruckingTotal.BackColor = Color.Yellow;
 
             dataGridView1.DataSource = dtLineItems;
 
@@ -339,10 +342,10 @@
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
 
-            dataGridView1.Columns["UnitOfMeasure"].DefaultCellStyle.BackColor = Color.Yellow; //"#FFFC8B";
-            dataGridView1.Columns["Ext"].DefaultCellStyle.BackColor = Color.Yellow;
-            dataGridView1.Columns["Description"].DefaultCellStyle.BackColor = Color.Yellow;
-            dataGridView1.Columns["Price"].DefaultCellStyle.BackColor = Color.Yellow;
+            //dataGridView1.Columns["UnitOfMeasure"].DefaultCellStyle.BackColor = Color.Yellow; //"#FFFC8B";
+            //dataGridView1.Columns["Ext"].DefaultCellStyle.BackColor = Color.Yellow;
+            //dataGridView1.Columns["Description"].DefaultCellStyle.BackColor = Color.Yellow;
+            //dataGridView1.Columns["Price"].DefaultCellStyle.BackColor = Color.Yellow;
             dataGridView1.Columns["Price"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -387,161 +390,161 @@
 
         private void rbtReceived_Click(object sender, EventArgs e)
         {
-            rbtReceivedAll.Checked = false;
-            rbtReceived.Checked = true;
-            //ddlReceived.Text = "";
-            ddlReceived.Enabled = true;
+            //rbtReceivedAll.Checked = false;
+            //rbtReceived.Checked = true;
+            ////ddlReceived.Text = "";
+            //ddlReceived.Enabled = true;
 
-            string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
+            //string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
 
-            selectedReceivedDate = receivedDate;
+            //selectedReceivedDate = receivedDate;
 
-            string batchId = selectedReceivedDate;
-            string bol = selectedBillOfLading;
-            string custName = selectedCustomerName;
+            //string batchId = selectedReceivedDate;
+            //string bol = selectedBillOfLading;
+            //string custName = selectedCustomerName;
 
-            if (rbtBatchAll.Checked)
-            {
-                batchId = "";
-            }
-            if (rbtBillOfLadingAll.Checked)
-            {
-                bol = "";
-            }
-            if (rbtCustomerAll.Checked)
-            {
-                custName = "";
-            }
+            //if (rbtBatchAll.Checked)
+            //{
+            //    batchId = "";
+            //}
+            //if (rbtBillOfLadingAll.Checked)
+            //{
+            //    bol = "";
+            //}
+            //if (rbtCustomerAll.Checked)
+            //{
+            //    custName = "";
+            //}
 
-            LoadData(selectedReceivedDate, batchId, "", bol, custName);
+            //LoadData(selectedReceivedDate, batchId, "", bol, custName);
         }
         private void rbtBatch_Click(object sender, EventArgs e)
         {
-            rbtBatchAll.Checked = false;
-            rbtBatch.Checked = true;
-            //ddlReceived.Text = "";
-            ddlBatch.Enabled = true;
+            //rbtBatchAll.Checked = false;
+            //rbtBatch.Checked = true;
+            ////ddlReceived.Text = "";
+            //ddlBatch.Enabled = true;
         }
         private void rbtBillOfLading_Click(object sender, EventArgs e)
         {
-            rbtBillOfLadingAll.Checked = false;
-            rbtBillOfLading.Checked = true;
-            //ddlReceived.Text = "";
-            ddlBillOfLading.Enabled = true;
+            //rbtBillOfLadingAll.Checked = false;
+            //rbtBillOfLading.Checked = true;
+            ////ddlReceived.Text = "";
+            //ddlBillOfLading.Enabled = true;
 
         }
         private void rbtCustomer_Click(object sender, EventArgs e)
         {
-            rbtCustomerAll.Checked = false;
-            rbtCustomer.Checked = true;
-            //ddlReceived.Text = "";
-            ddlCustomer.Enabled = true;
+            //rbtCustomerAll.Checked = false;
+            //rbtCustomer.Checked = true;
+            ////ddlReceived.Text = "";
+            //ddlCustomer.Enabled = true;
         }
         private void rbtReceivedAll_Click(object sender, EventArgs e)
         {
-            rbtReceivedAll.Checked = true;
-            rbtReceived.Checked = false;
-            //ddlReceived.Text = "";
-            ddlReceived.Enabled = false;
+            //rbtReceivedAll.Checked = true;
+            //rbtReceived.Checked = false;
+            ////ddlReceived.Text = "";
+            //ddlReceived.Enabled = false;
 
-            string batchId = selectedReceivedDate;
-            string bol = selectedBillOfLading;
-            string custName = selectedCustomerName;
+            //string batchId = selectedReceivedDate;
+            //string bol = selectedBillOfLading;
+            //string custName = selectedCustomerName;
 
-            if (rbtBatchAll.Checked)
-            {
-                batchId = "";
-            }
-            if (rbtBillOfLadingAll.Checked)
-            {
-                bol = "";
-            }
-            if (rbtCustomerAll.Checked)
-            {
-                custName = "";
-            }
+            //if (rbtBatchAll.Checked)
+            //{
+            //    batchId = "";
+            //}
+            //if (rbtBillOfLadingAll.Checked)
+            //{
+            //    bol = "";
+            //}
+            //if (rbtCustomerAll.Checked)
+            //{
+            //    custName = "";
+            //}
 
-            LoadData("", batchId, "", bol, custName);
+            //LoadData("", batchId, "", bol, custName);
         }
 
         private void rbtBatchAll_Click(object sender, EventArgs e)
         {
-            rbtBatchAll.Checked = true;
-            rbtBatch.Checked = false;
-            //ddlReceived.Text = "";
-            ddlBatch.Enabled = false;
+            //rbtBatchAll.Checked = true;
+            //rbtBatch.Checked = false;
+            ////ddlReceived.Text = "";
+            //ddlBatch.Enabled = false;
 
-            string recDate = selectedReceivedDate;
-            string bol = selectedBillOfLading;
-            string custName = selectedCustomerName;
+            //string recDate = selectedReceivedDate;
+            //string bol = selectedBillOfLading;
+            //string custName = selectedCustomerName;
 
-            if (rbtReceivedAll.Checked)
-            {
-                recDate = "";
-            }
-            if (rbtBillOfLadingAll.Checked)
-            {
-                bol = "";
-            }
-            if (rbtCustomerAll.Checked)
-            {
-                custName = "";
-            }
+            //if (rbtReceivedAll.Checked)
+            //{
+            //    recDate = "";
+            //}
+            //if (rbtBillOfLadingAll.Checked)
+            //{
+            //    bol = "";
+            //}
+            //if (rbtCustomerAll.Checked)
+            //{
+            //    custName = "";
+            //}
 
-            LoadData(recDate, "", "", bol, custName);
+            //LoadData(recDate, "", "", bol, custName);
 
         }
         private void rbtBillOfLadingAll_Click(object sender, EventArgs e)
         {
-            rbtBillOfLadingAll.Checked = true;
-            rbtBillOfLading.Checked = false;
-            //ddlReceived.Text = "";
-            ddlBillOfLading.Enabled = false;
+            //rbtBillOfLadingAll.Checked = true;
+            //rbtBillOfLading.Checked = false;
+            ////ddlReceived.Text = "";
+            //ddlBillOfLading.Enabled = false;
 
-            string recDate = selectedReceivedDate;
-            string batchId = selectedBatch;
-            string custName = selectedCustomerName;
+            //string recDate = selectedReceivedDate;
+            //string batchId = selectedBatch;
+            //string custName = selectedCustomerName;
 
-            if (rbtReceivedAll.Checked)
-            {
-                recDate = "";
-            }
-            if (rbtBatchAll.Checked)
-            {
-                batchId = "";
-            }
-            if (rbtCustomerAll.Checked)
-            {
-                custName = "";
-            }
+            //if (rbtReceivedAll.Checked)
+            //{
+            //    recDate = "";
+            //}
+            //if (rbtBatchAll.Checked)
+            //{
+            //    batchId = "";
+            //}
+            //if (rbtCustomerAll.Checked)
+            //{
+            //    custName = "";
+            //}
 
-            LoadData(recDate, batchId, "", "", custName);
+            //LoadData(recDate, batchId, "", "", custName);
 
         }
         private void rbtCustomerAll_Click(object sender, EventArgs e)
         {
-            rbtCustomerAll.Checked = true;
-            rbtCustomer.Checked = false;
-            //ddlReceived.Text = "";
-            ddlCustomer.Enabled = false;
+            //rbtCustomerAll.Checked = true;
+            //rbtCustomer.Checked = false;
+            ////ddlReceived.Text = "";
+            //ddlCustomer.Enabled = false;
 
-            string recDate = selectedReceivedDate;
-            string batchId = selectedBatch;
-            string BOL = selectedBillOfLading;
+            //string recDate = selectedReceivedDate;
+            //string batchId = selectedBatch;
+            //string BOL = selectedBillOfLading;
 
-            if (rbtReceivedAll.Checked)
-            {
-                recDate = "";
-            }
-            if (rbtBatchAll.Checked)
-            {
-                batchId = "";
-            }
-            if (rbtBillOfLadingAll.Checked)
-            {
-                BOL = "";
-            }
-            LoadData(recDate, batchId, "", BOL, "");
+            //if (rbtReceivedAll.Checked)
+            //{
+            //    recDate = "";
+            //}
+            //if (rbtBatchAll.Checked)
+            //{
+            //    batchId = "";
+            //}
+            //if (rbtBillOfLadingAll.Checked)
+            //{
+            //    BOL = "";
+            //}
+            //LoadData(recDate, batchId, "", BOL, "");
         }
         private void btnCreateReport_Click(object sender, EventArgs e)
         {
@@ -558,36 +561,16 @@
         /// <param name="e"></param>
         private void btnCreateReport_Click_1(object sender, EventArgs e)
         {
-            label1.Text = "Data is Exporting in Excel, Please wait...";
-            label1.ForeColor = Color.Red;
-            label1.Font = new Font(label1.Font, label1.Font.Style | FontStyle.Bold);
+            // label1.Text = "Data is Exporting in Excel, Please wait...";
+            // label1.ForeColor = Color.Red;
+            // label1.Font = new Font(label1.Font, label1.Font.Style | FontStyle.Bold);
             String SPName = "BillOfLading_Report_GetAll";
 
-            string recDate = selectedReceivedDate;
-            string batchId = selectedBatch;
-            string bol = selectedBillOfLading;
-            string custName = selectedCustomerName;
+            string recDate = "";
+            string batchId = "";
+            string bol = "";
+            string custName = "";
 
-            if (rbtReceivedAll.Checked)
-            {
-                recDate = "";
-            }
-
-            if (rbtBatchAll.Checked)
-            {
-                batchId = "";
-            }
-
-            if (rbtBillOfLadingAll.Checked)
-            {
-                bol = "";
-            }
-
-            if (rbtCustomerAll.Checked)
-            {
-                custName = "";
-            }
-            
             using (var ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName, true))
             {
                 var dtBOLReport = ds.Tables[0];
@@ -605,9 +588,9 @@
                 }
             }
 
-            label1.Text = "Click a heading to sort the data.";
-            label1.ForeColor = Color.Black;
-            label1.Font = new Font(label1.Font, label1.Font.Style & ~FontStyle.Bold);
+            // label1.Text = "Click a heading to sort the data.";
+            // label1.ForeColor = Color.Black;
+            // label1.Font = new Font(label1.Font, label1.Font.Style & ~FontStyle.Bold);
         }
 
         private void rbtReceived_CheckedChanged(object sender, EventArgs e)

@@ -10,14 +10,11 @@
             InitializeComponent();
             this.Text = "NFFM Launcher";
         }
-        int selectedRow;
-       
 
         private void Form1_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'nFFM_be_sqlDataSet1.tblCustomers' table. You can move, or remove it, as needed.
             this.tblCustomersTableAdapter.Fill(this.nFFM_be_sqlDataSet1.tblCustomers);
-
         }
 
         private void btnCustomer_Click(object sender, EventArgs e)
@@ -33,7 +30,7 @@
         private void Form1_Activated(object sender, EventArgs e)
         {
 
-           
+
         }
 
         private void btnSalesCode_Click(object sender, EventArgs e)
@@ -75,7 +72,7 @@
                     DBManager.isDataLoaded = true;
                     f.BringToFront();
                     isOpen = true;
-                   
+
                 }
             }
             return isOpen;
@@ -112,12 +109,24 @@
 
         private void btnFFBOLReport_Click(object sender, EventArgs e)
         {
-            FreightForwardingBOL_Report FFBOLReport = new FreightForwardingBOL_Report();
             bool isFormOpen = IsAlreadyOpen(typeof(FreightForwardingBOL_Report));
             if (isFormOpen == false)
             {
+                FreightForwardingBOL_Report FFBOLReport = new FreightForwardingBOL_Report();
                 FFBOLReport.Show();
             }
+        }
+
+        private void btnDataFileExport_Click(object sender, EventArgs e)
+        {
+            bool isFormOpen = IsAlreadyOpen(typeof(FreightForwardingBOL_DataFileExport));
+
+            if (isFormOpen == false)
+            {
+                var form = new FreightForwardingBOL_DataFileExport();
+                form.Show();
+            }
+            
         }
     }
 }

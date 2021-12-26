@@ -99,6 +99,12 @@
     <Compile Include="FreightForwardingBOL.Designer.cs">
       <DependentUpon>FreightForwardingBOL.cs</DependentUpon>
     </Compile>
+    <Compile Include="FreightForwardingBOL_DataFileExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FreightForwardingBOL_DataFileExport.Designer.cs">
+      <DependentUpon>FreightForwardingBOL_DataFileExport.cs</DependentUpon>
+    </Compile>
     <Compile Include="FreightForwardingBOL_Report.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FreightForwardingBOL.resx">
       <DependentUpon>FreightForwardingBOL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FreightForwardingBOL_DataFileExport.resx">
+      <DependentUpon>FreightForwardingBOL_DataFileExport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FreightForwardingBOL_Report.resx">
       <DependentUpon>FreightForwardingBOL_Report.cs</DependentUpon>
