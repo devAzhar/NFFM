@@ -158,6 +158,7 @@
                 //        }
                 //    }
                 BindLineItems(dtLineItems);
+                lblPageSize.Visible = btnNext.Visible = btnPrevious.Visible = btnCreateReport.Enabled = dtLineItems.Rows.Count > 0;
 
                 if (dtLineItems.Rows.Count > 0)
                 {
@@ -168,10 +169,6 @@
 
                     btnNext.Enabled = (totalPages != pageNumber.ToString());
                     btnPrevious.Enabled = (pageNumber > 1);
-                }
-                else
-                {
-                    lblPageSize.Visible = false;
                 }
             }
         }
@@ -583,7 +580,8 @@
             using (var ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName, true))
             {
                 var dtBOLReport = ds.Tables[0];
-                var fileName = "BillOfLadingReport" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("yy");
+                var date = DateTime.Parse(DBManager.ReportingDate);
+                var fileName = "billofLadingReport" + date.ToString("MMddyyyy");
 
                 var saveFileDialogue = new SaveFileDialog
                 {
