@@ -41,7 +41,6 @@
             this.btnBOL = new System.Windows.Forms.Button();
             this.btnBOLReport = new System.Windows.Forms.Button();
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnDataFileExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tblCustomersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nFFM_be_sqlDataSet1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -68,7 +67,7 @@
             this.btnCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCustomer.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCustomer.ForeColor = System.Drawing.Color.White;
-            this.btnCustomer.Location = new System.Drawing.Point(140, 118);
+            this.btnCustomer.Location = new System.Drawing.Point(22, 102);
             this.btnCustomer.Name = "btnCustomer";
             this.btnCustomer.Size = new System.Drawing.Size(248, 109);
             this.btnCustomer.TabIndex = 3;
@@ -83,7 +82,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1069, 77);
+            this.panel1.Size = new System.Drawing.Size(807, 77);
             this.panel1.TabIndex = 18;
             // 
             // lblHeading
@@ -91,7 +90,7 @@
             this.lblHeading.AutoSize = true;
             this.lblHeading.Font = new System.Drawing.Font("Century Gothic", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeading.ForeColor = System.Drawing.Color.Blue;
-            this.lblHeading.Location = new System.Drawing.Point(390, 19);
+            this.lblHeading.Location = new System.Drawing.Point(272, 9);
             this.lblHeading.Name = "lblHeading";
             this.lblHeading.Size = new System.Drawing.Size(275, 41);
             this.lblHeading.TabIndex = 6;
@@ -103,7 +102,7 @@
             this.btnSalesCode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSalesCode.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalesCode.ForeColor = System.Drawing.Color.White;
-            this.btnSalesCode.Location = new System.Drawing.Point(397, 118);
+            this.btnSalesCode.Location = new System.Drawing.Point(279, 102);
             this.btnSalesCode.Name = "btnSalesCode";
             this.btnSalesCode.Size = new System.Drawing.Size(248, 109);
             this.btnSalesCode.TabIndex = 20;
@@ -117,7 +116,7 @@
             this.btnShipper.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnShipper.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnShipper.ForeColor = System.Drawing.Color.White;
-            this.btnShipper.Location = new System.Drawing.Point(654, 118);
+            this.btnShipper.Location = new System.Drawing.Point(536, 102);
             this.btnShipper.Name = "btnShipper";
             this.btnShipper.Size = new System.Drawing.Size(248, 109);
             this.btnShipper.TabIndex = 21;
@@ -131,7 +130,7 @@
             this.btnTrucker.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnTrucker.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTrucker.ForeColor = System.Drawing.Color.White;
-            this.btnTrucker.Location = new System.Drawing.Point(140, 244);
+            this.btnTrucker.Location = new System.Drawing.Point(22, 228);
             this.btnTrucker.Name = "btnTrucker";
             this.btnTrucker.Size = new System.Drawing.Size(248, 109);
             this.btnTrucker.TabIndex = 22;
@@ -145,7 +144,7 @@
             this.btnBOL.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnBOL.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBOL.ForeColor = System.Drawing.Color.White;
-            this.btnBOL.Location = new System.Drawing.Point(397, 244);
+            this.btnBOL.Location = new System.Drawing.Point(279, 228);
             this.btnBOL.Name = "btnBOL";
             this.btnBOL.Size = new System.Drawing.Size(248, 109);
             this.btnBOL.TabIndex = 23;
@@ -159,7 +158,7 @@
             this.btnBOLReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnBOLReport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBOLReport.ForeColor = System.Drawing.Color.White;
-            this.btnBOLReport.Location = new System.Drawing.Point(654, 244);
+            this.btnBOLReport.Location = new System.Drawing.Point(536, 228);
             this.btnBOLReport.Name = "btnBOLReport";
             this.btnBOLReport.Size = new System.Drawing.Size(248, 109);
             this.btnBOLReport.TabIndex = 25;
@@ -171,26 +170,11 @@
             // 
             this.form1BindingSource.DataSource = typeof(NFFM.Customers);
             // 
-            // btnDataFileExport
-            // 
-            this.btnDataFileExport.BackColor = System.Drawing.Color.SeaGreen;
-            this.btnDataFileExport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDataFileExport.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDataFileExport.ForeColor = System.Drawing.Color.White;
-            this.btnDataFileExport.Location = new System.Drawing.Point(140, 373);
-            this.btnDataFileExport.Name = "btnDataFileExport";
-            this.btnDataFileExport.Size = new System.Drawing.Size(248, 109);
-            this.btnDataFileExport.TabIndex = 26;
-            this.btnDataFileExport.Text = "Data File Export";
-            this.btnDataFileExport.UseVisualStyleBackColor = false;
-            this.btnDataFileExport.Click += new System.EventHandler(this.btnDataFileExport_Click);
-            // 
             // Main
             // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1069, 505);
-            this.Controls.Add(this.btnDataFileExport);
+            this.ClientSize = new System.Drawing.Size(807, 360);
             this.Controls.Add(this.btnBOLReport);
             this.Controls.Add(this.btnBOL);
             this.Controls.Add(this.btnTrucker);
@@ -225,7 +209,6 @@
         private System.Windows.Forms.Button btnTrucker;
         private System.Windows.Forms.Button btnBOL;
         private System.Windows.Forms.Button btnBOLReport;
-        private System.Windows.Forms.Button btnDataFileExport;
     }
 }
 

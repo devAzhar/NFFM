@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
-
-namespace NFFM
+﻿namespace NFFM
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Data.SqlClient;
+    using System.Data;
+
     public static class DBManager
     {
         public static bool RowChanged { get; set; } = false;
@@ -16,6 +16,8 @@ namespace NFFM
         public static bool isDataLoaded = false;
         public static string NewTruckerId = string.Empty;
         public static int currentRecordId = 0;
+        public static string ReportingDate = string.Empty;
+        public static string ReportingDateType = string.Empty;
 
         public static string SqlSafe(string fieldValue, string replacer = "''") => fieldValue.Replace("'", replacer);
 
@@ -80,7 +82,20 @@ namespace NFFM
                 }
             }
         }
-        public static DataSet GetDataSet_Report(string SPName, string receivedDate, string batchId, string invoiceNumber, string billOfLadingNumber, string customerName, bool ExportToExcel)
+
+        /// <summary>
+        /// GetDataSet_Report
+        /// </summary>
+        /// <param name="SPName"></param>
+        /// <param name="receivedDate"></param>
+        /// <param name="batchId"></param>
+        /// <param name="invoiceNumber"></param>
+        /// <param name="billOfLadingNumber"></param>
+        /// <param name="customerName"></param>
+        /// <param name="ExportToExcel"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
+        public static DataSet GetDataSet_Report(string SPName, string receivedDate, string batchId, string invoiceNumber, string billOfLadingNumber, string customerName, bool ExportToExcel, int pageNumber = 1)
         {
             using (var conn = new SqlConnection(Constants.Constants.ConnectionString))
             {
@@ -88,12 +103,33 @@ namespace NFFM
                 {
                     using (var cmd = conn.CreateCommand())
                     {
+                        var weekEndingDate = string.Empty;
+                        receivedDate = string.Empty;
+
+                        if (ReportingDateType == "Received")
+                        {
+                            receivedDate = ReportingDate;
+                        }
+                        else
+                        {
+                            weekEndingDate = ReportingDate;
+                        }
+
+
+                        cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
                         cmd.Parameters.AddWithValue("receivedDate", receivedDate);
                         cmd.Parameters.AddWithValue("batchId", batchId);
                         cmd.Parameters.AddWithValue("billOfLadingNumber", billOfLadingNumber);
                         cmd.Parameters.AddWithValue("customerName", customerName);
                         cmd.Parameters.AddWithValue("ExportToExcel", ExportToExcel);
+
+                        if (pageNumber > 1)
+                        {
+                            cmd.Parameters.AddWithValue("pageNumber", pageNumber);
+                        }
+
                         cmd.CommandText = SPName;
+
                         cmd.CommandType = CommandType.StoredProcedure;
                         da.SelectCommand = cmd;
                         var ds = new DataSet();
@@ -106,6 +142,7 @@ namespace NFFM
                 }
             }
         }
+
         public static DataSet GetDataSet_FreightForwarding(string SPName, int shippingId)
         {
             using (var conn = new SqlConnection(Constants.Constants.ConnectionString))

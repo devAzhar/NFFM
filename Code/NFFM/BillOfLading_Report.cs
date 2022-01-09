@@ -1,14 +1,14 @@
 ﻿namespace NFFM
 {
     using System;
-    using System.Collections.Generic;
     using System.Data;
-    using System.Data.SqlClient;
     using System.Drawing;
     using System.Windows.Forms;
 
     public partial class BillOfLading_Report : Form
     {
+        private int CurrentPageNumber { get; set; } = 1;
+
         public BillOfLading_Report()
         {
             InitializeComponent();
@@ -37,137 +37,141 @@
         }
 
         int initialDataLoaded = 0;
-        int isButtonClicked = 0;
-        string currentReceivingId = "0";
-        string selectedReceivedDate = "0";
-        string selectedBatch = "0";
-        string selectedBillOfLading = "0";
-        string selectedCustomerName = "0";
-        int previousReceivingId = 0;
-        int firstReceivingId = 0;
-        int nextReceivingId = 0;
-        int lastReceivingId = 0;
-        int IsNewRecord = 0;
-        int lineItemId;
-        DataGridViewRow row;
-        Dictionary<string, string> ddlCustomers = new Dictionary<string, string>();
-        //Dictionary<string, string> ddlReceivedDate = new Dictionary<string, string>();
-        Dictionary<string, string> ReceivedDateItems = new Dictionary<string, string>();
-        Dictionary<string, string> BatchItems = new Dictionary<string, string>();
-        Dictionary<string, string> BillOfLadingItems = new Dictionary<string, string>();
-        Dictionary<string, string> CustomersItems = new Dictionary<string, string>();
-        DataTable dtCustomers;
-        DataTable dtReceived;
-        DataTable dtBatch;
+        //int isButtonClicked = 0;
+        //string currentReceivingId = "0";
+        //string selectedReceivedDate = "0";
+        //string selectedBatch = "0";
+        //string selectedBillOfLading = "0";
+        //string selectedCustomerName = "0";
+        //int previousReceivingId = 0;
+        //int firstReceivingId = 0;
+        //int nextReceivingId = 0;
+        //int lastReceivingId = 0;
+        //int IsNewRecord = 0;
+        //int lineItemId;
+        //DataGridViewRow row;
+        //Dictionary<string, string> ddlCustomers = new Dictionary<string, string>();
+        ////Dictionary<string, string> ddlReceivedDate = new Dictionary<string, string>();
+        //Dictionary<string, string> ReceivedDateItems = new Dictionary<string, string>();
+        //Dictionary<string, string> BatchItems = new Dictionary<string, string>();
+        //Dictionary<string, string> BillOfLadingItems = new Dictionary<string, string>();
+        //Dictionary<string, string> CustomersItems = new Dictionary<string, string>();
+        //DataTable dtCustomers;
+        //DataTable dtReceived;
+        //DataTable dtBatch;
 
-        bool IsReceivedChecked = true;
-        bool IsBatchChecked = true;
-        bool IsInvoiceChecked = true;
-        bool IsBillOfLadingChecked = true;
-        bool IsCustomerChecked = true;
+        //bool IsReceivedChecked = true;
+        //bool IsBatchChecked = true;
+        //bool IsInvoiceChecked = true;
+        //bool IsBillOfLadingChecked = true;
+        //bool IsCustomerChecked = true;
 
-
-        public void LoadData(string receivedDate, string batchId, string invoideNumbers, string billOfLadingNumber, string customerName)
+        public void LoadData(string receivedDate, string batchId, string invoideNumbers, string billOfLadingNumber, string customerName, int pageNumber = 1)
         {
-            String SPName = "BillOfLading_Report_GetAll";
+            var SPName = "BillOfLading_Report_GetAll";
             //ddlCustomers.Clear();
             //ddlReceivedDate.Clear();
             //ddlBatch1.Clear();
-            SqlCommand cmd = new SqlCommand();
             //cmd.CommandText = SPName;
             //cmd.Parameters.Add("receivingId", receivingId);
             //cmd.CommandType = CommandType.StoredProcedure;
-            DataSet ds = DBManager.GetDataSet_Report(SPName, receivedDate, batchId, invoideNumbers, billOfLadingNumber, customerName, false);
+            var ds = DBManager.GetDataSet_Report(SPName, receivedDate, batchId, invoideNumbers, billOfLadingNumber, customerName, false, pageNumber);
             // DataSet ds = DBManager.GetDataSet(SPName, cmd);
 
+            var dtLineItems = ds.Tables[0];
+            //dtReceived = ds.Tables[1];
 
-
-            DataTable dtLineItems = ds.Tables[0];
-            dtReceived = ds.Tables[1];
-            dtBatch = ds.Tables[2];
-            DataTable dtBillOfLading = ds.Tables[3];
-            dtCustomers = ds.Tables[4];
-            // dtReceived = ds.Tables[4];
-            // dtBatch = ds.Tables[5];
-            //selectedReceivedDate = "0";
-            //datePickerReceived.Value = new DateTime(1900, 01, 01);
-            //datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
-            if (selectedReceivedDate == "0")
-            {
-                selectedReceivedDate = DateTime.Parse(dtReceived.Rows[0]["ReceivedDate"].ToString()).ToShortDateString();
-            }
-            if (selectedBatch == "0")
-            {
-                selectedBatch = dtBatch.Rows[0]["BatchID"].ToString();
-            }
-            if (selectedBillOfLading == "0")
-            {
-                selectedBillOfLading = dtBillOfLading.Rows[0]["BillOfLadingNumber"].ToString();
-            }
-            if (selectedCustomerName == "0")
-            {
-                selectedCustomerName = dtCustomers.Rows[0]["Name"].ToString();
-            }
+            //dtBatch = ds.Tables[2];
+            //DataTable dtBillOfLading = ds.Tables[3];
+            //dtCustomers = ds.Tables[4];
+            //// dtReceived = ds.Tables[4];
+            //// dtBatch = ds.Tables[5];
+            ////selectedReceivedDate = "0";
+            ////datePickerReceived.Value = new DateTime(1900, 01, 01);
+            ////datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
+            //if (selectedReceivedDate == "0")
+            //{
+            //    selectedReceivedDate = DateTime.Parse(dtReceived.Rows[0]["ReceivedDate"].ToString()).ToShortDateString();
+            //}
+            //if (selectedBatch == "0")
+            //{
+            //    selectedBatch = dtBatch.Rows[0]["BatchID"].ToString();
+            //}
+            //if (selectedBillOfLading == "0")
+            //{
+            //    selectedBillOfLading = dtBillOfLading.Rows[0]["BillOfLadingNumber"].ToString();
+            //}
+            //if (selectedCustomerName == "0")
+            //{
+            //    selectedCustomerName = dtCustomers.Rows[0]["Name"].ToString();
+            //}
             if (ds.Tables.Count > 0)
             {
-                if (dtReceived.Rows.Count > 0 && ReceivedDateItems.Count == 0)
-                {
-                    for (int i = 0; i < dtReceived.Rows.Count; i++)
-                    {
-                        ReceivedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString());
-                    }
-                    //ddlReceived.DataSource = new BindingSource(ReceivedDateItems, null);
-                    //ddlReceived.DisplayMember = "Value";
-                    //ddlReceived.ValueMember = "Key";
-                }
+                //    if (dtReceived.Rows.Count > 0 && ReceivedDateItems.Count == 0)
+                //    {
+                //        for (int i = 0; i < dtReceived.Rows.Count; i++)
+                //        {
+                //            ReceivedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString());
+                //        }
+                //        //ddlReceived.DataSource = new BindingSource(ReceivedDateItems, null);
+                //        //ddlReceived.DisplayMember = "Value";
+                //        //ddlReceived.ValueMember = "Key";
+                //    }
 
-                if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
-                {
-                    for (int i = 0; i < dtBatch.Rows.Count; i++)
-                    {
-                        BatchItems.Add(dtBatch.Rows[i]["BatchID"].ToString(), dtBatch.Rows[i]["BatchID"].ToString());
-                    }
-                    //ddlBatch.DataSource = new BindingSource(BatchItems, null);
-                    //ddlBatch.DisplayMember = "Value";
-                    //ddlBatch.ValueMember = "Key";
-                }
-                if (dtBillOfLading.Rows.Count > 0 && BillOfLadingItems.Count == 0)
-                {
-                    for (int i = 0; i < dtBillOfLading.Rows.Count; i++)
-                    {
-                        BillOfLadingItems.Add(dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString(), dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString());
-                    }
-                    //ddlBillOfLading.DataSource = new BindingSource(BillOfLadingItems, null);
-                    //ddlBillOfLading.DisplayMember = "Value";
-                    //ddlBillOfLading.ValueMember = "Key";
-                }
-                if (dtCustomers.Rows.Count > 0 && CustomersItems.Count == 0)
-                {
-                    for (int i = 0; i < dtCustomers.Rows.Count; i++)
-                    {
-                        CustomersItems.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
-                    }
-                    //ddlCustomer.DataSource = new BindingSource(CustomersItems, null);
-                    //ddlCustomer.DisplayMember = "Value";
-                    //ddlCustomer.ValueMember = "Key";
-                }
+                //    if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
+                //    {
+                //        for (int i = 0; i < dtBatch.Rows.Count; i++)
+                //        {
+                //            BatchItems.Add(dtBatch.Rows[i]["BatchID"].ToString(), dtBatch.Rows[i]["BatchID"].ToString());
+                //        }
+                //        //ddlBatch.DataSource = new BindingSource(BatchItems, null);
+                //        //ddlBatch.DisplayMember = "Value";
+                //        //ddlBatch.ValueMember = "Key";
+                //    }
+                //    if (dtBillOfLading.Rows.Count > 0 && BillOfLadingItems.Count == 0)
+                //    {
+                //        for (int i = 0; i < dtBillOfLading.Rows.Count; i++)
+                //        {
+                //            BillOfLadingItems.Add(dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString(), dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString());
+                //        }
+                //        //ddlBillOfLading.DataSource = new BindingSource(BillOfLadingItems, null);
+                //        //ddlBillOfLading.DisplayMember = "Value";
+                //        //ddlBillOfLading.ValueMember = "Key";
+                //    }
+                //    if (dtCustomers.Rows.Count > 0 && CustomersItems.Count == 0)
+                //    {
+                //        for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                //        {
+                //            CustomersItems.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
+                //        }
+                //        //ddlCustomer.DataSource = new BindingSource(CustomersItems, null);
+                //        //ddlCustomer.DisplayMember = "Value";
+                //        //ddlCustomer.ValueMember = "Key";
+                //    }
 
 
-                if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
-                {
-                    for (int i = 0; i < dtCustomers.Rows.Count; i++)
-                    {
-                        ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
-                    }
-                }
+                //    if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
+                //    {
+                //        for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                //        {
+                //            ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
+                //        }
+                //    }
+                BindLineItems(dtLineItems);
+
                 if (dtLineItems.Rows.Count > 0)
                 {
+                    var totalPages = dtLineItems.Rows[0]["TotalPages"].ToString();
 
-                    BindLineItems(dtLineItems);
+                    lblPageSize.Visible = true;
+                    lblPageSize.Text = string.Format("Page {0} of {1}", pageNumber, totalPages);
+
+                    btnNext.Enabled = (totalPages != pageNumber.ToString());
+                    btnPrevious.Enabled = (pageNumber > 1);
                 }
                 else
                 {
-                    BindLineItems(dtLineItems);
+                    lblPageSize.Visible = false;
                 }
             }
         }
@@ -293,14 +297,14 @@
             //dataGridView1.BackgroundColor = Color.White;
             dataGridView1.RowHeadersVisible = false;
 
-            Decimal totalTrucking = 0;
-            if (dtLineItems.Rows.Count > 0)
-            {
-                for (int i = 0; i < dtLineItems.Rows.Count; i++)
-                {
-                    totalTrucking = totalTrucking + Convert.ToDecimal(dtLineItems.Rows[i]["Ext"]);
-                }
-            }
+            //Decimal totalTrucking = 0;
+            //if (dtLineItems.Rows.Count > 0)
+            //{
+            //    for (int i = 0; i < dtLineItems.Rows.Count; i++)
+            //    {
+            //        totalTrucking = totalTrucking + Convert.ToDecimal(dtLineItems.Rows[i]["Ext"]);
+            //    }
+            //}
             // totalTrucking = Math.Round(totalTrucking, 2);
             // txtTruckingTotal.Text = "$" + totalTrucking.ToString();
             // txtTruckingTotal.BackColor = Color.Yellow;
@@ -309,25 +313,26 @@
 
             dataGridView1.Columns["ReceivedDate"].HeaderText = "Received Date";
             dataGridView1.Columns["ReceivedDate"].Width = 140;
-            dataGridView1.Columns["BatchID"].HeaderText = "Batch ID";
-            dataGridView1.Columns["BatchID"].Width = 110;
+            //dataGridView1.Columns["BatchID"].HeaderText = "Batch ID";
+            //dataGridView1.Columns["BatchID"].Width = 110;
 
             //dataGridView1.Columns["receivingId"].Visible = false;
             //dataGridView1.Columns["lineitemId"].Visible = false;
-            dataGridView1.Columns["BillOfLadingNumber"].Width = 150;
-            dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
+            //dataGridView1.Columns["BillOfLadingNumber"].Width = 150;
+            //dataGridView1.Columns["BillOfLadingNumber"].HeaderText = "Bill of Lading #";
             dataGridView1.Columns["InvoiceNumber"].Width = 110;
             dataGridView1.Columns["InvoiceNumber"].HeaderText = "Invoice #";
             dataGridView1.Columns["CustomerName"].Width = 250;
             dataGridView1.Columns["CustomerName"].HeaderText = "Customer";
             dataGridView1.Columns["SalesCode"].Width = 130;
-            dataGridView1.Columns["SalesCode"].HeaderText = "Sales Code";
+            dataGridView1.Columns["SalesCode"].HeaderText = "Code";
             dataGridView1.Columns["Description"].Width = 120;
-            dataGridView1.Columns["UnitOfMeasure"].HeaderText = "Unit of Measure";
+            dataGridView1.Columns["UnitOfMeasure"].HeaderText = "Unit";
             dataGridView1.Columns["UnitOfMeasure"].Width = 195;
             dataGridView1.Columns["Qty"].Width = 50;
             dataGridView1.Columns["Price"].Width = 75;
-            dataGridView1.Columns["Ext"].Width = 75;
+            dataGridView1.Columns["Total"].Width = 75;
+            //dataGridView1.Columns["Ext"].Width = 75;
 
             dataGridView1.BorderStyle = BorderStyle.None;
             //dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
@@ -347,24 +352,20 @@
             //dataGridView1.Columns["Description"].DefaultCellStyle.BackColor = Color.Yellow;
             //dataGridView1.Columns["Price"].DefaultCellStyle.BackColor = Color.Yellow;
             dataGridView1.Columns["Price"].DefaultCellStyle.Format = "c";
-            dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
+            //dataGridView1.Columns["Ext"].DefaultCellStyle.Format = "c";
+            dataGridView1.Columns["Total"].DefaultCellStyle.Format = "c";
             dataGridView1.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            //dataGridView1.Columns["Ext"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             DBManager.isDataLoaded = true;
             //dataGridView1.AllowUserToAddRows = true;
 
-            dataGridView1.Columns["BillOfLadingNumber"].ReadOnly = true;
-            dataGridView1.Columns["CustomerName"].ReadOnly = true;
-            dataGridView1.Columns["Shipper"].ReadOnly = true;
-            dataGridView1.Columns["SalesCode"].ReadOnly = true;
-            dataGridView1.Columns["Qty"].ReadOnly = true;
-            dataGridView1.Columns["ReceivedDate"].ReadOnly = true;
-            dataGridView1.Columns["BatchID"].ReadOnly = true;
-            dataGridView1.Columns["InvoiceNumber"].ReadOnly = true;
-            dataGridView1.Columns["Description"].ReadOnly = true;
-            dataGridView1.Columns["UnitOfMeasure"].ReadOnly = true;
-            dataGridView1.Columns["Price"].ReadOnly = true;
-            dataGridView1.Columns["Ext"].ReadOnly = true;
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                col.ReadOnly = true;
+            }
+
+            dataGridView1.Columns[dataGridView1.Columns.Count - 1].Visible = false;
+            dataGridView1.Columns[dataGridView1.Columns.Count - 2].Visible = false;
 
             label1.Text = "Click a heading to sort the data.";
             label1.Font = new Font(label1.Font, FontStyle.Regular);
@@ -561,10 +562,18 @@
         /// <param name="e"></param>
         private void btnCreateReport_Click_1(object sender, EventArgs e)
         {
+            LoadReportData();
+        }
+
+        /// <summary>
+        /// LoadReportData
+        /// </summary>
+        private void LoadReportData()
+        {
             // label1.Text = "Data is Exporting in Excel, Please wait...";
             // label1.ForeColor = Color.Red;
             // label1.Font = new Font(label1.Font, label1.Font.Style | FontStyle.Bold);
-            String SPName = "BillOfLading_Report_GetAll";
+            var SPName = "BillOfLading_Report_GetAll";
 
             string recDate = "";
             string batchId = "";
@@ -575,7 +584,7 @@
             {
                 var dtBOLReport = ds.Tables[0];
                 var fileName = "BillOfLadingReport" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.ToString("yy");
-                
+
                 var saveFileDialogue = new SaveFileDialog
                 {
                     FileName = fileName,
@@ -599,6 +608,18 @@
 
         private void rbtReceivedAll_CheckedChanged(object sender, EventArgs e)
         {
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            this.CurrentPageNumber++;
+            LoadData("", "", "", "", "", this.CurrentPageNumber);
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            this.CurrentPageNumber--;
+            LoadData("", "", "", "", "", this.CurrentPageNumber);
         }
     }
 }

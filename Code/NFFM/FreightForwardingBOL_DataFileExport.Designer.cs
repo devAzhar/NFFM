@@ -34,7 +34,7 @@ namespace NFFM
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.datePickerWeekEnding = new System.Windows.Forms.DateTimePicker();
             this.datePickerReceived = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -89,7 +89,7 @@ namespace NFFM
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.datePickerWeekEnding);
             this.groupBox1.Controls.Add(this.datePickerReceived);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
@@ -103,14 +103,14 @@ namespace NFFM
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Report Selection";
             // 
-            // dateTimePicker1
+            // datePickerWeekEnding
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(253, 79);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(148, 31);
-            this.dateTimePicker1.TabIndex = 35;
+            this.datePickerWeekEnding.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.datePickerWeekEnding.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.datePickerWeekEnding.Location = new System.Drawing.Point(253, 79);
+            this.datePickerWeekEnding.Name = "datePickerWeekEnding";
+            this.datePickerWeekEnding.Size = new System.Drawing.Size(148, 31);
+            this.datePickerWeekEnding.TabIndex = 35;
             // 
             // datePickerReceived
             // 
@@ -226,7 +226,7 @@ namespace NFFM
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker datePickerWeekEnding;
         private System.Windows.Forms.DateTimePicker datePickerReceived;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnGenerateReport;

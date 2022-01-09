@@ -99,12 +99,20 @@
 
         private void btnBOLReport_Click(object sender, EventArgs e)
         {
-            BillOfLading_Report BOLReport = new BillOfLading_Report();
+            bool isFormOpen = IsAlreadyOpen(typeof(FreightForwardingBOL_DataFileExport));
+
+            if (isFormOpen == false)
+            {
+                var form = new FreightForwardingBOL_DataFileExport();
+                form.Show();
+            }
+
+            /*BillOfLading_Report BOLReport = new BillOfLading_Report();
             bool isFormOpen = IsAlreadyOpen(typeof(BillOfLading_Report));
             if (isFormOpen == false)
             {
                 BOLReport.Show();
-            }
+            }*/
         }
 
         private void btnFFBOLReport_Click(object sender, EventArgs e)
@@ -126,7 +134,6 @@
                 var form = new FreightForwardingBOL_DataFileExport();
                 form.Show();
             }
-            
         }
     }
 }
