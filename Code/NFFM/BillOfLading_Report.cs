@@ -14,149 +14,23 @@
             InitializeComponent();
             this.Text = "NFFM";
             DBManager.isDataLoaded = false;
-
-            //rbtReceivedAll.Checked = true;
-            //ddlReceived.Text = "";
-            //ddlReceived.Enabled = false;
-
-            //rbtBatchAll.Checked = true;
-            //ddlBatch.Text = "";
-            //ddlBatch.Enabled = false;
-
-            //rbtInvoiceAll.Checked = true;
-            //ddlInvoice.Text = "";
-            //ddlInvoice.Enabled = false;
-
-            //rbtBillOfLadingAll.Checked = true;
-            //ddlBillOfLading.Text = "";
-            //ddlBillOfLading.Enabled = false;
-
-            //rbtCustomerAll.Checked = true;
-            //ddlCustomer.Text = "";
-            //ddlCustomer.Enabled = false;
         }
 
         int initialDataLoaded = 0;
-        //int isButtonClicked = 0;
-        //string currentReceivingId = "0";
-        //string selectedReceivedDate = "0";
-        //string selectedBatch = "0";
-        //string selectedBillOfLading = "0";
-        //string selectedCustomerName = "0";
-        //int previousReceivingId = 0;
-        //int firstReceivingId = 0;
-        //int nextReceivingId = 0;
-        //int lastReceivingId = 0;
-        //int IsNewRecord = 0;
-        //int lineItemId;
-        //DataGridViewRow row;
-        //Dictionary<string, string> ddlCustomers = new Dictionary<string, string>();
-        ////Dictionary<string, string> ddlReceivedDate = new Dictionary<string, string>();
-        //Dictionary<string, string> ReceivedDateItems = new Dictionary<string, string>();
-        //Dictionary<string, string> BatchItems = new Dictionary<string, string>();
-        //Dictionary<string, string> BillOfLadingItems = new Dictionary<string, string>();
-        //Dictionary<string, string> CustomersItems = new Dictionary<string, string>();
-        //DataTable dtCustomers;
-        //DataTable dtReceived;
-        //DataTable dtBatch;
-
-        //bool IsReceivedChecked = true;
-        //bool IsBatchChecked = true;
-        //bool IsInvoiceChecked = true;
-        //bool IsBillOfLadingChecked = true;
-        //bool IsCustomerChecked = true;
 
         public void LoadData(string receivedDate, string batchId, string invoideNumbers, string billOfLadingNumber, string customerName, int pageNumber = 1)
         {
             var SPName = "BillOfLading_Report_GetAll";
-            //ddlCustomers.Clear();
-            //ddlReceivedDate.Clear();
-            //ddlBatch1.Clear();
-            //cmd.CommandText = SPName;
-            //cmd.Parameters.Add("receivingId", receivingId);
-            //cmd.CommandType = CommandType.StoredProcedure;
+            batchId = this.txtBatchId.Text;
+            invoideNumbers = this.txtInvoiceNumber.Text;
+            billOfLadingNumber = this.txtBillOfLanding.Text;
+            customerName = this.txtCustomer.Text;
+
             var ds = DBManager.GetDataSet_Report(SPName, receivedDate, batchId, invoideNumbers, billOfLadingNumber, customerName, false, pageNumber);
-            // DataSet ds = DBManager.GetDataSet(SPName, cmd);
-
             var dtLineItems = ds.Tables[0];
-            //dtReceived = ds.Tables[1];
 
-            //dtBatch = ds.Tables[2];
-            //DataTable dtBillOfLading = ds.Tables[3];
-            //dtCustomers = ds.Tables[4];
-            //// dtReceived = ds.Tables[4];
-            //// dtBatch = ds.Tables[5];
-            ////selectedReceivedDate = "0";
-            ////datePickerReceived.Value = new DateTime(1900, 01, 01);
-            ////datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
-            //if (selectedReceivedDate == "0")
-            //{
-            //    selectedReceivedDate = DateTime.Parse(dtReceived.Rows[0]["ReceivedDate"].ToString()).ToShortDateString();
-            //}
-            //if (selectedBatch == "0")
-            //{
-            //    selectedBatch = dtBatch.Rows[0]["BatchID"].ToString();
-            //}
-            //if (selectedBillOfLading == "0")
-            //{
-            //    selectedBillOfLading = dtBillOfLading.Rows[0]["BillOfLadingNumber"].ToString();
-            //}
-            //if (selectedCustomerName == "0")
-            //{
-            //    selectedCustomerName = dtCustomers.Rows[0]["Name"].ToString();
-            //}
             if (ds.Tables.Count > 0)
             {
-                //    if (dtReceived.Rows.Count > 0 && ReceivedDateItems.Count == 0)
-                //    {
-                //        for (int i = 0; i < dtReceived.Rows.Count; i++)
-                //        {
-                //            ReceivedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["ReceivedDate"].ToString()).ToShortDateString());
-                //        }
-                //        //ddlReceived.DataSource = new BindingSource(ReceivedDateItems, null);
-                //        //ddlReceived.DisplayMember = "Value";
-                //        //ddlReceived.ValueMember = "Key";
-                //    }
-
-                //    if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
-                //    {
-                //        for (int i = 0; i < dtBatch.Rows.Count; i++)
-                //        {
-                //            BatchItems.Add(dtBatch.Rows[i]["BatchID"].ToString(), dtBatch.Rows[i]["BatchID"].ToString());
-                //        }
-                //        //ddlBatch.DataSource = new BindingSource(BatchItems, null);
-                //        //ddlBatch.DisplayMember = "Value";
-                //        //ddlBatch.ValueMember = "Key";
-                //    }
-                //    if (dtBillOfLading.Rows.Count > 0 && BillOfLadingItems.Count == 0)
-                //    {
-                //        for (int i = 0; i < dtBillOfLading.Rows.Count; i++)
-                //        {
-                //            BillOfLadingItems.Add(dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString(), dtBillOfLading.Rows[i]["BillofLadingNumber"].ToString());
-                //        }
-                //        //ddlBillOfLading.DataSource = new BindingSource(BillOfLadingItems, null);
-                //        //ddlBillOfLading.DisplayMember = "Value";
-                //        //ddlBillOfLading.ValueMember = "Key";
-                //    }
-                //    if (dtCustomers.Rows.Count > 0 && CustomersItems.Count == 0)
-                //    {
-                //        for (int i = 0; i < dtCustomers.Rows.Count; i++)
-                //        {
-                //            CustomersItems.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
-                //        }
-                //        //ddlCustomer.DataSource = new BindingSource(CustomersItems, null);
-                //        //ddlCustomer.DisplayMember = "Value";
-                //        //ddlCustomer.ValueMember = "Key";
-                //    }
-
-
-                //    if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
-                //    {
-                //        for (int i = 0; i < dtCustomers.Rows.Count; i++)
-                //        {
-                //            ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
-                //        }
-                //    }
                 BindLineItems(dtLineItems);
                 lblPageSize.Visible = btnNext.Visible = btnPrevious.Visible = btnCreateReport.Enabled = dtLineItems.Rows.Count > 0;
 
@@ -567,17 +441,15 @@
         /// </summary>
         private void LoadReportData()
         {
-            // label1.Text = "Data is Exporting in Excel, Please wait...";
-            // label1.ForeColor = Color.Red;
-            // label1.Font = new Font(label1.Font, label1.Font.Style | FontStyle.Bold);
             var SPName = "BillOfLading_Report_GetAll";
 
-            string recDate = "";
-            string batchId = "";
-            string bol = "";
-            string custName = "";
+            var recDate = "";
+            var batchId = this.txtBatchId.Text;
+            var bol = this.txtBillOfLanding.Text;
+            var custName = this.txtCustomer.Text;
+            var invoiceNumber = this.txtInvoiceNumber.Text;
 
-            using (var ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName, true))
+            using (var ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, invoiceNumber, bol, custName, true))
             {
                 var dtBOLReport = ds.Tables[0];
                 var date = DateTime.Parse(DBManager.ReportingDate);
@@ -594,10 +466,6 @@
                     dtBOLReport.WriteToCsvFile(saveFileDialogue.FileName);
                 }
             }
-
-            // label1.Text = "Click a heading to sort the data.";
-            // label1.ForeColor = Color.Black;
-            // label1.Font = new Font(label1.Font, label1.Font.Style & ~FontStyle.Bold);
         }
 
         private void rbtReceived_CheckedChanged(object sender, EventArgs e)
@@ -617,6 +485,12 @@
         private void btnPrevious_Click(object sender, EventArgs e)
         {
             this.CurrentPageNumber--;
+            LoadData("", "", "", "", "", this.CurrentPageNumber);
+        }
+
+        private void btnGenerateReport_Click(object sender, EventArgs e)
+        {
+            this.CurrentPageNumber = 1;
             LoadData("", "", "", "", "", this.CurrentPageNumber);
         }
     }

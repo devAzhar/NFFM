@@ -877,6 +877,8 @@
 
             if (!isFormOpen)
             {
+                DBManager.ReportingDate = datePickerReceived.Value.ToString("yyyy-MM-dd");
+                DBManager.ReportingDateType = "Received";
                 BOLReport.Show();
             }
         }

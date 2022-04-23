@@ -119,6 +119,12 @@
                         cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
                         cmd.Parameters.AddWithValue("receivedDate", receivedDate);
                         cmd.Parameters.AddWithValue("batchId", batchId);
+
+                        if(!string.IsNullOrEmpty(invoiceNumber))
+                        {
+                            cmd.Parameters.AddWithValue("invoiceNumber", invoiceNumber);
+                        }
+
                         cmd.Parameters.AddWithValue("billOfLadingNumber", billOfLadingNumber);
                         cmd.Parameters.AddWithValue("customerName", customerName);
                         cmd.Parameters.AddWithValue("ExportToExcel", ExportToExcel);
