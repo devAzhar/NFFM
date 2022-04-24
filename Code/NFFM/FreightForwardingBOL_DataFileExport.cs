@@ -15,6 +15,7 @@ namespace NFFM
         public FreightForwardingBOL_DataFileExport()
         {
             InitializeComponent();
+            SetWeekEndingDate();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -44,6 +45,38 @@ namespace NFFM
 
             var bolReportingForm = new BillOfLading_Report();
             bolReportingForm.Show();
+        }
+
+        private void SetWeekEndingDate()
+        {
+            switch (datePickerReceived.Value.DayOfWeek)
+            {
+                case DayOfWeek.Saturday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(6);
+                    break;
+                case DayOfWeek.Sunday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(5);
+                    break;
+                case DayOfWeek.Monday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(4);
+                    break;
+                case DayOfWeek.Tuesday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(3);
+                    break;
+                case DayOfWeek.Wednesday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(2);
+                    break;
+                case DayOfWeek.Thursday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(1);
+                    break;
+                default:
+                    datePickerWeekEnding.Value = datePickerReceived.Value;
+                    break;
+            }
+        }
+        private void datePickerReceived_ValueChanged(object sender, EventArgs e)
+        {
+            SetWeekEndingDate();
         }
     }
 }

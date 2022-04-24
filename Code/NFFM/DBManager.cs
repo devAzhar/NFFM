@@ -18,8 +18,19 @@
         public static int currentRecordId = 0;
         public static string ReportingDate = string.Empty;
         public static string ReportingDateType = string.Empty;
-        public static string ReportingDateCaller = string.Empty;
-        
+        private static string _ReportingDateCaller = string.Empty;
+        public static string ReportingDateCaller 
+        {
+            get
+            {
+                return _ReportingDateCaller;
+            }
+            set
+            {
+                _ReportingDateCaller = value;
+            }
+        }
+
         public static string SqlSafe(string fieldValue, string replacer = "''") => fieldValue.Replace("'", replacer);
 
         public static DataTable GetDataTable(string SPName)
@@ -105,27 +116,41 @@
                     using (var cmd = conn.CreateCommand())
                     {
                         var weekEndingDate = string.Empty;
-                        receivedDate = string.Empty;
 
-                        if (ReportingDateType == "Received")
+                        if (string.IsNullOrEmpty(receivedDate))
                         {
-                            receivedDate = ReportingDate;
+                            if (ReportingDateType == "Received")
+                            {
+                                receivedDate = ReportingDate;
+                            }
+                            else
+                            {
+                                weekEndingDate = ReportingDate;
+                                receivedDate = string.Empty;
+                            }
                         }
                         else
                         {
-                            weekEndingDate = ReportingDate;
+                            if (ReportingDateType != "Received")
+                            {
+                                weekEndingDate = receivedDate;
+                                receivedDate = string.Empty;
+                            }
                         }
 
-                        if(DBManager.ReportingDateCaller == "Report")
+                        if (DBManager.ReportingDateCaller == "Report")
                         {
-                            cmd.Parameters.AddWithValue("currentRecordId", DBManager.currentRecordId);
+                            if (string.IsNullOrEmpty(batchId) && string.IsNullOrEmpty(invoiceNumber) && string.IsNullOrEmpty(customerName) && string.IsNullOrEmpty(billOfLadingNumber))
+                            {
+                                cmd.Parameters.AddWithValue("currentRecordId", DBManager.currentRecordId);
+                            }
                         }
 
                         cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
                         cmd.Parameters.AddWithValue("receivedDate", receivedDate);
                         cmd.Parameters.AddWithValue("batchId", batchId);
 
-                        if(!string.IsNullOrEmpty(invoiceNumber))
+                        if (!string.IsNullOrEmpty(invoiceNumber))
                         {
                             cmd.Parameters.AddWithValue("invoiceNumber", invoiceNumber);
                         }

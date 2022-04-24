@@ -39,6 +39,7 @@ namespace NFFM
             ddlCustomer.Text = "";
             ddlCustomer.Enabled = false;
         }
+
         int initialDataLoaded = 0;
         int isButtonClicked = 0;
         string currentshippingId = "0";
@@ -69,106 +70,107 @@ namespace NFFM
         bool IsFreightForwardingBOLChecked = true;
         bool IsCustomerChecked = true;
 
-
-        public void LoadData(string shippedDate, string batchId, string invoideNumbers, string BillOfLadingNumber, string customerName)
+        public void LoadData(string shippedDate, string batchId, string invoiceNumbers, string BillOfLadingNumber, string customerName)
         {
             var SPName = "FreightForwardingBOL_Report_GetAll";
             //ddlCustomers.Clear();
             //ddlshippedDate.Clear();
             //ddlBatch1.Clear();
-            var cmd = new SqlCommand();
-            //cmd.CommandText = SPName;
-            //cmd.Parameters.Add("shippingId", shippingId);
-            //cmd.CommandType = CommandType.StoredProcedure;
-            var ds = DBManager.GetDataSet_FreightForwardingReport(SPName, shippedDate, batchId, invoideNumbers, BillOfLadingNumber, customerName);
-            // DataSet ds = DBManager.GetDataSet(SPName, cmd);
-
-            var dtLineItems = ds.Tables[0];
-            dtReceived = ds.Tables[1];
-            dtBatch = ds.Tables[2];
-            var dtFreightForwardingBOL = ds.Tables[3];
-            dtCustomers = ds.Tables[4];
-            // dtReceived = ds.Tables[4];
-            // dtBatch = ds.Tables[5];
-            //selectedshippedDate = "0";
-            //datePickerReceived.Value = new DateTime(1900, 01, 01);
-            //datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
-            if (selectedshippedDate == "0")
+            using (var cmd = new SqlCommand())
             {
-                selectedshippedDate = DateTime.Parse(dtReceived.Rows[0]["shippedDate"].ToString()).ToShortDateString();
-            }
-            if (selectedBatch == "0")
-            {
-                selectedBatch = dtBatch.Rows[0]["BatchID"].ToString();
-            }
-            if (selectedFreightForwardingBOL == "0")
-            {
-                selectedFreightForwardingBOL = dtFreightForwardingBOL.Rows[0]["BillOfLadingNumber"].ToString();
-            }
-            if (selectedCustomerName == "0")
-            {
-                selectedCustomerName = dtCustomers.Rows[0]["Name"].ToString();
-            }
-            if (ds.Tables.Count > 0)
-            {
-                if (dtReceived.Rows.Count > 0 && shippedDateItems.Count == 0)
-                {
-                    for (int i = 0; i < dtReceived.Rows.Count; i++)
-                    {
-                        shippedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["shippedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["shippedDate"].ToString()).ToShortDateString());
-                    }
-                    ddlShipped.DataSource = new BindingSource(shippedDateItems, null);
-                    ddlShipped.DisplayMember = "Value";
-                    ddlShipped.ValueMember = "Key";
-                }
+                //cmd.CommandText = SPName;
+                //cmd.Parameters.Add("shippingId", shippingId);
+                //cmd.CommandType = CommandType.StoredProcedure;
+                var ds = DBManager.GetDataSet_FreightForwardingReport(SPName, shippedDate, batchId, invoiceNumbers, BillOfLadingNumber, customerName);
+                // DataSet ds = DBManager.GetDataSet(SPName, cmd);
 
-                if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
+                var dtLineItems = ds.Tables[0];
+                dtReceived = ds.Tables[1];
+                dtBatch = ds.Tables[2];
+                var dtFreightForwardingBOL = ds.Tables[3];
+                dtCustomers = ds.Tables[4];
+                // dtReceived = ds.Tables[4];
+                // dtBatch = ds.Tables[5];
+                //selectedshippedDate = "0";
+                //datePickerReceived.Value = new DateTime(1900, 01, 01);
+                //datePickerWeekEnding.Value = new DateTime(1900, 01, 01);
+                if (selectedshippedDate == "0")
                 {
-                    for (int i = 0; i < dtBatch.Rows.Count; i++)
-                    {
-                        BatchItems.Add(dtBatch.Rows[i]["BatchID"].ToString(), dtBatch.Rows[i]["BatchID"].ToString());
-                    }
-                    ddlBatch.DataSource = new BindingSource(BatchItems, null);
-                    ddlBatch.DisplayMember = "Value";
-                    ddlBatch.ValueMember = "Key";
+                    selectedshippedDate = DateTime.Parse(dtReceived.Rows[0]["shippedDate"].ToString()).ToShortDateString();
                 }
-                if (dtFreightForwardingBOL.Rows.Count > 0 && FreightForwardingBOLItems.Count == 0)
+                if (selectedBatch == "0")
                 {
-                    for (int i = 0; i < dtFreightForwardingBOL.Rows.Count; i++)
-                    {
-                        FreightForwardingBOLItems.Add(dtFreightForwardingBOL.Rows[i]["BillOfLadingNumber"].ToString(), dtFreightForwardingBOL.Rows[i]["BillOfLadingNumber"].ToString());
-                    }
-                    ddlFreightForwardingBOL.DataSource = new BindingSource(FreightForwardingBOLItems, null);
-                    ddlFreightForwardingBOL.DisplayMember = "Value";
-                    ddlFreightForwardingBOL.ValueMember = "Key";
+                    selectedBatch = dtBatch.Rows[0]["BatchID"].ToString();
                 }
-                if (dtCustomers.Rows.Count > 0 && CustomersItems.Count == 0)
+                if (selectedFreightForwardingBOL == "0")
                 {
-                    for (int i = 0; i < dtCustomers.Rows.Count; i++)
-                    {
-                        CustomersItems.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
-                    }
-                    ddlCustomer.DataSource = new BindingSource(CustomersItems, null);
-                    ddlCustomer.DisplayMember = "Value";
-                    ddlCustomer.ValueMember = "Key";
+                    selectedFreightForwardingBOL = dtFreightForwardingBOL.Rows[0]["BillOfLadingNumber"].ToString();
                 }
+                if (selectedCustomerName == "0")
+                {
+                    selectedCustomerName = dtCustomers.Rows[0]["Name"].ToString();
+                }
+                if (ds.Tables.Count > 0)
+                {
+                    if (dtReceived.Rows.Count > 0 && shippedDateItems.Count == 0)
+                    {
+                        for (int i = 0; i < dtReceived.Rows.Count; i++)
+                        {
+                            shippedDateItems.Add(DateTime.Parse(dtReceived.Rows[i]["shippedDate"].ToString()).ToShortDateString(), DateTime.Parse(dtReceived.Rows[i]["shippedDate"].ToString()).ToShortDateString());
+                        }
+                        ddlShipped.DataSource = new BindingSource(shippedDateItems, null);
+                        ddlShipped.DisplayMember = "Value";
+                        ddlShipped.ValueMember = "Key";
+                    }
+
+                    if (dtBatch.Rows.Count > 0 && BatchItems.Count == 0)
+                    {
+                        for (int i = 0; i < dtBatch.Rows.Count; i++)
+                        {
+                            BatchItems.Add(dtBatch.Rows[i]["BatchID"].ToString(), dtBatch.Rows[i]["BatchID"].ToString());
+                        }
+                        ddlBatch.DataSource = new BindingSource(BatchItems, null);
+                        ddlBatch.DisplayMember = "Value";
+                        ddlBatch.ValueMember = "Key";
+                    }
+                    if (dtFreightForwardingBOL.Rows.Count > 0 && FreightForwardingBOLItems.Count == 0)
+                    {
+                        for (int i = 0; i < dtFreightForwardingBOL.Rows.Count; i++)
+                        {
+                            FreightForwardingBOLItems.Add(dtFreightForwardingBOL.Rows[i]["BillOfLadingNumber"].ToString(), dtFreightForwardingBOL.Rows[i]["BillOfLadingNumber"].ToString());
+                        }
+                        ddlFreightForwardingBOL.DataSource = new BindingSource(FreightForwardingBOLItems, null);
+                        ddlFreightForwardingBOL.DisplayMember = "Value";
+                        ddlFreightForwardingBOL.ValueMember = "Key";
+                    }
+                    if (dtCustomers.Rows.Count > 0 && CustomersItems.Count == 0)
+                    {
+                        for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                        {
+                            CustomersItems.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
+                        }
+                        ddlCustomer.DataSource = new BindingSource(CustomersItems, null);
+                        ddlCustomer.DisplayMember = "Value";
+                        ddlCustomer.ValueMember = "Key";
+                    }
 
 
-                if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
-                {
-                    for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                    if (dtCustomers.Rows.Count > 0 && ddlCustomers.Count == 0)
                     {
-                        ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
+                        for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                        {
+                            ddlCustomers.Add(dtCustomers.Rows[i]["customerID"].ToString(), dtCustomers.Rows[i]["Name"].ToString());
+                        }
                     }
-                }
-                if (dtLineItems.Rows.Count > 0)
-                {
+                    if (dtLineItems.Rows.Count > 0)
+                    {
 
-                    BindLineItems(dtLineItems);
-                }
-                else
-                {
-                    BindLineItems(dtLineItems);
+                        BindLineItems(dtLineItems);
+                    }
+                    else
+                    {
+                        BindLineItems(dtLineItems);
+                    }
                 }
             }
         }
@@ -507,6 +509,11 @@ namespace NFFM
         private void BOL_Print_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             e.Graphics.DrawImage(bitmap, 0, 0);
+        }
+
+        private void rbtBatch_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
         //private void ddlShipped_SelectedIndexChanged(object sender, EventArgs e)

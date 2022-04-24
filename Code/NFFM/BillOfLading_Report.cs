@@ -1,7 +1,9 @@
 ﻿namespace NFFM
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
+    using System.Data.SqlClient;
     using System.Drawing;
     using System.Windows.Forms;
 
@@ -9,24 +11,125 @@
     {
         private int CurrentPageNumber { get; set; } = 1;
 
+        private string BatchId => rbtBatch.Checked ? ddlBatch.Text : string.Empty;
+        private string InvoiceNumber => rbtInvoice.Checked ? ddlInvoice.Text : string.Empty;
+        private string CustomerName => rbtCustomer.Checked ? ddlCustomer.Text : string.Empty;
+        private string ReceivedDate => rbtReceived.Checked ? Convert.ToString(dtReceivedDate.Value) : string.Empty;
+
         public BillOfLading_Report()
         {
             InitializeComponent();
             this.Text = "NFFM";
             DBManager.isDataLoaded = false;
+
+            rbtReceivedAll.Checked = true;
+            dtReceivedDate.Enabled = false;
+
+            rbtBatchAll.Checked = true;
+            ddlBatch.Text = "";
+            ddlBatch.Enabled = false;
+
+            rbtInvoiceAll.Checked = true;
+            ddlInvoice.Text = "";
+            ddlInvoice.Enabled = false;
+
+            rbtCustomerAll.Checked = true;
+            ddlCustomer.Text = "";
+            ddlCustomer.Enabled = false;
+
+            LoadDropDowns();
         }
 
         int initialDataLoaded = 0;
 
-        public void LoadData(string receivedDate, string batchId, string invoideNumbers, string billOfLadingNumber, string customerName, int pageNumber = 1)
+        private void LoadDropDowns()
+        {
+            var SPName = "BillOfLading_Report_GetDropDowns";
+
+            using (var ds = DBManager.GetDataSet(SPName))
+            {
+                var dtCustomers = ds.Tables[0];
+                var dtBatch = ds.Tables[1];
+                var dtInvoiceNumbers = ds.Tables[2];
+
+                if (dtCustomers.Rows.Count > 0)
+                {
+                    var dataItems = new Dictionary<string, string>();
+
+                    for (int i = 0; i < dtCustomers.Rows.Count; i++)
+                    {
+                        dataItems.Add(dtCustomers.Rows[i]["customerId"].ToString(), dtCustomers.Rows[i]["customerName"].ToString());
+                    }
+
+                    ddlCustomer.DataSource = new BindingSource(dataItems, null);
+                    ddlCustomer.DisplayMember = "Value";
+                    ddlCustomer.ValueMember = "Key";
+                    ddlCustomer.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    ddlCustomer.AutoCompleteSource = AutoCompleteSource.ListItems;
+                }
+
+                if (dtBatch.Rows.Count > 0)
+                {
+                    var dataItems = new Dictionary<string, string>();
+
+                    for (int i = 0; i < dtBatch.Rows.Count; i++)
+                    {
+                        dataItems.Add(dtBatch.Rows[i]["BatchID"].ToString(), dtBatch.Rows[i]["BatchID"].ToString());
+                    }
+                    ddlBatch.DataSource = new BindingSource(dataItems, null);
+                    ddlBatch.DisplayMember = "Value";
+                    ddlBatch.ValueMember = "Key";
+                    ddlBatch.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    ddlBatch.AutoCompleteSource = AutoCompleteSource.ListItems;
+                }
+
+                if (dtInvoiceNumbers.Rows.Count > 0)
+                {
+                    var dataItems = new Dictionary<string, string>();
+
+                    for (int i = 0; i < dtInvoiceNumbers.Rows.Count; i++)
+                    {
+                        dataItems.Add(dtInvoiceNumbers.Rows[i]["InvoiceNumber"].ToString(), dtInvoiceNumbers.Rows[i]["InvoiceNumber"].ToString());
+                    }
+
+                    ddlInvoice.DataSource = new BindingSource(dataItems, null);
+                    ddlInvoice.DisplayMember = "Value";
+                    ddlInvoice.ValueMember = "Key";
+                    ddlInvoice.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    ddlInvoice.AutoCompleteSource = AutoCompleteSource.ListItems;
+                }
+
+                try
+                {
+                    dtReceivedDate.Value = dtReceivedDate.Value = DateTime.Parse(DBManager.ReportingDate);
+                }
+                catch (Exception e)
+                {
+                }
+
+                if (DBManager.ReportingDateCaller != "Report")
+                {
+                    rbtReceived.Checked = true;
+                }
+
+                if (DBManager.ReportingDateType != "Received")
+                {
+                    groupBox1.Text = "Week Ending";
+                }
+                else
+                {
+                    groupBox1.Text = "Received Date";
+                }
+            }
+        }
+
+        public void LoadData(string receivedDate, string batchId, string invoiceNumbers, string billOfLadingNumber, string customerName, int pageNumber = 1)
         {
             var SPName = "BillOfLading_Report_GetAll";
-            batchId = this.txtBatchId.Text;
-            invoideNumbers = this.txtInvoiceNumber.Text;
-            billOfLadingNumber = this.txtBillOfLanding.Text;
-            customerName = this.txtCustomer.Text;
+            // billOfLadingNumber = this.txtBillOfLanding.Text;
 
-            var ds = DBManager.GetDataSet_Report(SPName, receivedDate, batchId, invoideNumbers, billOfLadingNumber, customerName, false, pageNumber);
+            DBManager.ReportingDate = ReceivedDate;
+            var ds = DBManager.GetDataSet_Report(SPName, ReceivedDate, BatchId, InvoiceNumber, billOfLadingNumber, CustomerName, false, pageNumber);
             var dtLineItems = ds.Tables[0];
 
             if (ds.Tables.Count > 0)
@@ -45,54 +148,6 @@
                     btnPrevious.Enabled = (pageNumber > 1);
                 }
             }
-        }
-        private void ddlReceived_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //string receivedDateId = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Key;
-            //string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
-
-            //string recDate = receivedDate;
-            //string batchId = selectedBatch;
-            //string bol = selectedBillOfLading;
-            //string custName = selectedCustomerName;
-            //selectedReceivedDate = receivedDate;
-
-            //if (rbtReceivedAll.Checked)
-            //{
-            //    recDate = "";
-            //}
-            //if (rbtBatchAll.Checked)
-            //{
-            //    batchId = "";
-            //}
-            //if (rbtBillOfLadingAll.Checked)
-            //{
-            //    bol = "";
-            //}
-            //if (rbtCustomerAll.Checked)
-            //{
-            //    custName = "";
-            //}
-
-
-            //            DataSet ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, "", bol, custName);
-
-            // LoadData(recDate, batchId, "", bol, custName);
-            //if (selectedReceivedDate != receivedDate && selectedReceivedDate != "0" && initialDataLoaded == 1)
-            //{
-            //    string batchId = selectedBatch;
-            //    if (rbtBatchAll.Checked)
-            //    {
-            //        batchId = "";
-            //    }
-            //    string BOL = selectedBillOfLading;
-            //    if (rbtBillOfLadingAll.Checked)
-            //    {
-            //        BOL = "";
-            //    }
-            //    selectedReceivedDate = receivedDate;
-            //    LoadData(receivedDate, batchId, "", BOL, "");
-            //}
         }
         private void ddlBatch_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -259,37 +314,6 @@
         {
             e.ThrowException = false;
         }
-
-        private void rbtReceived_Click(object sender, EventArgs e)
-        {
-            //rbtReceivedAll.Checked = false;
-            //rbtReceived.Checked = true;
-            ////ddlReceived.Text = "";
-            //ddlReceived.Enabled = true;
-
-            //string receivedDate = ((KeyValuePair<string, string>)ddlReceived.SelectedItem).Value;
-
-            //selectedReceivedDate = receivedDate;
-
-            //string batchId = selectedReceivedDate;
-            //string bol = selectedBillOfLading;
-            //string custName = selectedCustomerName;
-
-            //if (rbtBatchAll.Checked)
-            //{
-            //    batchId = "";
-            //}
-            //if (rbtBillOfLadingAll.Checked)
-            //{
-            //    bol = "";
-            //}
-            //if (rbtCustomerAll.Checked)
-            //{
-            //    custName = "";
-            //}
-
-            //LoadData(selectedReceivedDate, batchId, "", bol, custName);
-        }
         private void rbtBatch_Click(object sender, EventArgs e)
         {
             //rbtBatchAll.Checked = false;
@@ -442,14 +466,9 @@
         private void LoadReportData()
         {
             var SPName = "BillOfLading_Report_GetAll";
+            var bol = string.Empty;
 
-            var recDate = "";
-            var batchId = this.txtBatchId.Text;
-            var bol = this.txtBillOfLanding.Text;
-            var custName = this.txtCustomer.Text;
-            var invoiceNumber = this.txtInvoiceNumber.Text;
-
-            using (var ds = DBManager.GetDataSet_Report(SPName, recDate, batchId, invoiceNumber, bol, custName, true))
+            using (var ds = DBManager.GetDataSet_Report(SPName, ReceivedDate, BatchId, InvoiceNumber, bol, CustomerName, true))
             {
                 var dtBOLReport = ds.Tables[0];
                 var date = DateTime.Parse(DBManager.ReportingDate);
@@ -472,10 +491,6 @@
         {
         }
 
-        private void rbtReceivedAll_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
         private void btnNext_Click(object sender, EventArgs e)
         {
             this.CurrentPageNumber++;
@@ -492,6 +507,26 @@
         {
             this.CurrentPageNumber = 1;
             LoadData("", "", "", "", "", this.CurrentPageNumber);
+        }
+
+        private void rbtBatchAll_CheckedChanged(object sender, EventArgs e)
+        {
+            ddlBatch.Enabled = rbtBatch.Checked;
+        }
+
+        private void rbtInvoiceAll_CheckedChanged(object sender, EventArgs e)
+        {
+            ddlInvoice.Enabled = rbtInvoice.Checked;
+        }
+
+        private void rbtCustomerAll_CheckedChanged(object sender, EventArgs e)
+        {
+            ddlCustomer.Enabled = rbtCustomer.Checked;
+        }
+
+        private void rbtReceivedAll_CheckedChanged(object sender, EventArgs e)
+        {
+            dtReceivedDate.Enabled = rbtReceived.Checked;
         }
     }
 }

@@ -120,6 +120,7 @@ namespace NFFM
             this.datePickerReceived.Name = "datePickerReceived";
             this.datePickerReceived.Size = new System.Drawing.Size(148, 31);
             this.datePickerReceived.TabIndex = 34;
+            this.datePickerReceived.ValueChanged += new System.EventHandler(this.datePickerReceived_ValueChanged);
             // 
             // label6
             // 

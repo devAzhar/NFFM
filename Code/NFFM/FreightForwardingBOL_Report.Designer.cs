@@ -359,6 +359,7 @@
             this.rbtBatch.TabIndex = 43;
             this.rbtBatch.TabStop = true;
             this.rbtBatch.UseVisualStyleBackColor = true;
+            this.rbtBatch.CheckedChanged += new System.EventHandler(this.rbtBatch_CheckedChanged);
             this.rbtBatch.Click += new System.EventHandler(this.rbtBatch_Click);
             // 
             // label3

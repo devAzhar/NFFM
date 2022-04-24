@@ -882,14 +882,15 @@
 
         private void btnReport_Click(object sender, EventArgs e)
         {
+            DBManager.ReportingDate = datePickerReceived.Value.ToString("yyyy-MM-dd");
+            DBManager.ReportingDateType = "Received";
+            DBManager.ReportingDateCaller = "Report";
+
             var BOLReport = new BillOfLading_Report();
             var isFormOpen = IsAlreadyOpen(typeof(BillOfLading_Report));
 
             if (!isFormOpen)
             {
-                DBManager.ReportingDate = datePickerReceived.Value.ToString("yyyy-MM-dd");
-                DBManager.ReportingDateType = "Received";
-                DBManager.ReportingDateCaller = "Report";
                 BOLReport.Show();
             }
         }

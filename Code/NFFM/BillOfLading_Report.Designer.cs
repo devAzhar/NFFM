@@ -35,6 +35,22 @@
             this.lblHeading = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.ddlCustomer = new System.Windows.Forms.ComboBox();
+            this.rbtCustomer = new System.Windows.Forms.RadioButton();
+            this.rbtCustomerAll = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbtReceivedAll = new System.Windows.Forms.RadioButton();
+            this.rbtReceived = new System.Windows.Forms.RadioButton();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ddlInvoice = new System.Windows.Forms.ComboBox();
+            this.rbtInvoiceAll = new System.Windows.Forms.RadioButton();
+            this.rbtInvoice = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ddlBatch = new System.Windows.Forms.ComboBox();
+            this.rbtBatchAll = new System.Windows.Forms.RadioButton();
+            this.rbtBatch = new System.Windows.Forms.RadioButton();
+            this.btnGenerateReport = new System.Windows.Forms.Button();
             this.btnCreateReport = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
@@ -43,16 +59,12 @@
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.lblPageSize = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtBatchId = new System.Windows.Forms.TextBox();
-            this.txtInvoiceNumber = new System.Windows.Forms.TextBox();
-            this.txtBillOfLanding = new System.Windows.Forms.TextBox();
-            this.txtCustomer = new System.Windows.Forms.TextBox();
-            this.btnGenerateReport = new System.Windows.Forms.Button();
+            this.dtReceivedDate = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,7 +84,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(589, 154);
+            this.label1.Location = new System.Drawing.Point(703, 154);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(264, 21);
             this.label1.TabIndex = 21;
@@ -82,15 +94,11 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.groupBox5);
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.groupBox3);
+            this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.btnGenerateReport);
-            this.panel1.Controls.Add(this.txtCustomer);
-            this.panel1.Controls.Add(this.txtBillOfLanding);
-            this.panel1.Controls.Add(this.txtInvoiceNumber);
-            this.panel1.Controls.Add(this.txtBatchId);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.btnCreateReport);
             this.panel1.Controls.Add(this.lblHeading);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -100,13 +108,196 @@
             this.panel1.Size = new System.Drawing.Size(1727, 151);
             this.panel1.TabIndex = 20;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.ddlCustomer);
+            this.groupBox5.Controls.Add(this.rbtCustomer);
+            this.groupBox5.Controls.Add(this.rbtCustomerAll);
+            this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(1082, 41);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(200, 90);
+            this.groupBox5.TabIndex = 63;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Customer";
+            // 
+            // ddlCustomer
+            // 
+            this.ddlCustomer.FormattingEnabled = true;
+            this.ddlCustomer.Location = new System.Drawing.Point(26, 53);
+            this.ddlCustomer.Name = "ddlCustomer";
+            this.ddlCustomer.Size = new System.Drawing.Size(158, 28);
+            this.ddlCustomer.TabIndex = 35;
+            // 
+            // rbtCustomer
+            // 
+            this.rbtCustomer.AutoSize = true;
+            this.rbtCustomer.Location = new System.Drawing.Point(6, 60);
+            this.rbtCustomer.Name = "rbtCustomer";
+            this.rbtCustomer.Size = new System.Drawing.Size(14, 13);
+            this.rbtCustomer.TabIndex = 46;
+            this.rbtCustomer.TabStop = true;
+            this.rbtCustomer.UseVisualStyleBackColor = true;
+            this.rbtCustomer.CheckedChanged += new System.EventHandler(this.rbtCustomerAll_CheckedChanged);
+            // 
+            // rbtCustomerAll
+            // 
+            this.rbtCustomerAll.AutoSize = true;
+            this.rbtCustomerAll.Location = new System.Drawing.Point(6, 29);
+            this.rbtCustomerAll.Name = "rbtCustomerAll";
+            this.rbtCustomerAll.Size = new System.Drawing.Size(44, 24);
+            this.rbtCustomerAll.TabIndex = 40;
+            this.rbtCustomerAll.TabStop = true;
+            this.rbtCustomerAll.Text = "All";
+            this.rbtCustomerAll.UseVisualStyleBackColor = true;
+            this.rbtCustomerAll.CheckedChanged += new System.EventHandler(this.rbtCustomerAll_CheckedChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.dtReceivedDate);
+            this.groupBox1.Controls.Add(this.rbtReceivedAll);
+            this.groupBox1.Controls.Add(this.rbtReceived);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(374, 41);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 90);
+            this.groupBox1.TabIndex = 65;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Received Date";
+            // 
+            // rbtReceivedAll
+            // 
+            this.rbtReceivedAll.AutoSize = true;
+            this.rbtReceivedAll.Location = new System.Drawing.Point(6, 30);
+            this.rbtReceivedAll.Name = "rbtReceivedAll";
+            this.rbtReceivedAll.Size = new System.Drawing.Size(44, 24);
+            this.rbtReceivedAll.TabIndex = 36;
+            this.rbtReceivedAll.TabStop = true;
+            this.rbtReceivedAll.Text = "All";
+            this.rbtReceivedAll.UseVisualStyleBackColor = true;
+            this.rbtReceivedAll.CheckedChanged += new System.EventHandler(this.rbtReceivedAll_CheckedChanged);
+            // 
+            // rbtReceived
+            // 
+            this.rbtReceived.AutoSize = true;
+            this.rbtReceived.Location = new System.Drawing.Point(6, 64);
+            this.rbtReceived.Name = "rbtReceived";
+            this.rbtReceived.Size = new System.Drawing.Size(14, 13);
+            this.rbtReceived.TabIndex = 42;
+            this.rbtReceived.TabStop = true;
+            this.rbtReceived.UseVisualStyleBackColor = true;
+            this.rbtReceived.CheckedChanged += new System.EventHandler(this.rbtReceivedAll_CheckedChanged);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.ddlInvoice);
+            this.groupBox3.Controls.Add(this.rbtInvoiceAll);
+            this.groupBox3.Controls.Add(this.rbtInvoice);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(846, 41);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 90);
+            this.groupBox3.TabIndex = 64;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Invoice Numbers";
+            // 
+            // ddlInvoice
+            // 
+            this.ddlInvoice.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ddlInvoice.FormattingEnabled = true;
+            this.ddlInvoice.Location = new System.Drawing.Point(33, 56);
+            this.ddlInvoice.Name = "ddlInvoice";
+            this.ddlInvoice.Size = new System.Drawing.Size(154, 24);
+            this.ddlInvoice.TabIndex = 33;
+            // 
+            // rbtInvoiceAll
+            // 
+            this.rbtInvoiceAll.AutoSize = true;
+            this.rbtInvoiceAll.Location = new System.Drawing.Point(14, 24);
+            this.rbtInvoiceAll.Name = "rbtInvoiceAll";
+            this.rbtInvoiceAll.Size = new System.Drawing.Size(44, 24);
+            this.rbtInvoiceAll.TabIndex = 38;
+            this.rbtInvoiceAll.TabStop = true;
+            this.rbtInvoiceAll.Text = "All";
+            this.rbtInvoiceAll.UseVisualStyleBackColor = true;
+            this.rbtInvoiceAll.CheckedChanged += new System.EventHandler(this.rbtInvoiceAll_CheckedChanged);
+            // 
+            // rbtInvoice
+            // 
+            this.rbtInvoice.AutoSize = true;
+            this.rbtInvoice.Location = new System.Drawing.Point(13, 63);
+            this.rbtInvoice.Name = "rbtInvoice";
+            this.rbtInvoice.Size = new System.Drawing.Size(14, 13);
+            this.rbtInvoice.TabIndex = 44;
+            this.rbtInvoice.TabStop = true;
+            this.rbtInvoice.UseVisualStyleBackColor = true;
+            this.rbtInvoice.CheckedChanged += new System.EventHandler(this.rbtInvoiceAll_CheckedChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.ddlBatch);
+            this.groupBox2.Controls.Add(this.rbtBatchAll);
+            this.groupBox2.Controls.Add(this.rbtBatch);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(610, 41);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 90);
+            this.groupBox2.TabIndex = 61;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Batch ID";
+            // 
+            // ddlBatch
+            // 
+            this.ddlBatch.FormattingEnabled = true;
+            this.ddlBatch.Location = new System.Drawing.Point(27, 56);
+            this.ddlBatch.Name = "ddlBatch";
+            this.ddlBatch.Size = new System.Drawing.Size(157, 28);
+            this.ddlBatch.TabIndex = 32;
+            // 
+            // rbtBatchAll
+            // 
+            this.rbtBatchAll.AutoSize = true;
+            this.rbtBatchAll.Location = new System.Drawing.Point(7, 29);
+            this.rbtBatchAll.Name = "rbtBatchAll";
+            this.rbtBatchAll.Size = new System.Drawing.Size(44, 24);
+            this.rbtBatchAll.TabIndex = 37;
+            this.rbtBatchAll.TabStop = true;
+            this.rbtBatchAll.Text = "All";
+            this.rbtBatchAll.UseVisualStyleBackColor = true;
+            this.rbtBatchAll.CheckedChanged += new System.EventHandler(this.rbtBatchAll_CheckedChanged);
+            // 
+            // rbtBatch
+            // 
+            this.rbtBatch.AutoSize = true;
+            this.rbtBatch.Location = new System.Drawing.Point(7, 63);
+            this.rbtBatch.Name = "rbtBatch";
+            this.rbtBatch.Size = new System.Drawing.Size(14, 13);
+            this.rbtBatch.TabIndex = 43;
+            this.rbtBatch.TabStop = true;
+            this.rbtBatch.UseVisualStyleBackColor = true;
+            this.rbtBatch.CheckedChanged += new System.EventHandler(this.rbtBatchAll_CheckedChanged);
+            // 
+            // btnGenerateReport
+            // 
+            this.btnGenerateReport.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnGenerateReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnGenerateReport.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenerateReport.ForeColor = System.Drawing.Color.White;
+            this.btnGenerateReport.Location = new System.Drawing.Point(1312, 36);
+            this.btnGenerateReport.Name = "btnGenerateReport";
+            this.btnGenerateReport.Size = new System.Drawing.Size(154, 43);
+            this.btnGenerateReport.TabIndex = 42;
+            this.btnGenerateReport.Text = "Generate &Report";
+            this.btnGenerateReport.UseVisualStyleBackColor = false;
+            this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
+            // 
             // btnCreateReport
             // 
             this.btnCreateReport.BackColor = System.Drawing.Color.SeaGreen;
             this.btnCreateReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCreateReport.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreateReport.ForeColor = System.Drawing.Color.White;
-            this.btnCreateReport.Location = new System.Drawing.Point(1100, 69);
+            this.btnCreateReport.Location = new System.Drawing.Point(1312, 85);
             this.btnCreateReport.Name = "btnCreateReport";
             this.btnCreateReport.Size = new System.Drawing.Size(154, 43);
             this.btnCreateReport.TabIndex = 33;
@@ -206,94 +397,18 @@
             this.lblPageSize.Text = "Page {0} of {1}";
             this.lblPageSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // dtReceivedDate
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(31, 69);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "Batch ID";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(258, 68);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 13);
-            this.label3.TabIndex = 35;
-            this.label3.Text = "Invoice Number";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(485, 69);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 13);
-            this.label4.TabIndex = 36;
-            this.label4.Text = "Bill of Landing";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(712, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
-            this.label5.TabIndex = 37;
-            this.label5.Text = "Customer";
-            // 
-            // txtBatchId
-            // 
-            this.txtBatchId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBatchId.Location = new System.Drawing.Point(31, 86);
-            this.txtBatchId.Name = "txtBatchId";
-            this.txtBatchId.Size = new System.Drawing.Size(220, 26);
-            this.txtBatchId.TabIndex = 38;
-            // 
-            // txtInvoiceNumber
-            // 
-            this.txtInvoiceNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInvoiceNumber.Location = new System.Drawing.Point(258, 86);
-            this.txtInvoiceNumber.Name = "txtInvoiceNumber";
-            this.txtInvoiceNumber.Size = new System.Drawing.Size(220, 26);
-            this.txtInvoiceNumber.TabIndex = 39;
-            // 
-            // txtBillOfLanding
-            // 
-            this.txtBillOfLanding.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBillOfLanding.Location = new System.Drawing.Point(485, 86);
-            this.txtBillOfLanding.Name = "txtBillOfLanding";
-            this.txtBillOfLanding.Size = new System.Drawing.Size(220, 26);
-            this.txtBillOfLanding.TabIndex = 40;
-            // 
-            // txtCustomer
-            // 
-            this.txtCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCustomer.Location = new System.Drawing.Point(712, 86);
-            this.txtCustomer.Name = "txtCustomer";
-            this.txtCustomer.Size = new System.Drawing.Size(220, 26);
-            this.txtCustomer.TabIndex = 41;
-            // 
-            // btnGenerateReport
-            // 
-            this.btnGenerateReport.BackColor = System.Drawing.Color.SeaGreen;
-            this.btnGenerateReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnGenerateReport.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateReport.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateReport.Location = new System.Drawing.Point(939, 69);
-            this.btnGenerateReport.Name = "btnGenerateReport";
-            this.btnGenerateReport.Size = new System.Drawing.Size(154, 43);
-            this.btnGenerateReport.TabIndex = 42;
-            this.btnGenerateReport.Text = "Generate &Report";
-            this.btnGenerateReport.UseVisualStyleBackColor = false;
-            this.btnGenerateReport.Click += new System.EventHandler(this.btnGenerateReport_Click);
+            this.dtReceivedDate.Font = new System.Drawing.Font("Century Gothic", 14.25F);
+            this.dtReceivedDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtReceivedDate.Location = new System.Drawing.Point(26, 53);
+            this.dtReceivedDate.Name = "dtReceivedDate";
+            this.dtReceivedDate.Size = new System.Drawing.Size(157, 31);
+            this.dtReceivedDate.TabIndex = 66;
             // 
             // BillOfLading_Report
             // 
+            this.AcceptButton = this.btnGenerateReport;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -311,6 +426,14 @@
             this.Activated += new System.EventHandler(this.Form1_Activated);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -330,14 +453,22 @@
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Label lblPageSize;
-        private System.Windows.Forms.TextBox txtCustomer;
-        private System.Windows.Forms.TextBox txtBillOfLanding;
-        private System.Windows.Forms.TextBox txtInvoiceNumber;
-        private System.Windows.Forms.TextBox txtBatchId;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnGenerateReport;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rbtReceivedAll;
+        private System.Windows.Forms.RadioButton rbtReceived;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox ddlInvoice;
+        private System.Windows.Forms.RadioButton rbtInvoiceAll;
+        private System.Windows.Forms.RadioButton rbtInvoice;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox ddlBatch;
+        private System.Windows.Forms.RadioButton rbtBatchAll;
+        private System.Windows.Forms.RadioButton rbtBatch;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.ComboBox ddlCustomer;
+        private System.Windows.Forms.RadioButton rbtCustomer;
+        private System.Windows.Forms.RadioButton rbtCustomerAll;
+        private System.Windows.Forms.DateTimePicker dtReceivedDate;
     }
 }
