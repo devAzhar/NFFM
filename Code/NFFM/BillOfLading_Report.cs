@@ -128,6 +128,8 @@
             var SPName = "BillOfLading_Report_GetAll";
             // billOfLadingNumber = this.txtBillOfLanding.Text;
 
+            dataGridView1.Hide();
+            this.Refresh();
             DBManager.ReportingDate = ReceivedDate;
             var ds = DBManager.GetDataSet_Report(SPName, ReceivedDate, BatchId, InvoiceNumber, billOfLadingNumber, CustomerName, false, pageNumber);
             var dtLineItems = ds.Tables[0];
@@ -148,6 +150,8 @@
                     btnPrevious.Enabled = (pageNumber > 1);
                 }
             }
+
+            dataGridView1.Show();
         }
         private void ddlBatch_SelectedIndexChanged(object sender, EventArgs e)
         {
