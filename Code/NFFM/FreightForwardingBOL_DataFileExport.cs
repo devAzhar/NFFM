@@ -37,6 +37,7 @@ namespace NFFM
         {
             CloseIfOpened(typeof(BillOfLading_Report));
 
+            DBManager.ReportingDateCaller = string.Empty;
             DBManager.ReportingDate = radioButton1.Checked ? datePickerReceived.Value.ToString("yyyy-MM-dd") : datePickerWeekEnding.Value.ToString("yyyy-MM-dd");
             DBManager.ReportingDateType = radioButton1.Checked ? "Received" : "WeekEnding";
             //this.Close();

@@ -18,7 +18,8 @@
         public static int currentRecordId = 0;
         public static string ReportingDate = string.Empty;
         public static string ReportingDateType = string.Empty;
-
+        public static string ReportingDateCaller = string.Empty;
+        
         public static string SqlSafe(string fieldValue, string replacer = "''") => fieldValue.Replace("'", replacer);
 
         public static DataTable GetDataTable(string SPName)
@@ -115,6 +116,10 @@
                             weekEndingDate = ReportingDate;
                         }
 
+                        if(DBManager.ReportingDateCaller == "Report")
+                        {
+                            cmd.Parameters.AddWithValue("currentRecordId", DBManager.currentRecordId);
+                        }
 
                         cmd.Parameters.AddWithValue("weekEndingDate", weekEndingDate);
                         cmd.Parameters.AddWithValue("receivedDate", receivedDate);

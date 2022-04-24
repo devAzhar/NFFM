@@ -456,6 +456,11 @@
                     txtRecords.ReadOnly = true;
                     txtRecords.Text = dataSet.Tables[1].Rows[0]["CurrentRecord"].ToString() + " of " + dataSet.Tables[1].Rows[0]["TotalRecords"].ToString();
                     currentReceivingId = dataSet.Tables[1].Rows[0]["receivingId"].ToString();
+
+                    if(DBManager.currentRecordId == 0)
+                    {
+                        DBManager.currentRecordId = int.Parse(currentReceivingId);
+                    }
                     previousReceivingId = Convert.ToInt32(dataSet.Tables[1].Rows[0]["previousReceivingId"]);
                     firstReceivingId = Convert.ToInt32(dataSet.Tables[1].Rows[0]["firstReceivingId"]);
                     nextReceivingId = Convert.ToInt32(dataSet.Tables[1].Rows[0]["nextReceivingId"]);
@@ -667,11 +672,11 @@
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            DayOfWeek weekStart = DayOfWeek.Monday; // or Sunday, or whenever
-            DateTime startingDate = DateTime.Today;
+            //DayOfWeek weekStart = DayOfWeek.Monday; // or Sunday, or whenever
+            //DateTime startingDate = DateTime.Today;
 
-            while (startingDate.DayOfWeek != weekStart)
-                startingDate = startingDate.AddDays(-1);
+            //while (startingDate.DayOfWeek != weekStart)
+                //startingDate = startingDate.AddDays(-1);
 
             // DateTime previousWeekStart = startingDate.AddDays(-7);
             // DateTime previousWeekEnd = startingDate.AddDays(-3);
@@ -679,6 +684,7 @@
             // datePickerReceived.Text = previousWeekStart.ToShortDateString();
             // datePickerWeekEnding.Text = previousWeekEnd.ToShortDateString();
 
+            datePickerReceived.Value = DateTime.Now.Date;
             currentReceivingId = "0";
             currentTruckerId = "0";
             ddlTruckerName.Text = "";
@@ -803,25 +809,29 @@
 
         private void datePickerReceived_ValueChanged(object sender, EventArgs e)
         {
-            if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Sunday)
+            switch(datePickerReceived.Value.DayOfWeek)
             {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(5);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Monday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(4);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Tuesday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(3);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Wednesday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(2);
-            }
-            else if (datePickerReceived.Value.DayOfWeek == DayOfWeek.Thursday)
-            {
-                datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(1);
+                case DayOfWeek.Saturday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(6);
+                    break;
+                case DayOfWeek.Sunday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(5);
+                    break;
+                case DayOfWeek.Monday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(4);
+                    break;
+                case DayOfWeek.Tuesday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(3);
+                    break;
+                case DayOfWeek.Wednesday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(2);
+                    break;
+                case DayOfWeek.Thursday:
+                    datePickerWeekEnding.Value = datePickerReceived.Value.AddDays(1);
+                    break;
+                default:
+                    datePickerWeekEnding.Value = datePickerReceived.Value;
+                    break;
             }
         }
 
@@ -879,6 +889,7 @@
             {
                 DBManager.ReportingDate = datePickerReceived.Value.ToString("yyyy-MM-dd");
                 DBManager.ReportingDateType = "Received";
+                DBManager.ReportingDateCaller = "Report";
                 BOLReport.Show();
             }
         }

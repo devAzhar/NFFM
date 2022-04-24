@@ -48,14 +48,14 @@ namespace NFFM
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
             this.label1.Location = new System.Drawing.Point(34, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(410, 29);
+            this.label1.Size = new System.Drawing.Size(411, 26);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Freight Forwarding Data File Export";
+            this.label1.Text = "Receiving Bill of Lading Summary Report";
             // 
             // label2
             // 
@@ -125,7 +125,7 @@ namespace NFFM
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(133, 92);
+            this.label6.Location = new System.Drawing.Point(132, 92);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(118, 13);
             this.label6.TabIndex = 3;
@@ -135,11 +135,11 @@ namespace NFFM
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(159, 49);
+            this.label5.Location = new System.Drawing.Point(154, 49);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 13);
+            this.label5.Size = new System.Drawing.Size(96, 13);
             this.label5.TabIndex = 2;
-            this.label5.Text = "Shipped Date:";
+            this.label5.Text = "Received Date:";
             // 
             // radioButton2
             // 
@@ -207,7 +207,7 @@ namespace NFFM
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(7);
             this.Name = "FreightForwardingBOL_DataFileExport";
-            this.Text = "Freight Forwarding Data File Export";
+            this.Text = "Receiving Bill of Lading Summary Report";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
